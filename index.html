@@ -74,9 +74,9 @@ input[type=text]:focus{border-color:#8B5CF6}
 .cal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .cal-title{font-size:16px;font-weight:800;color:#1E1B4B}
 .cal-nav button{width:32px;height:32px;border-radius:10px;border:1.5px solid #E5E7EB;background:#fff;cursor:pointer;font-size:16px;color:#6B7280;font-weight:700;margin-left:6px;font-family:inherit}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;width:100%}
 .dow-lbl{text-align:center;font-size:11px;font-weight:700;color:#C4B5FD;padding:4px 0;letter-spacing:.05em}
-.day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:10px;font-size:13px;cursor:pointer;border:1.5px solid transparent;position:relative;transition:all .15s;font-family:inherit;background:transparent;color:#1E1B4B}
+.day{aspect-ratio:1/1;min-height:36px;display:flex;align-items:center;justify-content:center;border-radius:10px;font-size:13px;cursor:pointer;border:1.5px solid transparent;position:relative;transition:all .15s;font-family:inherit;background:transparent;color:#1E1B4B}
 .day.past{color:#D1D5DB;cursor:default}
 .day.today{border-color:#8B5CF6}
 .day.free{background:linear-gradient(135deg,#EDE9FE,#DDD6FE);color:#6D28D9;border-color:#C4B5FD;font-weight:700;box-shadow:0 2px 8px rgba(109,40,217,.12)}
