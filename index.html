@@ -4,482 +4,569 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>FreeGlow ✨</title>
-
-<!-- PWA -->
 <link rel="manifest" href="/manifest.json"/>
 <meta name="theme-color" content="#6D28D9"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="FreeGlow"/>
 <link rel="apple-touch-icon" href="/icons/icon-192.png"/>
-
-<!-- OG / share preview -->
-<meta property="og:title" content="FreeGlow ✨"/>
-<meta property="og:description" content="Find local events & meetups on your days off"/>
-<meta property="og:type" content="website"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#F7F5FF;font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;padding-bottom:60px}
-
-/* HERO */
-.hero{background:linear-gradient(135deg,#4C1D95 0%,#6D28D9 50%,#7C3AED 100%);padding:2.25rem 1.5rem 3.75rem;position:relative;overflow:hidden}
-.hero-blob1{position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.07)}
-.hero-blob2{position:absolute;bottom:-70px;left:-30px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,0.04)}
-.hero-blob3{position:absolute;top:30%;right:20%;width:80px;height:80px;border-radius:50%;background:rgba(251,191,36,0.15)}
-.hero-inner{position:relative;z-index:1;max-width:580px;margin:0 auto}
-.logo{display:inline-flex;align-items:center;gap:10px;margin-bottom:14px}
+body{background:#F7F5FF;font-family:'Segoe UI',system-ui,sans-serif;padding-bottom:60px}
+.hero{background:linear-gradient(135deg,#4C1D95,#6D28D9,#7C3AED);padding:2.25rem 1.5rem 3.75rem;position:relative;overflow:hidden}
+.blob{position:absolute;border-radius:50%;pointer-events:none}
+.hero p{font-size:15px;color:rgba(255,255,255,0.8);line-height:1.5;max-width:340px;position:relative;z-index:1}
+.logo{display:inline-flex;align-items:center;gap:10px;margin-bottom:14px;position:relative;z-index:1}
 .logo-icon{width:46px;height:46px;border-radius:14px;background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:24px}
 .logo-free{font-size:26px;font-weight:900;color:#fff;letter-spacing:-1px;font-family:Georgia,serif}
 .logo-glow{font-size:26px;font-weight:900;background:linear-gradient(90deg,#FDE68A,#FCD34D);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-1px;font-family:Georgia,serif}
-.hero p{font-size:15px;color:rgba(255,255,255,0.78);line-height:1.5;max-width:340px}
-
-/* LAYOUT */
-.main{max-width:580px;margin:-2rem auto 0;padding:0 1rem;position:relative;z-index:2}
-.card{background:#fff;border-radius:18px;padding:1.25rem;box-shadow:0 1px 3px rgba(109,40,217,0.08),0 4px 16px rgba(109,40,217,0.06);margin-bottom:14px}
-.label{display:block;font-size:11px;font-weight:700;letter-spacing:0.1em;color:#6B7280;text-transform:uppercase;margin-bottom:8px}
-.divider{border:none;border-top:1px solid #E5E7EB;margin:14px 0}
-
-/* INPUTS */
-input[type=text]{width:100%;padding:11px 15px;font-size:15px;border:2px solid #EDE9FE;border-radius:12px;outline:none;color:#1E1B4B;background:#FAFAFA;transition:border-color 0.2s;font-family:inherit}
-input[type=text]:focus{border-color:#8B5CF6}
-
-/* AGE BUTTONS */
-.age-grid{display:flex;gap:7px;flex-wrap:wrap}
-.age-btn{padding:8px 14px;border-radius:22px;font-size:13px;font-weight:700;border:2px solid #E5E7EB;cursor:pointer;background:#fff;color:#6B7280;transition:all 0.2s;line-height:1.2;font-family:inherit}
-.age-btn .sub{font-size:10px;font-weight:500;opacity:0.7;margin-top:1px}
-.age-btn.on{background:linear-gradient(135deg,#6D28D9,#7C3AED);color:#fff;border-color:#6D28D9;box-shadow:0 4px 14px rgba(109,40,217,0.35)}
-.age-btn.on .sub{opacity:0.8}
-
-/* TABS */
-.tabs{background:rgba(255,255,255,0.7);border-radius:14px;padding:5px;margin-bottom:14px;display:flex;gap:4px}
-.tab-btn{flex:1;padding:10px 0;font-size:13px;font-weight:700;border:none;border-radius:10px;cursor:pointer;background:transparent;color:#6B7280;transition:all 0.2s;font-family:inherit}
-.tab-btn.on{background:linear-gradient(135deg,#6D28D9,#7C3AED);color:#fff;box-shadow:0 4px 14px rgba(109,40,217,0.35)}
-
-/* DOW BUTTONS */
-.dow-grid{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:1rem}
-.dow-btn{width:44px;height:44px;border-radius:50%;font-size:13px;font-weight:700;border:2px solid #E5E7EB;cursor:pointer;background:#fff;color:#6B7280;transition:all 0.2s;font-family:inherit}
-.dow-btn.on{background:linear-gradient(135deg,#6D28D9,#7C3AED);color:#fff;border-color:#6D28D9;box-shadow:0 4px 14px rgba(109,40,217,0.35)}
-
-/* LOOKAHEAD */
-.lookahead{display:flex;gap:7px}
-.la-btn{flex:1;padding:8px 0;font-size:13px;font-weight:700;border-radius:10px;cursor:pointer;border:2px solid #E5E7EB;background:#fff;color:#6B7280;transition:all 0.2s;font-family:inherit}
-.la-btn.on{background:#EDE9FE;color:#6D28D9;border-color:#6D28D9}
-
-/* SCHEDULE FOOTER */
-.sched-foot{margin-top:12px;padding-top:12px;border-top:1px solid #E5E7EB;display:flex;align-items:center;justify-content:space-between;font-size:13px;color:#6B7280}
-.sched-foot strong{color:#1E1B4B}
-.clear-btn{font-size:12px;color:#6D28D9;font-weight:700;background:none;border:none;cursor:pointer;font-family:inherit;display:none}
-
-/* CALENDAR */
-.cal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.wrap{max-width:580px;margin:-2rem auto 0;padding:0 1rem;position:relative;z-index:2}
+.card{background:#fff;border-radius:18px;padding:1.25rem;box-shadow:0 2px 16px rgba(109,40,217,0.08);margin-bottom:14px}
+.lbl{display:block;font-size:11px;font-weight:700;letter-spacing:.1em;color:#6B7280;text-transform:uppercase;margin-bottom:8px}
+hr.div{border:none;border-top:1px solid #E5E7EB;margin:14px 0}
+input.loc{width:100%;padding:11px 15px;font-size:15px;border:2px solid #EDE9FE;border-radius:12px;outline:none;color:#1E1B4B;background:#FAFAFA;font-family:inherit;margin-bottom:16px}
+input.loc:focus{border-color:#8B5CF6}
+/* age */
+.age-row{display:flex;gap:7px;flex-wrap:wrap}
+.abtn{padding:8px 14px;border-radius:22px;font-size:13px;font-weight:700;border:2px solid #E5E7EB;cursor:pointer;background:#fff;color:#6B7280;font-family:inherit;line-height:1.2;transition:all .2s}
+.abtn.on{background:linear-gradient(135deg,#6D28D9,#7C3AED);color:#fff;border-color:#6D28D9;box-shadow:0 4px 14px rgba(109,40,217,.35)}
+.abtn small{display:block;font-size:10px;opacity:.75;margin-top:1px}
+/* tabs */
+.tabs{display:flex;gap:4px;background:rgba(255,255,255,.7);border-radius:14px;padding:5px;margin-bottom:14px}
+.tbtn{flex:1;padding:10px 0;font-size:13px;font-weight:700;border:none;border-radius:10px;cursor:pointer;background:transparent;color:#6B7280;font-family:inherit;transition:all .2s}
+.tbtn.on{background:linear-gradient(135deg,#6D28D9,#7C3AED);color:#fff;box-shadow:0 4px 14px rgba(109,40,217,.35)}
+/* dow */
+.dow-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:1rem}
+.dbtn{width:44px;height:44px;border-radius:50%;font-size:13px;font-weight:700;border:2px solid #E5E7EB;cursor:pointer;background:#fff;color:#6B7280;font-family:inherit;transition:all .2s}
+.dbtn.on{background:linear-gradient(135deg,#6D28D9,#7C3AED);color:#fff;border-color:#6D28D9;box-shadow:0 4px 14px rgba(109,40,217,.35)}
+/* lookahead */
+.la-row{display:flex;gap:7px}
+.lbtn{flex:1;padding:8px 0;font-size:13px;font-weight:700;border-radius:10px;cursor:pointer;border:2px solid #E5E7EB;background:#fff;color:#6B7280;font-family:inherit;transition:all .2s}
+.lbtn.on{background:#EDE9FE;color:#6D28D9;border-color:#6D28D9}
+.sfoot{margin-top:12px;padding-top:12px;border-top:1px solid #E5E7EB;display:flex;align-items:center;justify-content:space-between;font-size:13px;color:#6B7280}
+.sfoot strong{color:#1E1B4B}
+#clearBtn{font-size:12px;color:#6D28D9;font-weight:700;background:none;border:none;cursor:pointer;display:none;font-family:inherit}
+/* calendar */
+.cal-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .cal-title{font-size:16px;font-weight:800;color:#1E1B4B}
-.cal-nav button{width:32px;height:32px;border-radius:10px;border:1.5px solid #E5E7EB;background:#fff;cursor:pointer;font-size:16px;color:#6B7280;font-weight:700;margin-left:6px;font-family:inherit}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;width:100%}
-.dow-lbl{text-align:center;font-size:11px;font-weight:700;color:#C4B5FD;padding:4px 0;letter-spacing:.05em}
-.day{aspect-ratio:1/1;min-height:36px;display:flex;align-items:center;justify-content:center;border-radius:10px;font-size:13px;cursor:pointer;border:1.5px solid transparent;position:relative;transition:all .15s;font-family:inherit;background:transparent;color:#1E1B4B}
-.day.past{color:#D1D5DB;cursor:default}
-.day.today{border-color:#8B5CF6}
-.day.free{background:linear-gradient(135deg,#EDE9FE,#DDD6FE);color:#6D28D9;border-color:#C4B5FD;font-weight:700;box-shadow:0 2px 8px rgba(109,40,217,.12)}
-.day.added{background:#D1FAE5;color:#065F46;border-color:#6EE7B7;font-weight:700}
-.day.removed{border:1.5px dashed #FCA5A5;color:#EF4444}
-.day.today::after{content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:#6D28D9}
-.day.free.today::after,.day.added.today::after{background:#fff}
-.cal-hint{font-size:12px;color:#A78BFA;margin-top:12px;text-align:center;font-style:italic}
-
-/* LEGEND */
-.legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px;padding-left:4px}
+.cal-nav{display:flex;gap:6px}
+.cnav{width:32px;height:32px;border-radius:10px;border:1.5px solid #E5E7EB;background:#fff;cursor:pointer;font-size:16px;color:#6B7280;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:inherit}
+.cgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;width:100%}
+.cdow{text-align:center;font-size:11px;font-weight:700;color:#C4B5FD;padding:4px 2px;letter-spacing:.04em}
+.cday{width:100%;padding-bottom:100%;position:relative;border-radius:8px;cursor:pointer;border:1.5px solid transparent;transition:all .15s}
+.cday-inner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:400;color:#1E1B4B;border-radius:8px}
+.cday.past{cursor:default}
+.cday.past .cday-inner{color:#D1D5DB}
+.cday.free{border-color:#C4B5FD}
+.cday.free .cday-inner{background:linear-gradient(135deg,#EDE9FE,#DDD6FE);color:#6D28D9;font-weight:700}
+.cday.oadded{border-color:#6EE7B7}
+.cday.oadded .cday-inner{background:#D1FAE5;color:#065F46;font-weight:700}
+.cday.oremoved{border:1.5px dashed #FCA5A5}
+.cday.oremoved .cday-inner{color:#EF4444}
+.cday.today{border-color:#8B5CF6}
+.cday.today .cday-inner::after{content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:#6D28D9}
+.cday.free.today .cday-inner::after,.cday.oadded.today .cday-inner::after{background:#fff}
+.cal-hint{font-size:12px;color:#A78BFA;margin-top:10px;text-align:center;font-style:italic}
+/* legend */
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px;padding-left:2px}
 .leg{display:flex;align-items:center;gap:6px;font-size:12px;color:#6B7280}
-.leg-dot{width:12px;height:12px;border-radius:3px;display:inline-block}
-
-/* CHIPS */
-.chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px;min-height:10px}
+.ldot{width:12px;height:12px;border-radius:3px;display:inline-block}
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}
 .chip{display:inline-flex;align-items:center;gap:5px;background:#EDE9FE;color:#6D28D9;font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;border:1px solid #C4B5FD}
 .chip-x{cursor:pointer;font-size:15px;opacity:.5;line-height:1}
-
-/* ERRORS */
-.err{background:#FEF2F2;border:1px solid #FECACA;border-radius:12px;padding:12px 16px;font-size:13px;color:#991B1B;margin-bottom:14px;display:none}
-
-/* BUTTONS */
-.btn-purple{width:100%;padding:15px;font-size:15px;font-weight:800;background:linear-gradient(135deg,#6D28D9,#7C3AED);color:#fff;border:none;border-radius:14px;cursor:pointer;margin-bottom:10px;letter-spacing:.02em;box-shadow:0 4px 14px rgba(109,40,217,.35);transition:all .2s;font-family:inherit}
-.btn-purple:disabled{background:#C4B5FD;box-shadow:none;cursor:default}
-.btn-teal{width:100%;padding:15px;font-size:15px;font-weight:800;background:linear-gradient(135deg,#0F766E,#0D9488);color:#fff;border:none;border-radius:14px;cursor:pointer;margin-bottom:1.5rem;letter-spacing:.02em;box-shadow:0 4px 14px rgba(13,148,136,.35);transition:all .2s;font-family:inherit}
-.btn-teal:disabled{background:#99F6E4;box-shadow:none;cursor:default}
-
-/* LOADING */
+/* error */
+#errBox{background:#FEF2F2;border:1px solid #FECACA;border-radius:12px;padding:12px 16px;font-size:13px;color:#991B1B;margin-bottom:14px;display:none}
+/* buttons */
+.btn-v{width:100%;padding:15px;font-size:15px;font-weight:800;background:linear-gradient(135deg,#6D28D9,#7C3AED);color:#fff;border:none;border-radius:14px;cursor:pointer;margin-bottom:10px;letter-spacing:.02em;box-shadow:0 4px 14px rgba(109,40,217,.35);font-family:inherit}
+.btn-v:disabled{background:#C4B5FD;box-shadow:none;cursor:default}
+.btn-t{width:100%;padding:15px;font-size:15px;font-weight:800;background:linear-gradient(135deg,#0F766E,#0D9488);color:#fff;border:none;border-radius:14px;cursor:pointer;margin-bottom:1.5rem;letter-spacing:.02em;box-shadow:0 4px 14px rgba(13,148,136,.35);font-family:inherit}
+.btn-t:disabled{background:#99F6E4;box-shadow:none;cursor:default}
+/* loading */
 .loading{text-align:center;padding:2rem;color:#6B7280;font-size:14px}
 .loading .ico{font-size:36px;margin-bottom:10px}
-.loading strong{color:#1E1B4B;display:block;margin-bottom:4px}
-
-/* SECTION DIVIDER */
-.sec-div{display:flex;align-items:center;gap:10px;margin-bottom:18px}
-.sec-div .line{flex:1;height:1px;background:#EDE9FE}
-.sec-div .txt{font-size:12px;font-weight:700;color:#6D28D9;letter-spacing:.08em;text-transform:uppercase}
-
-/* DAY SECTION */
-.day-sec{margin-bottom:1.75rem}
-.day-hdr{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.day-badge{background:linear-gradient(135deg,#6D28D9,#7C3AED);border-radius:10px;padding:4px 12px;font-size:12px;font-weight:800;color:#fff;letter-spacing:.04em}
-.day-line{flex:1;height:1px;background:#E5E7EB}
-
-/* EVENT CARDS */
-.ev-card{background:#fff;border-radius:16px;padding:14px 16px;margin-bottom:10px;box-shadow:0 1px 3px rgba(109,40,217,.08),0 4px 16px rgba(109,40,217,.06);border:1px solid #E5E7EB;display:flex;gap:13px}
-.ev-ico{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
-.ev-name{font-size:15px;font-weight:800;color:#1E1B4B;margin-bottom:3px;line-height:1.3}
-.ev-meta{font-size:12px;color:#6B7280;margin-bottom:7px}
-.ev-desc{font-size:13px;color:#374151;line-height:1.6;margin-bottom:8px}
-.ev-tip{background:#FEF3C7;border-radius:8px;padding:7px 10px;font-size:12px;color:#78350F;margin-bottom:8px;line-height:1.5}
-.ev-tag{display:inline-block;font-size:11px;padding:3px 10px;border-radius:12px;font-weight:700;letter-spacing:.04em}
-
-/* MEETUP CARDS */
-.mu-hdr{background:linear-gradient(135deg,#0F766E,#0D9488);border-radius:16px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:12px}
-.mu-hdr .ico{font-size:28px}
-.mu-hdr .title{font-size:16px;font-weight:800;color:#fff}
-.mu-hdr .sub{font-size:12px;color:rgba(255,255,255,.8);margin-top:2px}
-.mu-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:2rem}
-.mu-card{background:#fff;border-radius:16px;padding:14px;box-shadow:0 1px 3px rgba(109,40,217,.08),0 4px 16px rgba(109,40,217,.06);border:1px solid #E5E7EB;display:flex;flex-direction:column;gap:8px}
-.mu-top{display:flex;align-items:flex-start;gap:10px}
-.mu-ico{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.mu-name{font-size:13px;font-weight:800;color:#1E1B4B;line-height:1.3;margin-bottom:2px}
-.mu-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700}
-.mu-desc{font-size:12px;color:#374151;line-height:1.55}
-.mu-meta{margin-top:auto;display:flex;flex-direction:column;gap:4px;font-size:11px;color:#6B7280}
-.mu-vibe{background:#EDE9FE;color:#6D28D9;border-radius:8px;padding:4px 8px;font-size:11px;font-weight:600;margin-top:2px}
-
-/* FOOTER */
-.foot-badge{text-align:center;padding:1rem 1rem 0}
-.foot-badge span{background:#EDE9FE;color:#6D28D9;padding:6px 16px;border-radius:20px;font-weight:600;font-size:12px}
+/* results */
+.sdiv{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.sdiv .sline{flex:1;height:1px;background:#EDE9FE}
+.sdiv .stxt{font-size:12px;font-weight:700;color:#6D28D9;letter-spacing:.08em;text-transform:uppercase}
+.dsec{margin-bottom:1.75rem}
+.dhdr{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.dbadge{background:linear-gradient(135deg,#6D28D9,#7C3AED);border-radius:10px;padding:4px 12px;font-size:12px;font-weight:800;color:#fff}
+.dline{flex:1;height:1px;background:#E5E7EB}
+.ecard{background:#fff;border-radius:16px;padding:14px 16px;margin-bottom:10px;box-shadow:0 2px 12px rgba(109,40,217,.07);border:1px solid #E5E7EB;display:flex;gap:13px}
+.eico{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+.ename{font-size:15px;font-weight:800;color:#1E1B4B;margin-bottom:3px;line-height:1.3}
+.emeta{font-size:12px;color:#6B7280;margin-bottom:7px}
+.edesc{font-size:13px;color:#374151;line-height:1.6;margin-bottom:8px}
+.etip{background:#FEF3C7;border-radius:8px;padding:7px 10px;font-size:12px;color:#78350F;margin-bottom:8px;line-height:1.5}
+.etag{display:inline-block;font-size:11px;padding:3px 10px;border-radius:12px;font-weight:700}
+.muhdr{background:linear-gradient(135deg,#0F766E,#0D9488);border-radius:16px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.mugrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:2rem}
+.mucard{background:#fff;border-radius:16px;padding:14px;box-shadow:0 2px 12px rgba(109,40,217,.07);border:1px solid #E5E7EB;display:flex;flex-direction:column;gap:8px}
+.mutop{display:flex;align-items:flex-start;gap:10px}
+.muico{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.muname{font-size:13px;font-weight:800;color:#1E1B4B;line-height:1.3;margin-bottom:2px}
+.mutag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700}
+.mudesc{font-size:12px;color:#374151;line-height:1.55}
+.mumeta{margin-top:auto;font-size:11px;color:#6B7280;display:flex;flex-direction:column;gap:4px}
+.muvibe{background:#EDE9FE;color:#6D28D9;border-radius:8px;padding:4px 8px;font-size:11px;font-weight:600;margin-top:2px}
+.fbadge{text-align:center;padding:1rem 0}
+.fbadge span{background:#EDE9FE;color:#6D28D9;padding:6px 16px;border-radius:20px;font-weight:600;font-size:12px}
 </style>
 </head>
 <body>
 
-<!-- HERO -->
 <div class="hero">
-  <div class="hero-blob1"></div><div class="hero-blob2"></div><div class="hero-blob3"></div>
-  <div class="hero-inner">
-    <div class="logo">
-      <div class="logo-icon">🌅</div>
-      <div><span class="logo-free">Free</span><span class="logo-glow">Glow</span></div>
-    </div>
-    <p>Your days off deserve to shine ✨ — find events &amp; meetups that fit your life</p>
+  <div class="blob" style="top:-50px;right:-50px;width:200px;height:200px;background:rgba(255,255,255,0.07)"></div>
+  <div class="blob" style="bottom:-70px;left:-30px;width:240px;height:240px;background:rgba(255,255,255,0.04)"></div>
+  <div class="blob" style="top:30%;right:20%;width:80px;height:80px;background:rgba(251,191,36,0.15)"></div>
+  <div class="logo">
+    <div class="logo-icon">🌅</div>
+    <div><span class="logo-free">Free</span><span class="logo-glow">Glow</span></div>
   </div>
+  <p>Your days off deserve to shine ✨ — find events &amp; meetups that fit your life</p>
 </div>
 
-<div class="main">
+<div class="wrap">
 
-  <!-- LOCATION + AGE -->
   <div class="card">
-    <label class="label">📍 Your Location</label>
-    <input type="text" id="loc" placeholder="City, state or zip — e.g. Atlanta, GA" style="margin-bottom:16px"/>
-    <hr class="divider" style="margin-top:0"/>
-    <label class="label">🎂 Your Age Group</label>
-    <div class="age-grid" id="ageGrid"></div>
+    <label class="lbl">📍 Your Location</label>
+    <input class="loc" type="text" id="locIn" placeholder="City, state or zip — e.g. Atlanta, GA"/>
+    <hr class="div" style="margin-top:0"/>
+    <label class="lbl">🎂 Your Age Group</label>
+    <div class="age-row" id="ageRow"></div>
   </div>
 
-  <!-- TABS -->
   <div class="tabs">
-    <button class="tab-btn on" id="tabS" onclick="setTab('s')">📋  Work Schedule</button>
-    <button class="tab-btn" id="tabM" onclick="setTab('m')">✏️  Pick Days Manually</button>
+    <button class="tbtn on" id="tabS" onclick="setTab('s')">📋  Work Schedule</button>
+    <button class="tbtn" id="tabM" onclick="setTab('m')">✏️  Pick Days Manually</button>
   </div>
 
-  <!-- SCHEDULE SETTINGS -->
   <div class="card" id="schedCard">
-    <div class="label">Which days do you work?</div>
-    <div class="dow-grid" id="dowGrid"></div>
-    <hr class="divider"/>
-    <div class="label">Look Ahead</div>
-    <div class="lookahead" id="laGrid"></div>
-    <div class="sched-foot">
+    <div class="lbl">Which days do you work?</div>
+    <div class="dow-row" id="dowRow"></div>
+    <hr class="div"/>
+    <div class="lbl">Look Ahead</div>
+    <div class="la-row" id="laRow"></div>
+    <div class="sfoot">
       <span><strong id="freeCount">0</strong> free days coming up</span>
-      <button class="clear-btn" id="clearBtn" onclick="clearOv()">Clear overrides</button>
+      <button id="clearBtn" onclick="clearOv()">Clear overrides</button>
     </div>
   </div>
 
-  <!-- CALENDAR -->
   <div class="card">
-    <div class="cal-hdr">
-      <span class="cal-title" id="calTitle"></span>
-      <div class="cal-nav"><button onclick="nav(-1)">‹</button><button onclick="nav(1)">›</button></div>
+    <div class="cal-top">
+      <span class="cal-title" id="calTitle">Loading...</span>
+      <div class="cal-nav">
+        <button class="cnav" onclick="navMonth(-1)">&#8249;</button>
+        <button class="cnav" onclick="navMonth(1)">&#8250;</button>
+      </div>
     </div>
-    <div class="cal-grid" id="calGrid"></div>
+    <div class="cgrid" id="calGrid"></div>
     <p class="cal-hint" id="calHint">Tap any day to override your schedule</p>
   </div>
 
-  <!-- LEGEND -->
-  <div class="legend" id="legend"></div>
+  <div class="legend" id="legendBox"></div>
+  <div class="chips" id="chipsBox"></div>
+  <div id="errBox"></div>
 
-  <!-- CHIPS -->
-  <div class="chips" id="chips"></div>
+  <button class="btn-v" id="btnEv" onclick="doEvents()">✨ Find events on my free days</button>
+  <button class="btn-t" id="btnMu" onclick="doMeetups()">👥 Find Meetup Groups Near Me</button>
 
-  <!-- ERROR -->
-  <div class="err" id="errBox"></div>
-
-  <!-- BUTTONS -->
-  <button class="btn-purple" id="btnEv" onclick="doEvents()">✨ Find events on my free days</button>
-  <button class="btn-teal"   id="btnMu" onclick="doMeetups()">👥 Find Meetup Groups Near Me</button>
-
-  <!-- RESULTS -->
   <div id="results"></div>
 </div>
 
 <script>
-// ── Data ──────────────────────────────────────────────────────────────────────
-const MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
-const DS=["Su","Mo","Tu","We","Th","Fr","Sa"];
-const DF=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-const AGES=[{id:"18-24",l:"18–24",d:"College & Young Adult"},{id:"25-34",l:"25–34",d:"Young Professional"},{id:"35-44",l:"35–44",d:"Mid-Career & Family"},{id:"45-54",l:"45–54",d:"Established & Active"},{id:"55+",l:"55+",d:"Active Seniors"}];
-const ECAT={Social:{bg:"#EDE9FE",tx:"#5B21B6",em:"🤝"},Outdoors:{bg:"#DCFCE7",tx:"#166534",em:"🌿"},Food:{bg:"#FEF3C7",tx:"#92400E",em:"🍴"},Music:{bg:"#FCE7F3",tx:"#9D174D",em:"🎵"},Arts:{bg:"#E0F2FE",tx:"#075985",em:"🎨"},Fitness:{bg:"#DCFCE7",tx:"#166534",em:"💪"},Volunteer:{bg:"#FEF9C3",tx:"#854D0E",em:"🤲"},Learning:{bg:"#E0F2FE",tx:"#0C4A6E",em:"📚"},Community:{bg:"#FFF7ED",tx:"#9A3412",em:"🏘️"}};
-const MCAT={"Social":{bg:"#EDE9FE",tx:"#5B21B6",em:"🎉"},"Outdoors":{bg:"#DCFCE7",tx:"#166534",em:"🥾"},"Sports":{bg:"#DBEAFE",tx:"#1E40AF",em:"⚽"},"Arts":{bg:"#FCE7F3",tx:"#9D174D",em:"🎨"},"Tech":{bg:"#E0F2FE",tx:"#075985",em:"💻"},"Wellness":{bg:"#FEF9C3",tx:"#854D0E",em:"🧘"},"Books":{bg:"#F3E8FF",tx:"#6B21A8",em:"📖"},"Food/Drink":{bg:"#FFF7ED",tx:"#9A3412",em:"🍻"},"Gaming":{bg:"#EDE9FE",tx:"#4C1D95",em:"🎮"},"Networking":{bg:"#DBEAFE",tx:"#1E3A8A",em:"🤝"},"Music":{bg:"#FCE7F3",tx:"#831843",em:"🎸"},"Volunteering":{bg:"#DCFCE7",tx:"#14532D",em:"💚"}};
+// ─── Constants ────────────────────────────────────────────────────────────────
+var MN=["January","February","March","April","May","June","July","August","September","October","November","December"];
+var DS=["Su","Mo","Tu","We","Th","Fr","Sa"];
+var DF=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+var AGES=[
+  {id:"18-24",l:"18\u201324",d:"College & Young Adult"},
+  {id:"25-34",l:"25\u201334",d:"Young Professional"},
+  {id:"35-44",l:"35\u201344",d:"Mid-Career & Family"},
+  {id:"45-54",l:"45\u201354",d:"Established & Active"},
+  {id:"55+",l:"55+",d:"Active Seniors"}
+];
+var ECAT={
+  Social:{bg:"#EDE9FE",tx:"#5B21B6",em:"🤝"},
+  Outdoors:{bg:"#DCFCE7",tx:"#166534",em:"🌿"},
+  Food:{bg:"#FEF3C7",tx:"#92400E",em:"🍴"},
+  Music:{bg:"#FCE7F3",tx:"#9D174D",em:"🎵"},
+  Arts:{bg:"#E0F2FE",tx:"#075985",em:"🎨"},
+  Fitness:{bg:"#DCFCE7",tx:"#166534",em:"💪"},
+  Volunteer:{bg:"#FEF9C3",tx:"#854D0E",em:"🤲"},
+  Learning:{bg:"#E0F2FE",tx:"#0C4A6E",em:"📚"},
+  Community:{bg:"#FFF7ED",tx:"#9A3412",em:"🏘️"}
+};
+var MCAT={
+  "Social":{bg:"#EDE9FE",tx:"#5B21B6",em:"🎉"},
+  "Outdoors":{bg:"#DCFCE7",tx:"#166534",em:"🥾"},
+  "Sports":{bg:"#DBEAFE",tx:"#1E40AF",em:"⚽"},
+  "Arts":{bg:"#FCE7F3",tx:"#9D174D",em:"🎨"},
+  "Tech":{bg:"#E0F2FE",tx:"#075985",em:"💻"},
+  "Wellness":{bg:"#FEF9C3",tx:"#854D0E",em:"🧘"},
+  "Books":{bg:"#F3E8FF",tx:"#6B21A8",em:"📖"},
+  "Food/Drink":{bg:"#FFF7ED",tx:"#9A3412",em:"🍻"},
+  "Gaming":{bg:"#EDE9FE",tx:"#4C1D95",em:"🎮"},
+  "Networking":{bg:"#DBEAFE",tx:"#1E3A8A",em:"🤝"},
+  "Music":{bg:"#FCE7F3",tx:"#831843",em:"🎸"},
+  "Volunteering":{bg:"#DCFCE7",tx:"#14532D",em:"💚"}
+};
 
-// ── State ────────────────────────────────────────────────────────────────────
-const TOD=new Date();TOD.setHours(0,0,0,0);
-let vY=TOD.getFullYear(),vM=TOD.getMonth();
-let curTab="s",age="25-34",months=1;
-let work=new Set([1,2,3,4,5]),added=new Set(),removed=new Set();
+// ─── State ────────────────────────────────────────────────────────────────────
+var TOD=new Date(); TOD.setHours(0,0,0,0);
+var vY=TOD.getFullYear(), vM=TOD.getMonth();
+var curTab="s", ageId="25-34", lookMonths=1;
+var workSet={"1":1,"2":1,"3":1,"4":1,"5":1};
+var addedSet={}, removedSet={};
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
-const key=(y,m,d)=>`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-const parse=k=>{const[y,m,d]=k.split('-');return new Date(+y,+m-1,+d);};
-const disp=k=>parse(k).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+// ─── Key helpers ──────────────────────────────────────────────────────────────
+function makeKey(y,m,d){
+  return y+"-"+(m+1<10?"0":"")+(m+1)+"-"+(d<10?"0":"")+d;
+}
+function keyToDate(k){
+  var p=k.split("-");
+  return new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2]));
+}
+function keyToDisplay(k){
+  return keyToDate(k).toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});
+}
 
-function schFree(){
-  const s=new Set(),end=new Date(TOD);end.setMonth(end.getMonth()+months);
-  const c=new Date(TOD);
-  while(c<=end){if(!work.has(c.getDay()))s.add(key(c.getFullYear(),c.getMonth(),c.getDate()));c.setDate(c.getDate()+1);}
+// ─── Free day logic ───────────────────────────────────────────────────────────
+function getSchedFree(){
+  var s={};
+  var end=new Date(TOD); end.setMonth(end.getMonth()+lookMonths);
+  var cur=new Date(TOD);
+  while(cur<=end){
+    var dow=cur.getDay();
+    if(!workSet[dow]){
+      s[makeKey(cur.getFullYear(),cur.getMonth(),cur.getDate())]=1;
+    }
+    cur.setDate(cur.getDate()+1);
+  }
   return s;
 }
-function freeDays(){
-  const s=new Set();
-  if(curTab==="s"){for(const k of schFree())if(!removed.has(k))s.add(k);for(const k of added)if(!removed.has(k))s.add(k);}
-  else for(const k of added)s.add(k);
+function getFreeDays(){
+  var s={};
+  if(curTab==="s"){
+    var sf=getSchedFree();
+    for(var k in sf){ if(!removedSet[k]) s[k]=1; }
+    for(var k in addedSet){ if(!removedSet[k]) s[k]=1; }
+  } else {
+    for(var k in addedSet){ s[k]=1; }
+  }
   return s;
 }
-function upcoming(){return[...freeDays()].sort().filter(k=>parse(k)>=TOD).slice(0,14);}
+function getUpcoming(){
+  var fd=getFreeDays();
+  var arr=[];
+  for(var k in fd){
+    if(keyToDate(k)>=TOD) arr.push(k);
+  }
+  arr.sort();
+  return arr.slice(0,14);
+}
 
-// ── Build age buttons ──────────────────────────────────────────────────────────
-AGES.forEach(a=>{
-  const b=document.createElement('button');
-  b.className='age-btn'+(a.id===age?' on':'');
-  b.innerHTML=`<div>${a.l}</div><div class="sub">${a.d}</div>`;
-  b.onclick=()=>{age=a.id;document.querySelectorAll('.age-btn').forEach(x=>x.classList.remove('on'));b.classList.add('on');};
-  document.getElementById('ageGrid').appendChild(b);
-});
+// ─── Build age buttons ────────────────────────────────────────────────────────
+(function(){
+  var row=document.getElementById("ageRow");
+  AGES.forEach(function(a){
+    var b=document.createElement("button");
+    b.className="abtn"+(a.id===ageId?" on":"");
+    b.innerHTML="<span>"+a.l+"</span><small>"+a.d+"</small>";
+    b.onclick=function(){
+      ageId=a.id;
+      document.querySelectorAll(".abtn").forEach(function(x){x.classList.remove("on");});
+      b.classList.add("on");
+    };
+    row.appendChild(b);
+  });
+})();
 
-// ── Build DOW buttons ─────────────────────────────────────────────────────────
-DF.forEach((n,i)=>{
-  const b=document.createElement('button');
-  b.className='dow-btn'+(work.has(i)?' on':'');b.textContent=DS[i];
-  b.onclick=()=>{work.has(i)?work.delete(i):work.add(i);b.classList.toggle('on');render();};
-  document.getElementById('dowGrid').appendChild(b);
-});
+// ─── Build DOW buttons ────────────────────────────────────────────────────────
+(function(){
+  var row=document.getElementById("dowRow");
+  DS.forEach(function(name,i){
+    var b=document.createElement("button");
+    b.className="dbtn"+(workSet[i]?" on":"");
+    b.textContent=name;
+    b.onclick=function(){
+      if(workSet[i]){ delete workSet[i]; } else { workSet[i]=1; }
+      b.classList.toggle("on");
+      renderAll();
+    };
+    row.appendChild(b);
+  });
+})();
 
-// ── Build lookahead buttons ───────────────────────────────────────────────────
-[1,2,3].forEach(n=>{
-  const b=document.createElement('button');
-  b.className='la-btn'+(n===months?' on':'');b.textContent=n+' month'+(n>1?'s':'');
-  b.onclick=()=>{months=n;document.querySelectorAll('.la-btn').forEach(x=>x.classList.remove('on'));b.classList.add('on');render();};
-  document.getElementById('laGrid').appendChild(b);
-});
+// ─── Build lookahead buttons ──────────────────────────────────────────────────
+(function(){
+  var row=document.getElementById("laRow");
+  [1,2,3].forEach(function(n){
+    var b=document.createElement("button");
+    b.className="lbtn"+(n===lookMonths?" on":"");
+    b.textContent=n+" month"+(n>1?"s":"");
+    b.onclick=function(){
+      lookMonths=n;
+      document.querySelectorAll(".lbtn").forEach(function(x){x.classList.remove("on");});
+      b.classList.add("on");
+      renderAll();
+    };
+    row.appendChild(b);
+  });
+})();
 
-// ── Tab switch ────────────────────────────────────────────────────────────────
+// ─── Tab switch ───────────────────────────────────────────────────────────────
 function setTab(t){
   curTab=t;
-  document.getElementById('tabS').classList.toggle('on',t==='s');
-  document.getElementById('tabM').classList.toggle('on',t==='m');
-  document.getElementById('schedCard').style.display=t==='s'?'block':'none';
-  document.getElementById('calHint').style.display=t==='s'?'block':'none';
-  render();
+  document.getElementById("tabS").classList.toggle("on",t==="s");
+  document.getElementById("tabM").classList.toggle("on",t==="m");
+  document.getElementById("schedCard").style.display=t==="s"?"block":"none";
+  document.getElementById("calHint").style.display=t==="s"?"block":"none";
+  renderAll();
 }
 
-// ── Day toggle ────────────────────────────────────────────────────────────────
+// ─── Toggle day ───────────────────────────────────────────────────────────────
 function toggleDay(k){
-  const free=freeDays().has(k);
-  if(curTab==='s'){if(free){removed.add(k);added.delete(k);}else{added.add(k);removed.delete(k);}}
-  else{added.has(k)?added.delete(k):added.add(k);}
-  render();
+  var isFree=!!getFreeDays()[k];
+  if(curTab==="s"){
+    if(isFree){ removedSet[k]=1; delete addedSet[k]; }
+    else { addedSet[k]=1; delete removedSet[k]; }
+  } else {
+    if(addedSet[k]){ delete addedSet[k]; } else { addedSet[k]=1; }
+  }
+  renderAll();
 }
-function clearOv(){added=new Set();removed=new Set();render();}
+function clearOv(){ addedSet={}; removedSet={}; renderAll(); }
+function navMonth(d){ vM+=d; if(vM>11){vM=0;vY++;} if(vM<0){vM=11;vY--;} renderCal(); }
 
-// ── Calendar nav ──────────────────────────────────────────────────────────────
-function nav(d){vM+=d;if(vM>11){vM=0;vY++;}if(vM<0){vM=11;vY--;}renderCal();}
-
-// ── Render ────────────────────────────────────────────────────────────────────
+// ─── Render calendar ──────────────────────────────────────────────────────────
 function renderCal(){
-  document.getElementById('calTitle').textContent=MONTHS[vM]+' '+vY;
-  const fd=freeDays(),grid=document.getElementById('calGrid');
-  grid.innerHTML=DS.map(d=>`<div class="dow-lbl">${d}</div>`).join('');
-  const first=new Date(vY,vM,1).getDay(),dim=new Date(vY,vM+1,0).getDate();
-  for(let i=0;i<first;i++)grid.innerHTML+='<div></div>';
-  for(let d=1;d<=dim;d++){
-    const dt=new Date(vY,vM,d),k=key(vY,vM,d);
-    const past=dt<TOD,tod=dt.getTime()===TOD.getTime(),free=fd.has(k),oa=added.has(k),or=removed.has(k);
-    let cls='day';
-    if(past)cls+=' past';
-    else if(free&&oa)cls+=' added';
-    else if(free)cls+=' free';
-    else if(or)cls+=' removed';
-    if(tod)cls+=' today';
-    grid.innerHTML+=`<div class="${cls}" ${past?'':` onclick="toggleDay('${k}')"`}>${d}</div>`;
+  document.getElementById("calTitle").textContent=MN[vM]+" "+vY;
+  var fd=getFreeDays();
+  var grid=document.getElementById("calGrid");
+  var html="";
+
+  // Day of week headers
+  DS.forEach(function(d){ html+='<div class="cdow">'+d+'</div>'; });
+
+  // Empty cells before first day
+  var first=new Date(vY,vM,1).getDay();
+  for(var i=0;i<first;i++) html+='<div></div>';
+
+  // Day cells
+  var dim=new Date(vY,vM+1,0).getDate();
+  for(var d=1;d<=dim;d++){
+    var dt=new Date(vY,vM,d);
+    var k=makeKey(vY,vM,d);
+    var past=dt<TOD;
+    var isToday=dt.getTime()===TOD.getTime();
+    var isFree=!!fd[k];
+    var isAdded=!!addedSet[k];
+    var isRemoved=!!removedSet[k];
+
+    var cls="cday";
+    if(past) cls+=" past";
+    else if(isFree && isAdded) cls+=" oadded";
+    else if(isFree) cls+=" free";
+    else if(isRemoved) cls+=" oremoved";
+    if(isToday) cls+=" today";
+
+    var onclick='';
+    if(!past) onclick=' onclick="toggleDay(\''+k+'\')"';
+
+    html+='<div class="'+cls+'"'+onclick+'><div class="cday-inner">'+d+'</div></div>';
   }
+  grid.innerHTML=html;
 }
+
+// ─── Render chips ─────────────────────────────────────────────────────────────
 function renderChips(){
-  const up=upcoming();
-  document.getElementById('chips').innerHTML=
-    up.slice(0,10).map(k=>`<span class="chip">${disp(k)}<span class="chip-x" onclick="toggleDay('${k}')">×</span></span>`).join('')+
-    (up.length>10?`<span style="font-size:12px;color:#6B7280;align-self:center;font-style:italic">+${up.length-10} more</span>`:'');
+  var up=getUpcoming();
+  var box=document.getElementById("chipsBox");
+  var html="";
+  var show=up.slice(0,10);
+  show.forEach(function(k){
+    html+='<span class="chip">'+keyToDisplay(k)+'<span class="chip-x" onclick="toggleDay(\''+k+'\')">&#215;</span></span>';
+  });
+  if(up.length>10) html+='<span style="font-size:12px;color:#6B7280;align-self:center;font-style:italic">+' +(up.length-10)+' more</span>';
+  box.innerHTML=html;
 }
+
+// ─── Render legend ────────────────────────────────────────────────────────────
 function renderLegend(){
-  let h=`<div class="leg"><span class="leg-dot" style="background:#EDE9FE;border:1.5px solid #C4B5FD"></span>Free day</div>`;
-  if(curTab==='s'){
-    h+=`<div class="leg"><span class="leg-dot" style="background:#D1FAE5;border:1.5px solid #6EE7B7"></span>Added as free</div>`;
-    h+=`<div class="leg"><span class="leg-dot" style="background:transparent;border:1.5px dashed #FCA5A5"></span>Marked working</div>`;
+  var html='<div class="leg"><span class="ldot" style="background:#EDE9FE;border:1.5px solid #C4B5FD"></span>Free day</div>';
+  if(curTab==="s"){
+    html+='<div class="leg"><span class="ldot" style="background:#D1FAE5;border:1.5px solid #6EE7B7"></span>Added as free</div>';
+    html+='<div class="leg"><span class="ldot" style="background:transparent;border:1.5px dashed #FCA5A5"></span>Marked working</div>';
   }
-  document.getElementById('legend').innerHTML=h;
+  document.getElementById("legendBox").innerHTML=html;
 }
+
+// ─── Render footer ────────────────────────────────────────────────────────────
 function renderFooter(){
-  const up=upcoming(),oc=added.size+removed.size;
-  document.getElementById('freeCount').textContent=up.length;
-  const cb=document.getElementById('clearBtn');
-  cb.style.display=oc>0?'inline':'none';
-  cb.textContent=`Clear ${oc} override${oc>1?'s':''}`;
+  var up=getUpcoming();
+  document.getElementById("freeCount").textContent=up.length;
+  var oc=Object.keys(addedSet).length+Object.keys(removedSet).length;
+  var cb=document.getElementById("clearBtn");
+  cb.style.display=oc>0?"inline":"none";
+  cb.textContent="Clear "+oc+" override"+(oc>1?"s":"");
 }
+
+// ─── Render buttons ───────────────────────────────────────────────────────────
 function renderBtns(){
-  const up=upcoming(),ag=AGES.find(a=>a.id===age);
-  document.getElementById('btnEv').textContent=`✨  Find events on my ${up.length} free day${up.length===1?'':'s'}`;
-  document.getElementById('btnMu').textContent=`👥  Find ${ag?.l||age} Meetup Groups Near Me`;
+  var up=getUpcoming();
+  var ag=AGES.filter(function(a){return a.id===ageId;})[0]||AGES[1];
+  document.getElementById("btnEv").textContent="✨  Find events on my "+up.length+" free day"+(up.length===1?"":"s");
+  document.getElementById("btnMu").textContent="👥  Find "+ag.l+" Meetup Groups Near Me";
 }
-function render(){renderCal();renderChips();renderLegend();renderFooter();renderBtns();}
 
-// Init
-setTab('s');render();
+// ─── Render all ───────────────────────────────────────────────────────────────
+function renderAll(){
+  renderCal();
+  renderChips();
+  renderLegend();
+  renderFooter();
+  renderBtns();
+}
 
-// ── JSON cleaner — fixes common AI output issues ─────────────────────────────
-function cleanJSON(raw) {
-  let s = raw;
-  // Extract first JSON object
-  const m = s.match(/\{[\s\S]*\}/);
-  if (!m) throw new Error("No JSON found in response");
-  s = m[0];
-  // Remove trailing commas before } or ]
-  s = s.replace(/,\s*([}\]])/g, '$1');
-  // Remove control characters inside strings (newlines, tabs in values)
-  s = s.replace(/"([^"]*)"/g, (match) =>
-    match.replace(/
-/g, ' ').replace(/
-/g, '').replace(/	/g, ' ')
-  );
-  // Try parsing — if it fails, truncate to last complete object/array
-  try {
-    return JSON.parse(s);
-  } catch(e) {
-    // Try to salvage truncated JSON by closing open structures
-    const opens = (s.match(/\[/g)||[]).length - (s.match(/\]/g)||[]).length;
-    const openB = (s.match(/\{/g)||[]).length - (s.match(/\}/g)||[]).length;
-    // Remove last incomplete item
-    s = s.replace(/,\s*\{[^}]*$/,'');
-    s = s.replace(/,\s*"[^"]*":[^,}\]]*$/,'');
-    for(let i=0;i<opens;i++) s += ']';
-    for(let i=0;i<openB;i++) s += '}';
-    s = s.replace(/,\s*([}\]])/g,'$1');
+// ─── Init ─────────────────────────────────────────────────────────────────────
+setTab("s");
+
+// ─── Error display ────────────────────────────────────────────────────────────
+function showErr(msg){
+  var b=document.getElementById("errBox");
+  if(msg){ b.textContent="⚠️ "+msg; b.style.display="block"; }
+  else b.style.display="none";
+}
+
+// ─── JSON cleaner ─────────────────────────────────────────────────────────────
+function cleanJSON(raw){
+  var s=raw;
+  var m=s.match(/\{[\s\S]*\}/);
+  if(!m) throw new Error("No JSON found");
+  s=m[0];
+  s=s.replace(/,\s*([}\]])/g,"$1");
+  s=s.replace(/"([^"]*)"/g,function(match){
+    return match.replace(/\n/g," ").replace(/\r/g,"").replace(/\t/g," ");
+  });
+  try{ return JSON.parse(s); }
+  catch(e){
+    s=s.replace(/,\s*\{[^}]*$/,"");
+    s=s.replace(/,\s*"[^"]*":[^,}\]]*$/,"");
+    var opens=(s.match(/\[/g)||[]).length-(s.match(/\]/g)||[]).length;
+    var openb=(s.match(/\{/g)||[]).length-(s.match(/\}/g)||[]).length;
+    for(var i=0;i<opens;i++) s+="]";
+    for(var i=0;i<openb;i++) s+="}";
+    s=s.replace(/,\s*([}\]])/g,"$1");
     return JSON.parse(s);
   }
 }
 
-// ── API call (key is on the server — users never see it) ──────────────────────
-async function callAI(prompt){
-  const r=await fetch('/api/groq',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'llama-3.3-70b-versatile',temperature:0.7,max_tokens:2000,
-      messages:[{role:'user',content:prompt}]})});
-  const d=await r.json();
-  if(d.error)throw new Error(d.error.message||JSON.stringify(d.error));
-  const txt=d.choices?.[0]?.message?.content||'';
-  return cleanJSON(txt);
+// ─── API call ─────────────────────────────────────────────────────────────────
+function callAI(prompt){
+  return fetch("/api/groq",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      model:"llama-3.3-70b-versatile",
+      temperature:0.7,
+      max_tokens:2000,
+      messages:[{role:"user",content:prompt}]
+    })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(d){
+    if(d.error) throw new Error(d.error.message||JSON.stringify(d.error));
+    var txt=(d.choices&&d.choices[0]&&d.choices[0].message&&d.choices[0].message.content)||"";
+    return cleanJSON(txt);
+  });
 }
 
-function showErr(msg){const b=document.getElementById('errBox');b.textContent='⚠️ '+msg;b.style.display=msg?'block':'none';}
+// ─── Events search ────────────────────────────────────────────────────────────
+function doEvents(){
+  var loc=document.getElementById("locIn").value.trim();
+  if(!loc){ showErr("Please enter your city or zip code."); return; }
+  var up=getUpcoming();
+  if(!up.length){ showErr("No upcoming free days found. Adjust your schedule."); return; }
+  showErr("");
+  var btn=document.getElementById("btnEv"); btn.disabled=true;
+  var ag=AGES.filter(function(a){return a.id===ageId;})[0]||AGES[1];
+  var res=document.getElementById("results");
+  res.innerHTML='<div class="loading"><div class="ico">🗺️</div><strong>Finding things to do in '+loc+'…</strong><div style="font-size:13px;margin-top:4px">Powered by AI</div></div>';
 
-// ── Events search ─────────────────────────────────────────────────────────────
-async function doEvents(){
-  const loc=document.getElementById('loc').value.trim();
-  if(!loc){showErr('Please enter your city or zip code.');return;}
-  const up=upcoming();
-  if(!up.length){showErr('No upcoming free days found.');return;}
-  showErr('');
-  const btn=document.getElementById('btnEv');btn.disabled=true;
-  const res=document.getElementById('results');
-  const ag=AGES.find(a=>a.id===age);
-  res.innerHTML=`<div class="loading"><div class="ico">🗺️</div><strong>Finding things to do in ${loc}…</strong><span id="aiProv">Searching with AI…</span></div>`;
-  try{
-    const data=await callAI(`You are a helpful local events assistant. Find upcoming community events in or near "${loc}" on these dates: ${up.map(disp).join(', ')}.
-The person is age ${ag?.l||age} and wants to meet people. Return ONLY valid JSON, no markdown:
-{"city":"City","events":[{"date":"YYYY-MM-DD","name":"Name","type":"Social|Outdoors|Food|Music|Arts|Fitness|Volunteer|Learning|Community","time":"7:00 PM","venue":"Venue","description":"2 sentences.","tip":"First-timer tip"}]}
-2-4 events per date, realistic and specific.`);
-    const byD={};for(const k of up)byD[k]=[];
-    for(const ev of data.events||[]){if(byD[ev.date])byD[ev.date].push(ev);else if(up.length)byD[up[0]].push(ev);}
-    let h=`<div class="sec-div"><div class="line"></div><div class="txt">Events near ${data.city||loc}</div><div class="line"></div></div>`;
-    up.forEach(k=>{
-      const evs=byD[k]||[];if(!evs.length)return;
-      h+=`<div class="day-sec"><div class="day-hdr"><div class="day-badge">${disp(k)}</div><div class="day-line"></div></div>`;
-      evs.forEach(ev=>{
-        const c=ECAT[ev.type]||{bg:"#F3F4F6",tx:"#374151",em:"✨"};
-        h+=`<div class="ev-card"><div class="ev-ico" style="background:${c.bg}">${c.em}</div><div style="flex:1;min-width:0">
-          <div class="ev-name">${ev.name}</div>
-          <div class="ev-meta">🕐 ${ev.time} &nbsp;·&nbsp; 📍 ${ev.venue}</div>
-          <div class="ev-desc">${ev.description}</div>
-          ${ev.tip?`<div class="ev-tip">💡 <strong>Tip:</strong> ${ev.tip}</div>`:''}
-          <span class="ev-tag" style="background:${c.bg};color:${c.tx}">${ev.type}</span>
-        </div></div>`;
+  var dates=up.map(function(k){return keyToDisplay(k);}).join(", ");
+  var prompt='You are a helpful local events assistant. Find upcoming community events in or near "'+loc+'" on these dates: '+dates+'.\nThe person is age '+ag.l+' and wants to meet people. Return ONLY valid JSON no markdown:\n{"city":"City","events":[{"date":"YYYY-MM-DD","name":"Name","type":"Social|Outdoors|Food|Music|Arts|Fitness|Volunteer|Learning|Community","time":"7:00 PM","venue":"Venue","description":"2 sentences.","tip":"First-timer tip"}]}\n2-4 events per date, realistic and specific to the area.';
+
+  callAI(prompt).then(function(data){
+    var byD={};
+    up.forEach(function(k){ byD[k]=[]; });
+    (data.events||[]).forEach(function(ev){
+      if(byD[ev.date]) byD[ev.date].push(ev);
+      else if(up.length) byD[up[0]].push(ev);
+    });
+    var prov=data._provider==="gemini"?"✨ Gemini":"⚡ Groq";
+    var h='<div class="sdiv"><div class="sline"></div><div class="stxt">Events near '+(data.city||loc)+'</div><div class="sline"></div></div>';
+    up.forEach(function(k){
+      var evs=byD[k]||[];
+      if(!evs.length) return;
+      h+='<div class="dsec"><div class="dhdr"><div class="dbadge">'+keyToDisplay(k)+'</div><div class="dline"></div></div>';
+      evs.forEach(function(ev){
+        var c=ECAT[ev.type]||{bg:"#F3F4F6",tx:"#374151",em:"✨"};
+        h+='<div class="ecard"><div class="eico" style="background:'+c.bg+'">'+c.em+'</div><div style="flex:1;min-width:0">';
+        h+='<div class="ename">'+ev.name+'</div>';
+        h+='<div class="emeta">🕐 '+ev.time+' &nbsp;·&nbsp; 📍 '+ev.venue+'</div>';
+        h+='<div class="edesc">'+ev.description+'</div>';
+        if(ev.tip) h+='<div class="etip">💡 <strong>Tip:</strong> '+ev.tip+'</div>';
+        h+='<span class="etag" style="background:'+c.bg+';color:'+c.tx+'">'+ev.type+'</span>';
+        h+='</div></div>';
       });
       h+='</div>';
     });
-    const prov = data._provider==="gemini"?"✨ Gemini":"⚡ Groq";
-    h+=`<div class="foot-badge"><span>🌅 FreeGlow · ${up.length} free day${up.length!==1?'s':''} · ${data.city||loc} · ${prov}</span></div>`;
+    h+='<div class="fbadge"><span>🌅 FreeGlow · '+up.length+' free day'+(up.length!==1?"s":"")+" · "+(data.city||loc)+" · "+prov+'</span></div>';
     res.innerHTML=h;
-  }catch(e){showErr('Could not load events. ('+e.message+')');res.innerHTML='';}
-  btn.disabled=false;
+  }).catch(function(e){
+    showErr("Could not load events. ("+e.message+")");
+    res.innerHTML="";
+  }).finally(function(){ btn.disabled=false; });
 }
 
-// ── Meetups search ────────────────────────────────────────────────────────────
-async function doMeetups(){
-  const loc=document.getElementById('loc').value.trim();
-  if(!loc){showErr('Please enter your city or zip code.');return;}
-  showErr('');
-  const btn=document.getElementById('btnMu');btn.disabled=true;
-  const res=document.getElementById('results');
-  const ag=AGES.find(a=>a.id===age);
-  res.innerHTML=`<div class="loading"><div class="ico">👥</div><strong>Finding ${ag?.l||age} meetup groups in ${loc}…</strong><span id="aiProv">Searching with AI…</span></div>`;
-  try{
-    const data=await callAI(`You are a local community expert. Find recurring meetup groups near "${loc}" for people aged ${ag?.l||age} (${ag?.d||''}).
-Return ONLY valid JSON, no markdown:
-{"city":"City","meetups":[{"name":"Name","category":"Social|Outdoors|Sports|Arts|Tech|Wellness|Books|Food/Drink|Gaming|Networking|Music|Volunteering","frequency":"Every Thursday","size":"50-200 members","description":"2 sentences.","where":"Meetup.com or venue","vibe":"Casual and welcoming"}]}
-6-9 diverse groups, specific to the city and age group.`);
-    let h=`<div class="mu-hdr"><div class="ico">👥</div><div><div class="title">Meetup Groups for Ages ${ag?.l||age}</div><div class="sub">Near ${data.city||loc} · Recurring communities to join</div></div></div>`;
-    h+='<div class="mu-grid">';
-    (data.meetups||[]).forEach(m=>{
-      const c=MCAT[m.category]||{bg:"#F3F4F6",tx:"#374151",em:"👥"};
-      h+=`<div class="mu-card">
-        <div class="mu-top"><div class="mu-ico" style="background:${c.bg}">${c.em}</div>
-        <div><div class="mu-name">${m.name}</div><span class="mu-tag" style="background:${c.bg};color:${c.tx}">${m.category}</span></div></div>
-        <div class="mu-desc">${m.description}</div>
-        <div class="mu-meta">
-          <div>🔄 <strong>${m.frequency}</strong></div>
-          <div>👤 ${m.size}</div>
-          <div>📍 ${m.where}</div>
-          ${m.vibe?`<div class="mu-vibe">✨ ${m.vibe}</div>`:''}
-        </div>
-      </div>`;
+// ─── Meetups search ───────────────────────────────────────────────────────────
+function doMeetups(){
+  var loc=document.getElementById("locIn").value.trim();
+  if(!loc){ showErr("Please enter your city or zip code."); return; }
+  showErr("");
+  var btn=document.getElementById("btnMu"); btn.disabled=true;
+  var ag=AGES.filter(function(a){return a.id===ageId;})[0]||AGES[1];
+  var res=document.getElementById("results");
+  res.innerHTML='<div class="loading"><div class="ico">👥</div><strong>Finding '+ag.l+' meetup groups in '+loc+'…</strong><div style="font-size:13px;margin-top:4px">Powered by AI</div></div>';
+
+  var prompt='You are a local community expert. Find recurring meetup groups near "'+loc+'" for people aged '+ag.l+' ('+ag.d+').\nReturn ONLY valid JSON no markdown:\n{"city":"City","meetups":[{"name":"Name","category":"Social|Outdoors|Sports|Arts|Tech|Wellness|Books|Food/Drink|Gaming|Networking|Music|Volunteering","frequency":"Every Thursday","size":"50-200 members","description":"2 sentences.","where":"Meetup.com or venue","vibe":"Casual and welcoming"}]}\n6-9 diverse groups, specific to the city and age group.';
+
+  callAI(prompt).then(function(data){
+    var h='<div class="muhdr"><div style="font-size:28px">👥</div><div><div style="font-size:16px;font-weight:800;color:#fff">Meetup Groups for Ages '+ag.l+'</div><div style="font-size:12px;color:rgba(255,255,255,.8);margin-top:2px">Near '+(data.city||loc)+' · Recurring communities</div></div></div>';
+    h+='<div class="mugrid">';
+    (data.meetups||[]).forEach(function(m){
+      var c=MCAT[m.category]||{bg:"#F3F4F6",tx:"#374151",em:"👥"};
+      h+='<div class="mucard"><div class="mutop"><div class="muico" style="background:'+c.bg+'">'+c.em+'</div>';
+      h+='<div><div class="muname">'+m.name+'</div><span class="mutag" style="background:'+c.bg+';color:'+c.tx+'">'+m.category+'</span></div></div>';
+      h+='<div class="mudesc">'+m.description+'</div>';
+      h+='<div class="mumeta"><div>🔄 <strong>'+m.frequency+'</strong></div><div>👤 '+m.size+'</div><div>📍 '+m.where+'</div>';
+      if(m.vibe) h+='<div class="muvibe">✨ '+m.vibe+'</div>';
+      h+='</div></div>';
     });
     h+='</div>';
     res.innerHTML=h;
-  }catch(e){showErr('Could not load meetups. ('+e.message+')');res.innerHTML='';}
-  btn.disabled=false;
+  }).catch(function(e){
+    showErr("Could not load meetups. ("+e.message+")");
+    res.innerHTML="";
+  }).finally(function(){ btn.disabled=false; });
 }
-</script>
-<script>
+
+// ─── Service Worker ───────────────────────────────────────────────────────────
 if("serviceWorker" in navigator){
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/sw.js")
-      .then(r => console.log("FreeGlow SW registered:", r.scope))
-      .catch(e => console.log("SW error:", e));
+  window.addEventListener("load",function(){
+    navigator.serviceWorker.register("/sw.js").catch(function(e){ console.log("SW:",e); });
   });
 }
 </script>
