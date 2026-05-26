@@ -4,6 +4,19 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>FreeGlow ✨</title>
+
+<!-- PWA -->
+<link rel="manifest" href="/manifest.json"/>
+<meta name="theme-color" content="#6D28D9"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="FreeGlow"/>
+<link rel="apple-touch-icon" href="/icons/icon-192.png"/>
+
+<!-- OG / share preview -->
+<meta property="og:title" content="FreeGlow ✨"/>
+<meta property="og:description" content="Find local events & meetups on your days off"/>
+<meta property="og:type" content="website"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#F7F5FF;font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;padding-bottom:60px}
@@ -428,6 +441,15 @@ Return ONLY valid JSON, no markdown:
     res.innerHTML=h;
   }catch(e){showErr('Could not load meetups. ('+e.message+')');res.innerHTML='';}
   btn.disabled=false;
+}
+</script>
+<script>
+if("serviceWorker" in navigator){
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js")
+      .then(r => console.log("FreeGlow SW registered:", r.scope))
+      .catch(e => console.log("SW error:", e));
+  });
 }
 </script>
 </body>
