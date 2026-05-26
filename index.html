@@ -7,6 +7,8 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#F7F5FF;font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;padding-bottom:60px}
+
+/* HERO */
 .hero{background:linear-gradient(135deg,#4C1D95 0%,#6D28D9 50%,#7C3AED 100%);padding:2.25rem 1.5rem 3.75rem;position:relative;overflow:hidden}
 .hero-blob1{position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.07)}
 .hero-blob2{position:absolute;bottom:-70px;left:-30px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,0.04)}
@@ -14,426 +16,417 @@ body{background:#F7F5FF;font-family:'Segoe UI',system-ui,sans-serif;min-height:1
 .hero-inner{position:relative;z-index:1;max-width:580px;margin:0 auto}
 .logo{display:inline-flex;align-items:center;gap:10px;margin-bottom:14px}
 .logo-icon{width:46px;height:46px;border-radius:14px;background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:24px}
-.logo-text{display:flex;align-items:baseline;gap:2px}
 .logo-free{font-size:26px;font-weight:900;color:#fff;letter-spacing:-1px;font-family:Georgia,serif}
 .logo-glow{font-size:26px;font-weight:900;background:linear-gradient(90deg,#FDE68A,#FCD34D);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-1px;font-family:Georgia,serif}
 .hero p{font-size:15px;color:rgba(255,255,255,0.78);line-height:1.5;max-width:340px}
+
+/* LAYOUT */
 .main{max-width:580px;margin:-2rem auto 0;padding:0 1rem;position:relative;z-index:2}
 .card{background:#fff;border-radius:18px;padding:1.25rem;box-shadow:0 1px 3px rgba(109,40,217,0.08),0 4px 16px rgba(109,40,217,0.06);margin-bottom:14px}
 .label{display:block;font-size:11px;font-weight:700;letter-spacing:0.1em;color:#6B7280;text-transform:uppercase;margin-bottom:8px}
+.divider{border:none;border-top:1px solid #E5E7EB;margin:14px 0}
+
+/* INPUTS */
 input[type=text]{width:100%;padding:11px 15px;font-size:15px;border:2px solid #EDE9FE;border-radius:12px;outline:none;color:#1E1B4B;background:#FAFAFA;transition:border-color 0.2s;font-family:inherit}
 input[type=text]:focus{border-color:#8B5CF6}
-.divider{border:none;border-top:1px solid #E5E7EB;margin:14px 0}
+
+/* AGE BUTTONS */
 .age-grid{display:flex;gap:7px;flex-wrap:wrap}
 .age-btn{padding:8px 14px;border-radius:22px;font-size:13px;font-weight:700;border:2px solid #E5E7EB;cursor:pointer;background:#fff;color:#6B7280;transition:all 0.2s;line-height:1.2;font-family:inherit}
 .age-btn .sub{font-size:10px;font-weight:500;opacity:0.7;margin-top:1px}
-.age-btn.active{background:linear-gradient(135deg,#6D28D9,#7C3AED);color:#fff;border-color:#6D28D9;box-shadow:0 4px 14px rgba(109,40,217,0.35)}
-.age-btn.active .sub{opacity:0.8}
+.age-btn.on{background:linear-gradient(135deg,#6D28D9,#7C3AED);color:#fff;border-color:#6D28D9;box-shadow:0 4px 14px rgba(109,40,217,0.35)}
+.age-btn.on .sub{opacity:0.8}
+
+/* TABS */
 .tabs{background:rgba(255,255,255,0.7);border-radius:14px;padding:5px;margin-bottom:14px;display:flex;gap:4px}
 .tab-btn{flex:1;padding:10px 0;font-size:13px;font-weight:700;border:none;border-radius:10px;cursor:pointer;background:transparent;color:#6B7280;transition:all 0.2s;font-family:inherit}
-.tab-btn.active{background:linear-gradient(135deg,#6D28D9,#7C3AED);color:#fff;box-shadow:0 4px 14px rgba(109,40,217,0.35)}
+.tab-btn.on{background:linear-gradient(135deg,#6D28D9,#7C3AED);color:#fff;box-shadow:0 4px 14px rgba(109,40,217,0.35)}
+
+/* DOW BUTTONS */
 .dow-grid{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:1rem}
 .dow-btn{width:44px;height:44px;border-radius:50%;font-size:13px;font-weight:700;border:2px solid #E5E7EB;cursor:pointer;background:#fff;color:#6B7280;transition:all 0.2s;font-family:inherit}
-.dow-btn.active{background:linear-gradient(135deg,#6D28D9,#7C3AED);color:#fff;border-color:#6D28D9;box-shadow:0 4px 14px rgba(109,40,217,0.35)}
+.dow-btn.on{background:linear-gradient(135deg,#6D28D9,#7C3AED);color:#fff;border-color:#6D28D9;box-shadow:0 4px 14px rgba(109,40,217,0.35)}
+
+/* LOOKAHEAD */
 .lookahead{display:flex;gap:7px}
 .la-btn{flex:1;padding:8px 0;font-size:13px;font-weight:700;border-radius:10px;cursor:pointer;border:2px solid #E5E7EB;background:#fff;color:#6B7280;transition:all 0.2s;font-family:inherit}
-.la-btn.active{background:#EDE9FE;color:#6D28D9;border-color:#6D28D9}
-.sched-footer{margin-top:12px;padding-top:12px;border-top:1px solid #E5E7EB;display:flex;align-items:center;justify-content:space-between}
-.sched-footer span{font-size:13px;color:#6B7280}
-.sched-footer strong{color:#1E1B4B}
-.clear-btn{font-size:12px;color:#6D28D9;font-weight:700;background:none;border:none;cursor:pointer;font-family:inherit}
-.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.la-btn.on{background:#EDE9FE;color:#6D28D9;border-color:#6D28D9}
+
+/* SCHEDULE FOOTER */
+.sched-foot{margin-top:12px;padding-top:12px;border-top:1px solid #E5E7EB;display:flex;align-items:center;justify-content:space-between;font-size:13px;color:#6B7280}
+.sched-foot strong{color:#1E1B4B}
+.clear-btn{font-size:12px;color:#6D28D9;font-weight:700;background:none;border:none;cursor:pointer;font-family:inherit;display:none}
+
+/* CALENDAR */
+.cal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .cal-title{font-size:16px;font-weight:800;color:#1E1B4B}
-.cal-nav{display:flex;gap:6px}
-.cal-nav button{width:32px;height:32px;border-radius:10px;border:1.5px solid #E5E7EB;background:#fff;cursor:pointer;font-size:16px;color:#6B7280;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:inherit}
+.cal-nav button{width:32px;height:32px;border-radius:10px;border:1.5px solid #E5E7EB;background:#fff;cursor:pointer;font-size:16px;color:#6B7280;font-weight:700;margin-left:6px;font-family:inherit}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
-.cal-dow{text-align:center;font-size:11px;font-weight:700;color:#C4B5FD;padding:4px 0;letter-spacing:0.05em}
-.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:10px;font-size:13px;cursor:pointer;font-weight:400;background:transparent;color:#1E1B4B;border:1.5px solid transparent;position:relative;transition:all 0.15s;font-family:inherit}
-.cal-day.past{color:#D1D5DB;cursor:default}
-.cal-day.today{border-color:#8B5CF6}
-.cal-day.free{background:linear-gradient(135deg,#EDE9FE,#DDD6FE);color:#6D28D9;border-color:#C4B5FD;font-weight:700;box-shadow:0 2px 8px rgba(109,40,217,0.12)}
-.cal-day.override-added{background:#D1FAE5;color:#065F46;border-color:#6EE7B7;font-weight:700}
-.cal-day.override-removed{border:1.5px dashed #FCA5A5;color:#EF4444}
-.cal-day.today-dot::after{content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:#6D28D9}
-.cal-day.free.today-dot::after{background:#fff}
+.dow-lbl{text-align:center;font-size:11px;font-weight:700;color:#C4B5FD;padding:4px 0;letter-spacing:.05em}
+.day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:10px;font-size:13px;cursor:pointer;border:1.5px solid transparent;position:relative;transition:all .15s;font-family:inherit;background:transparent;color:#1E1B4B}
+.day.past{color:#D1D5DB;cursor:default}
+.day.today{border-color:#8B5CF6}
+.day.free{background:linear-gradient(135deg,#EDE9FE,#DDD6FE);color:#6D28D9;border-color:#C4B5FD;font-weight:700;box-shadow:0 2px 8px rgba(109,40,217,.12)}
+.day.added{background:#D1FAE5;color:#065F46;border-color:#6EE7B7;font-weight:700}
+.day.removed{border:1.5px dashed #FCA5A5;color:#EF4444}
+.day.today::after{content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:#6D28D9}
+.day.free.today::after,.day.added.today::after{background:#fff}
 .cal-hint{font-size:12px;color:#A78BFA;margin-top:12px;text-align:center;font-style:italic}
+
+/* LEGEND */
 .legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px;padding-left:4px}
-.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#6B7280}
-.legend-dot{width:12px;height:12px;border-radius:3px;display:inline-block}
-.chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}
+.leg{display:flex;align-items:center;gap:6px;font-size:12px;color:#6B7280}
+.leg-dot{width:12px;height:12px;border-radius:3px;display:inline-block}
+
+/* CHIPS */
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px;min-height:10px}
 .chip{display:inline-flex;align-items:center;gap:5px;background:#EDE9FE;color:#6D28D9;font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;border:1px solid #C4B5FD}
-.chip-x{cursor:pointer;font-size:15px;opacity:0.5;line-height:1}
-.error-box{background:#FEF2F2;border:1px solid #FECACA;border-radius:12px;padding:12px 16px;font-size:13px;color:#991B1B;margin-bottom:14px}
-.btn-primary{width:100%;padding:15px;font-size:15px;font-weight:800;background:linear-gradient(135deg,#6D28D9,#7C3AED);color:#fff;border:none;border-radius:14px;cursor:pointer;margin-bottom:10px;letter-spacing:0.02em;box-shadow:0 4px 14px rgba(109,40,217,0.35);transition:all 0.2s;font-family:inherit}
-.btn-primary:disabled{background:#C4B5FD;box-shadow:none;cursor:default}
-.btn-teal{width:100%;padding:15px;font-size:15px;font-weight:800;background:linear-gradient(135deg,#0F766E,#0D9488);color:#fff;border:none;border-radius:14px;cursor:pointer;margin-bottom:1.5rem;letter-spacing:0.02em;box-shadow:0 4px 14px rgba(13,148,136,0.35);transition:all 0.2s;font-family:inherit}
+.chip-x{cursor:pointer;font-size:15px;opacity:.5;line-height:1}
+
+/* ERRORS */
+.err{background:#FEF2F2;border:1px solid #FECACA;border-radius:12px;padding:12px 16px;font-size:13px;color:#991B1B;margin-bottom:14px;display:none}
+
+/* BUTTONS */
+.btn-purple{width:100%;padding:15px;font-size:15px;font-weight:800;background:linear-gradient(135deg,#6D28D9,#7C3AED);color:#fff;border:none;border-radius:14px;cursor:pointer;margin-bottom:10px;letter-spacing:.02em;box-shadow:0 4px 14px rgba(109,40,217,.35);transition:all .2s;font-family:inherit}
+.btn-purple:disabled{background:#C4B5FD;box-shadow:none;cursor:default}
+.btn-teal{width:100%;padding:15px;font-size:15px;font-weight:800;background:linear-gradient(135deg,#0F766E,#0D9488);color:#fff;border:none;border-radius:14px;cursor:pointer;margin-bottom:1.5rem;letter-spacing:.02em;box-shadow:0 4px 14px rgba(13,148,136,.35);transition:all .2s;font-family:inherit}
 .btn-teal:disabled{background:#99F6E4;box-shadow:none;cursor:default}
+
+/* LOADING */
 .loading{text-align:center;padding:2rem;color:#6B7280;font-size:14px}
-.loading .icon{font-size:36px;margin-bottom:10px}
-.loading strong{color:#1E1B4B}
-.meetup-header{background:linear-gradient(135deg,#0F766E,#0D9488);border-radius:16px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:12px}
-.meetup-header .icon{font-size:28px}
-.meetup-header .title{font-size:16px;font-weight:800;color:#fff}
-.meetup-header .sub{font-size:12px;color:rgba(255,255,255,0.8);margin-top:2px}
-.meetup-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:2rem}
-.meetup-card{background:#fff;border-radius:16px;padding:14px;box-shadow:0 1px 3px rgba(109,40,217,0.08),0 4px 16px rgba(109,40,217,0.06);border:1px solid #E5E7EB;display:flex;flex-direction:column;gap:8px}
-.meetup-top{display:flex;align-items:flex-start;gap:10px}
-.meetup-emoji{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.meetup-name{font-size:13px;font-weight:800;color:#1E1B4B;line-height:1.3;margin-bottom:2px}
-.meetup-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700}
-.meetup-desc{font-size:12px;color:#374151;line-height:1.55}
-.meetup-meta{margin-top:auto;display:flex;flex-direction:column;gap:4px}
-.meetup-meta-row{font-size:11px;color:#6B7280;display:flex;align-items:center;gap:5px}
-.meetup-vibe{border-radius:8px;padding:4px 8px;font-size:11px;font-weight:600;margin-top:2px}
-.section-divider{display:flex;align-items:center;gap:10px;margin-bottom:18px}
-.section-divider .line{flex:1;height:1px;background:#EDE9FE}
-.section-divider .text{font-size:12px;font-weight:700;color:#6D28D9;letter-spacing:0.08em;text-transform:uppercase}
-.day-section{margin-bottom:1.75rem}
-.day-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.day-badge{background:linear-gradient(135deg,#6D28D9,#7C3AED);border-radius:10px;padding:4px 12px}
-.day-badge span{font-size:12px;font-weight:800;color:#fff;letter-spacing:0.04em}
+.loading .ico{font-size:36px;margin-bottom:10px}
+.loading strong{color:#1E1B4B;display:block;margin-bottom:4px}
+
+/* SECTION DIVIDER */
+.sec-div{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.sec-div .line{flex:1;height:1px;background:#EDE9FE}
+.sec-div .txt{font-size:12px;font-weight:700;color:#6D28D9;letter-spacing:.08em;text-transform:uppercase}
+
+/* DAY SECTION */
+.day-sec{margin-bottom:1.75rem}
+.day-hdr{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.day-badge{background:linear-gradient(135deg,#6D28D9,#7C3AED);border-radius:10px;padding:4px 12px;font-size:12px;font-weight:800;color:#fff;letter-spacing:.04em}
 .day-line{flex:1;height:1px;background:#E5E7EB}
-.event-card{background:#fff;border-radius:16px;padding:14px 16px;margin-bottom:10px;box-shadow:0 1px 3px rgba(109,40,217,0.08),0 4px 16px rgba(109,40,217,0.06);border:1px solid #E5E7EB;display:flex;gap:13px;align-items:flex-start}
-.event-emoji{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
-.event-name{font-size:15px;font-weight:800;color:#1E1B4B;margin-bottom:3px;line-height:1.3}
-.event-meta{font-size:12px;color:#6B7280;margin-bottom:7px;display:flex;flex-wrap:wrap;gap:8px}
-.event-desc{font-size:13px;color:#374151;line-height:1.6;margin-bottom:8px}
-.event-tip{background:#FEF3C7;border-radius:8px;padding:7px 10px;font-size:12px;color:#78350F;margin-bottom:8px;line-height:1.5}
-.event-type{display:inline-block;font-size:11px;padding:3px 10px;border-radius:12px;font-weight:700;letter-spacing:0.04em}
-.footer-badge{text-align:center;padding:1rem 1rem 0}
-.footer-badge span{background:#EDE9FE;color:#6D28D9;padding:6px 16px;border-radius:20px;font-weight:600;font-size:12px}
+
+/* EVENT CARDS */
+.ev-card{background:#fff;border-radius:16px;padding:14px 16px;margin-bottom:10px;box-shadow:0 1px 3px rgba(109,40,217,.08),0 4px 16px rgba(109,40,217,.06);border:1px solid #E5E7EB;display:flex;gap:13px}
+.ev-ico{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+.ev-name{font-size:15px;font-weight:800;color:#1E1B4B;margin-bottom:3px;line-height:1.3}
+.ev-meta{font-size:12px;color:#6B7280;margin-bottom:7px}
+.ev-desc{font-size:13px;color:#374151;line-height:1.6;margin-bottom:8px}
+.ev-tip{background:#FEF3C7;border-radius:8px;padding:7px 10px;font-size:12px;color:#78350F;margin-bottom:8px;line-height:1.5}
+.ev-tag{display:inline-block;font-size:11px;padding:3px 10px;border-radius:12px;font-weight:700;letter-spacing:.04em}
+
+/* MEETUP CARDS */
+.mu-hdr{background:linear-gradient(135deg,#0F766E,#0D9488);border-radius:16px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.mu-hdr .ico{font-size:28px}
+.mu-hdr .title{font-size:16px;font-weight:800;color:#fff}
+.mu-hdr .sub{font-size:12px;color:rgba(255,255,255,.8);margin-top:2px}
+.mu-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:2rem}
+.mu-card{background:#fff;border-radius:16px;padding:14px;box-shadow:0 1px 3px rgba(109,40,217,.08),0 4px 16px rgba(109,40,217,.06);border:1px solid #E5E7EB;display:flex;flex-direction:column;gap:8px}
+.mu-top{display:flex;align-items:flex-start;gap:10px}
+.mu-ico{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.mu-name{font-size:13px;font-weight:800;color:#1E1B4B;line-height:1.3;margin-bottom:2px}
+.mu-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700}
+.mu-desc{font-size:12px;color:#374151;line-height:1.55}
+.mu-meta{margin-top:auto;display:flex;flex-direction:column;gap:4px;font-size:11px;color:#6B7280}
+.mu-vibe{background:#EDE9FE;color:#6D28D9;border-radius:8px;padding:4px 8px;font-size:11px;font-weight:600;margin-top:2px}
+
+/* FOOTER */
+.foot-badge{text-align:center;padding:1rem 1rem 0}
+.foot-badge span{background:#EDE9FE;color:#6D28D9;padding:6px 16px;border-radius:20px;font-weight:600;font-size:12px}
 </style>
 </head>
 <body>
 
+<!-- HERO -->
 <div class="hero">
-  <div class="hero-blob1"></div>
-  <div class="hero-blob2"></div>
-  <div class="hero-blob3"></div>
+  <div class="hero-blob1"></div><div class="hero-blob2"></div><div class="hero-blob3"></div>
   <div class="hero-inner">
     <div class="logo">
       <div class="logo-icon">🌅</div>
-      <div class="logo-text">
-        <span class="logo-free">Free</span><span class="logo-glow">Glow</span>
-      </div>
+      <div><span class="logo-free">Free</span><span class="logo-glow">Glow</span></div>
     </div>
-    <p>Your days off deserve to shine ✨ — find events & meetups that fit your life</p>
+    <p>Your days off deserve to shine ✨ — find events &amp; meetups that fit your life</p>
   </div>
 </div>
 
 <div class="main">
 
-  <!-- Location + Age -->
+  <!-- LOCATION + AGE -->
   <div class="card">
     <label class="label">📍 Your Location</label>
-    <input type="text" id="locationInput" placeholder="City, state or zip — e.g. Atlanta, GA" style="margin-bottom:16px"/>
+    <input type="text" id="loc" placeholder="City, state or zip — e.g. Atlanta, GA" style="margin-bottom:16px"/>
     <hr class="divider" style="margin-top:0"/>
     <label class="label">🎂 Your Age Group</label>
     <div class="age-grid" id="ageGrid"></div>
   </div>
 
-  <!-- Tabs -->
+  <!-- TABS -->
   <div class="tabs">
-    <button class="tab-btn active" id="tabSchedule" onclick="switchTab('schedule')">📋  Work Schedule</button>
-    <button class="tab-btn" id="tabManual" onclick="switchTab('manual')">✏️  Pick Days Manually</button>
+    <button class="tab-btn on" id="tabS" onclick="setTab('s')">📋  Work Schedule</button>
+    <button class="tab-btn" id="tabM" onclick="setTab('m')">✏️  Pick Days Manually</button>
   </div>
 
-  <!-- Schedule settings -->
-  <div class="card" id="scheduleCard">
+  <!-- SCHEDULE SETTINGS -->
+  <div class="card" id="schedCard">
     <div class="label">Which days do you work?</div>
     <div class="dow-grid" id="dowGrid"></div>
     <hr class="divider"/>
     <div class="label">Look Ahead</div>
-    <div class="lookahead" id="lookahead"></div>
-    <div class="sched-footer">
-      <span><strong id="freeDayCount">0</strong> free days coming up</span>
-      <button class="clear-btn" id="clearBtn" onclick="clearOverrides()" style="display:none">Clear overrides</button>
+    <div class="lookahead" id="laGrid"></div>
+    <div class="sched-foot">
+      <span><strong id="freeCount">0</strong> free days coming up</span>
+      <button class="clear-btn" id="clearBtn" onclick="clearOv()">Clear overrides</button>
     </div>
   </div>
 
-  <!-- Calendar -->
+  <!-- CALENDAR -->
   <div class="card">
-    <div class="cal-header">
+    <div class="cal-hdr">
       <span class="cal-title" id="calTitle"></span>
-      <div class="cal-nav">
-        <button onclick="changeMonth(-1)">‹</button>
-        <button onclick="changeMonth(1)">›</button>
-      </div>
+      <div class="cal-nav"><button onclick="nav(-1)">‹</button><button onclick="nav(1)">›</button></div>
     </div>
     <div class="cal-grid" id="calGrid"></div>
     <p class="cal-hint" id="calHint">Tap any day to override your schedule</p>
   </div>
 
-  <!-- Legend -->
+  <!-- LEGEND -->
   <div class="legend" id="legend"></div>
 
-  <!-- Chips -->
+  <!-- CHIPS -->
   <div class="chips" id="chips"></div>
 
-  <!-- Error -->
-  <div class="error-box" id="errorBox" style="display:none"></div>
+  <!-- ERROR -->
+  <div class="err" id="errBox"></div>
 
-  <!-- Buttons -->
-  <button class="btn-primary" id="btnEvents" onclick="doSearch()">✨ Find events on my free days</button>
-  <button class="btn-teal" id="btnMeetups" onclick="doMeetups()">👥 Find Meetup Groups Near Me</button>
+  <!-- BUTTONS -->
+  <button class="btn-purple" id="btnEv" onclick="doEvents()">✨ Find events on my free days</button>
+  <button class="btn-teal"   id="btnMu" onclick="doMeetups()">👥 Find Meetup Groups Near Me</button>
 
-  <!-- Results -->
+  <!-- RESULTS -->
   <div id="results"></div>
 </div>
 
 <script>
+// ── Data ──────────────────────────────────────────────────────────────────────
 const MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
-const DOW_S=["Su","Mo","Tu","We","Th","Fr","Sa"];
-const DOW_F=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-const AGE_GROUPS=[{id:"18-24",label:"18–24",desc:"College & Young Adult"},{id:"25-34",label:"25–34",desc:"Young Professional"},{id:"35-44",label:"35–44",desc:"Mid-Career & Family"},{id:"45-54",label:"45–54",desc:"Established & Active"},{id:"55+",label:"55+",desc:"Active Seniors"}];
-const CAT={Social:{bg:"#EDE9FE",text:"#5B21B6",emoji:"🤝"},Outdoors:{bg:"#DCFCE7",text:"#166534",emoji:"🌿"},Food:{bg:"#FEF3C7",text:"#92400E",emoji:"🍴"},Music:{bg:"#FCE7F3",text:"#9D174D",emoji:"🎵"},Arts:{bg:"#E0F2FE",text:"#075985",emoji:"🎨"},Fitness:{bg:"#DCFCE7",text:"#166534",emoji:"💪"},Volunteer:{bg:"#FEF9C3",text:"#854D0E",emoji:"🤲"},Learning:{bg:"#E0F2FE",text:"#0C4A6E",emoji:"📚"},Community:{bg:"#FFF7ED",text:"#9A3412",emoji:"🏘️"}};
-const FB={bg:"#F3F4F6",text:"#374151",emoji:"✨"};
-const MC={"Social":{bg:"#EDE9FE",text:"#5B21B6",emoji:"🎉"},"Outdoors":{bg:"#DCFCE7",text:"#166534",emoji:"🥾"},"Sports":{bg:"#DBEAFE",text:"#1E40AF",emoji:"⚽"},"Arts":{bg:"#FCE7F3",text:"#9D174D",emoji:"🎨"},"Tech":{bg:"#E0F2FE",text:"#075985",emoji:"💻"},"Wellness":{bg:"#FEF9C3",text:"#854D0E",emoji:"🧘"},"Books":{bg:"#F3E8FF",text:"#6B21A8",emoji:"📖"},"Food/Drink":{bg:"#FFF7ED",text:"#9A3412",emoji:"🍻"},"Gaming":{bg:"#EDE9FE",text:"#4C1D95",emoji:"🎮"},"Networking":{bg:"#DBEAFE",text:"#1E3A8A",emoji:"🤝"},"Music":{bg:"#FCE7F3",text:"#831843",emoji:"🎸"},"Volunteering":{bg:"#DCFCE7",text:"#14532D",emoji:"💚"}};
-const MF={bg:"#F3F4F6",text:"#374151",emoji:"👥"};
+const DS=["Su","Mo","Tu","We","Th","Fr","Sa"];
+const DF=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const AGES=[{id:"18-24",l:"18–24",d:"College & Young Adult"},{id:"25-34",l:"25–34",d:"Young Professional"},{id:"35-44",l:"35–44",d:"Mid-Career & Family"},{id:"45-54",l:"45–54",d:"Established & Active"},{id:"55+",l:"55+",d:"Active Seniors"}];
+const ECAT={Social:{bg:"#EDE9FE",tx:"#5B21B6",em:"🤝"},Outdoors:{bg:"#DCFCE7",tx:"#166534",em:"🌿"},Food:{bg:"#FEF3C7",tx:"#92400E",em:"🍴"},Music:{bg:"#FCE7F3",tx:"#9D174D",em:"🎵"},Arts:{bg:"#E0F2FE",tx:"#075985",em:"🎨"},Fitness:{bg:"#DCFCE7",tx:"#166534",em:"💪"},Volunteer:{bg:"#FEF9C3",tx:"#854D0E",em:"🤲"},Learning:{bg:"#E0F2FE",tx:"#0C4A6E",em:"📚"},Community:{bg:"#FFF7ED",tx:"#9A3412",em:"🏘️"}};
+const MCAT={"Social":{bg:"#EDE9FE",tx:"#5B21B6",em:"🎉"},"Outdoors":{bg:"#DCFCE7",tx:"#166534",em:"🥾"},"Sports":{bg:"#DBEAFE",tx:"#1E40AF",em:"⚽"},"Arts":{bg:"#FCE7F3",tx:"#9D174D",em:"🎨"},"Tech":{bg:"#E0F2FE",tx:"#075985",em:"💻"},"Wellness":{bg:"#FEF9C3",tx:"#854D0E",em:"🧘"},"Books":{bg:"#F3E8FF",tx:"#6B21A8",em:"📖"},"Food/Drink":{bg:"#FFF7ED",tx:"#9A3412",em:"🍻"},"Gaming":{bg:"#EDE9FE",tx:"#4C1D95",em:"🎮"},"Networking":{bg:"#DBEAFE",tx:"#1E3A8A",em:"🤝"},"Music":{bg:"#FCE7F3",tx:"#831843",em:"🎸"},"Volunteering":{bg:"#DCFCE7",tx:"#14532D",em:"💚"}};
 
-const tod=new Date();tod.setHours(0,0,0,0);
-let viewY=tod.getFullYear(),viewM=tod.getMonth();
-let tab="schedule",ageGroup="25-34",schedMonths=1;
-let workDays=new Set([1,2,3,4,5]);
-let manualAdded=new Set(),manualRemoved=new Set();
+// ── State ────────────────────────────────────────────────────────────────────
+const TOD=new Date();TOD.setHours(0,0,0,0);
+let vY=TOD.getFullYear(),vM=TOD.getMonth();
+let curTab="s",age="25-34",months=1;
+let work=new Set([1,2,3,4,5]),added=new Set(),removed=new Set();
 
-function fmtKey(y,m,d){return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;}
-function parseKey(k){const[y,m,d]=k.split('-');return new Date(+y,+m-1,+d);}
-function fmtDisplay(k){return parseKey(k).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});}
+// ── Helpers ───────────────────────────────────────────────────────────────────
+const key=(y,m,d)=>`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+const parse=k=>{const[y,m,d]=k.split('-');return new Date(+y,+m-1,+d);};
+const disp=k=>parse(k).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
 
-function getScheduledFree(){
-  const days=new Set();
-  const end=new Date(tod);end.setMonth(end.getMonth()+schedMonths);
-  const cur=new Date(tod);
-  while(cur<=end){
-    if(!workDays.has(cur.getDay()))days.add(fmtKey(cur.getFullYear(),cur.getMonth(),cur.getDate()));
-    cur.setDate(cur.getDate()+1);
-  }
-  return days;
+function schFree(){
+  const s=new Set(),end=new Date(TOD);end.setMonth(end.getMonth()+months);
+  const c=new Date(TOD);
+  while(c<=end){if(!work.has(c.getDay()))s.add(key(c.getFullYear(),c.getMonth(),c.getDate()));c.setDate(c.getDate()+1);}
+  return s;
 }
-
-function getFreeDays(){
-  const days=new Set();
-  if(tab==="schedule"){
-    const sFree=getScheduledFree();
-    for(const k of sFree)if(!manualRemoved.has(k))days.add(k);
-    for(const k of manualAdded)if(!manualRemoved.has(k))days.add(k);
-  } else {
-    for(const k of manualAdded)days.add(k);
-  }
-  return days;
+function freeDays(){
+  const s=new Set();
+  if(curTab==="s"){for(const k of schFree())if(!removed.has(k))s.add(k);for(const k of added)if(!removed.has(k))s.add(k);}
+  else for(const k of added)s.add(k);
+  return s;
 }
+function upcoming(){return[...freeDays()].sort().filter(k=>parse(k)>=TOD).slice(0,14);}
 
-function getUpcoming(){
-  return [...getFreeDays()].sort().filter(k=>parseKey(k)>=tod).slice(0,14);
-}
-
-// Build age buttons
-const ag=document.getElementById('ageGrid');
-AGE_GROUPS.forEach(a=>{
+// ── Build age buttons ──────────────────────────────────────────────────────────
+AGES.forEach(a=>{
   const b=document.createElement('button');
-  b.className='age-btn'+(a.id===ageGroup?' active':'');
-  b.innerHTML=`<div>${a.label}</div><div class="sub">${a.desc}</div>`;
-  b.onclick=()=>{ageGroup=a.id;document.querySelectorAll('.age-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');};
-  ag.appendChild(b);
+  b.className='age-btn'+(a.id===age?' on':'');
+  b.innerHTML=`<div>${a.l}</div><div class="sub">${a.d}</div>`;
+  b.onclick=()=>{age=a.id;document.querySelectorAll('.age-btn').forEach(x=>x.classList.remove('on'));b.classList.add('on');};
+  document.getElementById('ageGrid').appendChild(b);
 });
 
-// Build day-of-week buttons
-const dg=document.getElementById('dowGrid');
-DOW_F.forEach((name,i)=>{
+// ── Build DOW buttons ─────────────────────────────────────────────────────────
+DF.forEach((n,i)=>{
   const b=document.createElement('button');
-  b.className='dow-btn'+(workDays.has(i)?' active':'');
-  b.textContent=DOW_S[i];
-  b.onclick=()=>{
-    if(workDays.has(i))workDays.delete(i);else workDays.add(i);
-    b.classList.toggle('active');
-    renderAll();
-  };
-  dg.appendChild(b);
+  b.className='dow-btn'+(work.has(i)?' on':'');b.textContent=DS[i];
+  b.onclick=()=>{work.has(i)?work.delete(i):work.add(i);b.classList.toggle('on');render();};
+  document.getElementById('dowGrid').appendChild(b);
 });
 
-// Build lookahead buttons
-const la=document.getElementById('lookahead');
+// ── Build lookahead buttons ───────────────────────────────────────────────────
 [1,2,3].forEach(n=>{
   const b=document.createElement('button');
-  b.className='la-btn'+(n===schedMonths?' active':'');
-  b.textContent=n+' month'+(n>1?'s':'');
-  b.onclick=()=>{schedMonths=n;document.querySelectorAll('.la-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderAll();};
-  la.appendChild(b);
+  b.className='la-btn'+(n===months?' on':'');b.textContent=n+' month'+(n>1?'s':'');
+  b.onclick=()=>{months=n;document.querySelectorAll('.la-btn').forEach(x=>x.classList.remove('on'));b.classList.add('on');render();};
+  document.getElementById('laGrid').appendChild(b);
 });
 
-function switchTab(t){
-  tab=t;
-  document.getElementById('tabSchedule').classList.toggle('active',t==='schedule');
-  document.getElementById('tabManual').classList.toggle('active',t==='manual');
-  document.getElementById('scheduleCard').style.display=t==='schedule'?'block':'none';
-  document.getElementById('calHint').style.display=t==='schedule'?'block':'none';
-  renderAll();
+// ── Tab switch ────────────────────────────────────────────────────────────────
+function setTab(t){
+  curTab=t;
+  document.getElementById('tabS').classList.toggle('on',t==='s');
+  document.getElementById('tabM').classList.toggle('on',t==='m');
+  document.getElementById('schedCard').style.display=t==='s'?'block':'none';
+  document.getElementById('calHint').style.display=t==='s'?'block':'none';
+  render();
 }
 
-function toggleDay(key){
-  const free=getFreeDays().has(key);
-  if(tab==='schedule'){
-    if(free){manualRemoved.add(key);manualAdded.delete(key);}
-    else{manualAdded.add(key);manualRemoved.delete(key);}
-  } else {
-    if(manualAdded.has(key))manualAdded.delete(key);else manualAdded.add(key);
-  }
-  renderAll();
+// ── Day toggle ────────────────────────────────────────────────────────────────
+function toggleDay(k){
+  const free=freeDays().has(k);
+  if(curTab==='s'){if(free){removed.add(k);added.delete(k);}else{added.add(k);removed.delete(k);}}
+  else{added.has(k)?added.delete(k):added.add(k);}
+  render();
 }
+function clearOv(){added=new Set();removed=new Set();render();}
 
-function clearOverrides(){manualAdded=new Set();manualRemoved=new Set();renderAll();}
+// ── Calendar nav ──────────────────────────────────────────────────────────────
+function nav(d){vM+=d;if(vM>11){vM=0;vY++;}if(vM<0){vM=11;vY--;}renderCal();}
 
-function changeMonth(d){
-  viewM+=d;
-  if(viewM>11){viewM=0;viewY++;}
-  if(viewM<0){viewM=11;viewY--;}
-  renderCal();
-}
-
+// ── Render ────────────────────────────────────────────────────────────────────
 function renderCal(){
-  document.getElementById('calTitle').textContent=MONTHS[viewM]+' '+viewY;
-  const freeDays=getFreeDays();
-  const grid=document.getElementById('calGrid');
-  grid.innerHTML=DOW_S.map(d=>`<div class="cal-dow">${d}</div>`).join('');
-  const first=new Date(viewY,viewM,1).getDay();
-  const dim=new Date(viewY,viewM+1,0).getDate();
+  document.getElementById('calTitle').textContent=MONTHS[vM]+' '+vY;
+  const fd=freeDays(),grid=document.getElementById('calGrid');
+  grid.innerHTML=DS.map(d=>`<div class="dow-lbl">${d}</div>`).join('');
+  const first=new Date(vY,vM,1).getDay(),dim=new Date(vY,vM+1,0).getDate();
   for(let i=0;i<first;i++)grid.innerHTML+='<div></div>';
   for(let d=1;d<=dim;d++){
-    const dt=new Date(viewY,viewM,d),key=fmtKey(viewY,viewM,d);
-    const isPast=dt<tod,isTod=dt.getTime()===tod.getTime(),isFree=freeDays.has(key);
-    const isOA=manualAdded.has(key),isOR=manualRemoved.has(key);
-    let cls='cal-day';
-    if(isPast)cls+=' past';
-    else if(isFree&&isOA)cls+=' free override-added';
-    else if(isFree)cls+=' free';
-    else if(isOR)cls+=' override-removed';
-    if(isTod)cls+=' today';
-    if(isTod)cls+=' today-dot';
-    const click=isPast?'':`onclick="toggleDay('${key}')"`;
-    grid.innerHTML+=`<div class="${cls}" ${click}>${d}</div>`;
+    const dt=new Date(vY,vM,d),k=key(vY,vM,d);
+    const past=dt<TOD,tod=dt.getTime()===TOD.getTime(),free=fd.has(k),oa=added.has(k),or=removed.has(k);
+    let cls='day';
+    if(past)cls+=' past';
+    else if(free&&oa)cls+=' added';
+    else if(free)cls+=' free';
+    else if(or)cls+=' removed';
+    if(tod)cls+=' today';
+    grid.innerHTML+=`<div class="${cls}" ${past?'':` onclick="toggleDay('${k}')"`}>${d}</div>`;
   }
 }
-
 function renderChips(){
-  const upcoming=getUpcoming();
-  const box=document.getElementById('chips');
-  box.innerHTML=upcoming.slice(0,10).map(k=>`<span class="chip">${fmtDisplay(k)}<span class="chip-x" onclick="toggleDay('${k}')">×</span></span>`).join('');
-  if(upcoming.length>10)box.innerHTML+=`<span style="font-size:12px;color:#6B7280;align-self:center;font-style:italic">+${upcoming.length-10} more</span>`;
+  const up=upcoming();
+  document.getElementById('chips').innerHTML=
+    up.slice(0,10).map(k=>`<span class="chip">${disp(k)}<span class="chip-x" onclick="toggleDay('${k}')">×</span></span>`).join('')+
+    (up.length>10?`<span style="font-size:12px;color:#6B7280;align-self:center;font-style:italic">+${up.length-10} more</span>`:'');
 }
-
 function renderLegend(){
-  const box=document.getElementById('legend');
-  let html=`<div class="legend-item"><span class="legend-dot" style="background:#EDE9FE;border:1.5px solid #C4B5FD"></span>Free day</div>`;
-  if(tab==='schedule'){
-    html+=`<div class="legend-item"><span class="legend-dot" style="background:#D1FAE5;border:1.5px solid #6EE7B7"></span>Added as free</div>`;
-    html+=`<div class="legend-item"><span class="legend-dot" style="background:transparent;border:1.5px dashed #FCA5A5"></span>Marked working</div>`;
+  let h=`<div class="leg"><span class="leg-dot" style="background:#EDE9FE;border:1.5px solid #C4B5FD"></span>Free day</div>`;
+  if(curTab==='s'){
+    h+=`<div class="leg"><span class="leg-dot" style="background:#D1FAE5;border:1.5px solid #6EE7B7"></span>Added as free</div>`;
+    h+=`<div class="leg"><span class="leg-dot" style="background:transparent;border:1.5px dashed #FCA5A5"></span>Marked working</div>`;
   }
-  box.innerHTML=html;
+  document.getElementById('legend').innerHTML=h;
 }
-
-function renderScheduleFooter(){
-  const upcoming=getUpcoming();
-  document.getElementById('freeDayCount').textContent=upcoming.length;
-  const oc=manualAdded.size+manualRemoved.size;
+function renderFooter(){
+  const up=upcoming(),oc=added.size+removed.size;
+  document.getElementById('freeCount').textContent=up.length;
   const cb=document.getElementById('clearBtn');
-  cb.style.display=oc>0?'block':'none';
+  cb.style.display=oc>0?'inline':'none';
   cb.textContent=`Clear ${oc} override${oc>1?'s':''}`;
 }
-
-function renderButtons(){
-  const upcoming=getUpcoming();
-  const ag=AGE_GROUPS.find(a=>a.id===ageGroup);
-  document.getElementById('btnEvents').textContent=`✨  Find events on my ${upcoming.length} free day${upcoming.length===1?'':'s'}`;
-  document.getElementById('btnMeetups').textContent=`👥  Find ${ag?.label||ageGroup} Meetup Groups Near Me`;
+function renderBtns(){
+  const up=upcoming(),ag=AGES.find(a=>a.id===age);
+  document.getElementById('btnEv').textContent=`✨  Find events on my ${up.length} free day${up.length===1?'':'s'}`;
+  document.getElementById('btnMu').textContent=`👥  Find ${ag?.l||age} Meetup Groups Near Me`;
 }
-
-function renderAll(){renderCal();renderChips();renderLegend();renderScheduleFooter();renderButtons();}
+function render(){renderCal();renderChips();renderLegend();renderFooter();renderBtns();}
 
 // Init
-switchTab('schedule');
-renderAll();
+setTab('s');render();
 
-// API call
-async function groqFetch(prompt){
-  const resp=await fetch('/api/groq',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'llama-3.3-70b-versatile',temperature:0.7,max_tokens:1500,messages:[{role:'user',content:prompt}]})});
-  const data=await resp.json();
-  if(data.error)throw new Error(data.error.message||JSON.stringify(data.error));
-  const text=data.choices?.[0]?.message?.content||'';
-  const match=text.match(/\{[\s\S]*\}/);
-  if(!match)throw new Error('No JSON returned');
-  return JSON.parse(match[0]);
+// ── API call (key is on the server — users never see it) ──────────────────────
+async function callAI(prompt){
+  const r=await fetch('/api/groq',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'llama-3.3-70b-versatile',temperature:0.7,max_tokens:1500,
+      messages:[{role:'user',content:prompt}]})});
+  const d=await r.json();
+  if(d.error)throw new Error(d.error.message||JSON.stringify(d.error));
+  const txt=d.choices?.[0]?.message?.content||'';
+  const m=txt.match(/\{[\s\S]*\}/);
+  if(!m)throw new Error('No JSON returned — try again.');
+  return JSON.parse(m[0]);
 }
 
-function setError(msg,isMeetup=false){
-  const box=document.getElementById('errorBox');
-  if(msg){box.style.display='block';box.textContent='⚠️ '+msg;}
-  else box.style.display='none';
-}
+function showErr(msg){const b=document.getElementById('errBox');b.textContent='⚠️ '+msg;b.style.display=msg?'block':'none';}
 
-async function doSearch(){
-  const loc=document.getElementById('locationInput').value.trim();
-  if(!loc){setError('Please enter your city or zip code.');return;}
-  const upcoming=getUpcoming();
-  if(!upcoming.length){setError('No upcoming free days found.');return;}
-  setError('');
-  const btn=document.getElementById('btnEvents');
-  btn.disabled=true;
-  const results=document.getElementById('results');
-  results.innerHTML=`<div class="loading"><div class="icon">🗺️</div><strong>Finding things to do in ${loc}…</strong><div style="margin-top:4px;font-size:13px">Powered by Groq · Llama 3.3 70B</div></div>`;
-  const dateList=upcoming.map(fmtDisplay).join(', ');
-  const ag=AGE_GROUPS.find(a=>a.id===ageGroup);
-  const prompt=`You are a helpful local events assistant. Find upcoming community events, social activities, and gatherings in or near "${loc}" happening on these dates: ${dateList}.
-The person is age ${ag?.label||ageGroup} and wants to meet people and find community. Tailor suggestions to this age group.
-Return ONLY a valid JSON object, no markdown, no backticks:
-{"city":"City name","events":[{"date":"YYYY-MM-DD","name":"Event name","type":"One of: Social,Outdoors,Food,Music,Arts,Fitness,Volunteer,Learning,Community","time":"e.g. 7:00 PM","venue":"Venue or neighborhood","description":"2 sentences about what it is and why its great for meeting people.","tip":"One quick first-timer tip"}]}
-Provide 2-4 events per date. Make them realistic and specific to the area.`;
+// ── Events search ─────────────────────────────────────────────────────────────
+async function doEvents(){
+  const loc=document.getElementById('loc').value.trim();
+  if(!loc){showErr('Please enter your city or zip code.');return;}
+  const up=upcoming();
+  if(!up.length){showErr('No upcoming free days found.');return;}
+  showErr('');
+  const btn=document.getElementById('btnEv');btn.disabled=true;
+  const res=document.getElementById('results');
+  const ag=AGES.find(a=>a.id===age);
+  res.innerHTML=`<div class="loading"><div class="ico">🗺️</div><strong>Finding things to do in ${loc}…</strong><span>Powered by Groq · Llama 3.3 70B</span></div>`;
   try{
-    const data=await groqFetch(prompt);
-    const byDate={};
-    for(const k of upcoming)byDate[k]=[];
-    for(const ev of data.events||[]){if(byDate[ev.date])byDate[ev.date].push(ev);else if(upcoming.length)byDate[upcoming[0]].push(ev);}
-    let html=`<div class="section-divider"><div class="line"></div><div class="text">Events near ${data.city||loc}</div><div class="line"></div></div>`;
-    upcoming.forEach(k=>{
-      const evs=byDate[k]||[];if(!evs.length)return;
-      html+=`<div class="day-section"><div class="day-header"><div class="day-badge"><span>${fmtDisplay(k)}</span></div><div class="day-line"></div></div>`;
+    const data=await callAI(`You are a helpful local events assistant. Find upcoming community events in or near "${loc}" on these dates: ${up.map(disp).join(', ')}.
+The person is age ${ag?.l||age} and wants to meet people. Return ONLY valid JSON, no markdown:
+{"city":"City","events":[{"date":"YYYY-MM-DD","name":"Name","type":"Social|Outdoors|Food|Music|Arts|Fitness|Volunteer|Learning|Community","time":"7:00 PM","venue":"Venue","description":"2 sentences.","tip":"First-timer tip"}]}
+2-4 events per date, realistic and specific.`);
+    const byD={};for(const k of up)byD[k]=[];
+    for(const ev of data.events||[]){if(byD[ev.date])byD[ev.date].push(ev);else if(up.length)byD[up[0]].push(ev);}
+    let h=`<div class="sec-div"><div class="line"></div><div class="txt">Events near ${data.city||loc}</div><div class="line"></div></div>`;
+    up.forEach(k=>{
+      const evs=byD[k]||[];if(!evs.length)return;
+      h+=`<div class="day-sec"><div class="day-hdr"><div class="day-badge">${disp(k)}</div><div class="day-line"></div></div>`;
       evs.forEach(ev=>{
-        const col=CAT[ev.type]||FB;
-        html+=`<div class="event-card"><div class="event-emoji" style="background:${col.bg}">${col.emoji}</div><div style="flex:1;min-width:0"><div class="event-name">${ev.name}</div><div class="event-meta"><span>🕐 ${ev.time}</span><span>📍 ${ev.venue}</span></div><div class="event-desc">${ev.description}</div>${ev.tip?`<div class="event-tip">💡 <strong>Tip:</strong> ${ev.tip}</div>`:''}<span class="event-type" style="background:${col.bg};color:${col.text}">${ev.type}</span></div></div>`;
+        const c=ECAT[ev.type]||{bg:"#F3F4F6",tx:"#374151",em:"✨"};
+        h+=`<div class="ev-card"><div class="ev-ico" style="background:${c.bg}">${c.em}</div><div style="flex:1;min-width:0">
+          <div class="ev-name">${ev.name}</div>
+          <div class="ev-meta">🕐 ${ev.time} &nbsp;·&nbsp; 📍 ${ev.venue}</div>
+          <div class="ev-desc">${ev.description}</div>
+          ${ev.tip?`<div class="ev-tip">💡 <strong>Tip:</strong> ${ev.tip}</div>`:''}
+          <span class="ev-tag" style="background:${c.bg};color:${c.tx}">${ev.type}</span>
+        </div></div>`;
       });
-      html+='</div>';
+      h+='</div>';
     });
-    html+=`<div class="footer-badge"><span>🌅 FreeGlow · ${upcoming.length} free day${upcoming.length!==1?'s':''} · ${data.city||loc}</span></div>`;
-    results.innerHTML=html;
-  }catch(e){setError('Could not load events. ('+e.message+')');results.innerHTML='';}
+    h+=`<div class="foot-badge"><span>🌅 FreeGlow · ${up.length} free day${up.length!==1?'s':''} · ${data.city||loc}</span></div>`;
+    res.innerHTML=h;
+  }catch(e){showErr('Could not load events. ('+e.message+')');res.innerHTML='';}
   btn.disabled=false;
 }
 
+// ── Meetups search ────────────────────────────────────────────────────────────
 async function doMeetups(){
-  const loc=document.getElementById('locationInput').value.trim();
-  if(!loc){setError('Please enter your city or zip code.');return;}
-  setError('');
-  const btn=document.getElementById('btnMeetups');
-  btn.disabled=true;
-  const results=document.getElementById('results');
-  const ag=AGE_GROUPS.find(a=>a.id===ageGroup);
-  results.innerHTML=`<div class="loading"><div class="icon">👥</div><strong>Finding ${ag?.label||ageGroup} meetup groups in ${loc}…</strong><div style="margin-top:4px;font-size:13px">Powered by Groq · Llama 3.3 70B</div></div>`;
-  const prompt=`You are a local community expert. Find recurring meetup groups and communities in or near "${loc}" specifically welcoming to people aged ${ag?.label||ageGroup} (${ag?.desc||''}).
-Return ONLY a valid JSON object, no markdown, no backticks:
-{"city":"City name","meetups":[{"name":"Group name","category":"One of: Social,Outdoors,Sports,Arts,Tech,Wellness,Books,Food/Drink,Gaming,Networking,Music,Volunteering","frequency":"How often e.g. Every Thursday","size":"Approx size e.g. 50-200 members","description":"2 sentences about the group and why its great for ${ag?.label} age group.","where":"Platform or venue e.g. Meetup.com, local park","vibe":"One phrase e.g. Casual and welcoming"}]}
-Provide 6-9 diverse groups. Be specific to the city and age group.`;
+  const loc=document.getElementById('loc').value.trim();
+  if(!loc){showErr('Please enter your city or zip code.');return;}
+  showErr('');
+  const btn=document.getElementById('btnMu');btn.disabled=true;
+  const res=document.getElementById('results');
+  const ag=AGES.find(a=>a.id===age);
+  res.innerHTML=`<div class="loading"><div class="ico">👥</div><strong>Finding ${ag?.l||age} meetup groups in ${loc}…</strong><span>Powered by Groq · Llama 3.3 70B</span></div>`;
   try{
-    const data=await groqFetch(prompt);
-    let html=`<div class="meetup-header"><div class="icon">👥</div><div><div class="title">Meetup Groups for Ages ${ag?.label||ageGroup}</div><div class="sub">Near ${data.city||loc} · Recurring communities to join</div></div></div>`;
-    html+='<div class="meetup-grid">';
+    const data=await callAI(`You are a local community expert. Find recurring meetup groups near "${loc}" for people aged ${ag?.l||age} (${ag?.d||''}).
+Return ONLY valid JSON, no markdown:
+{"city":"City","meetups":[{"name":"Name","category":"Social|Outdoors|Sports|Arts|Tech|Wellness|Books|Food/Drink|Gaming|Networking|Music|Volunteering","frequency":"Every Thursday","size":"50-200 members","description":"2 sentences.","where":"Meetup.com or venue","vibe":"Casual and welcoming"}]}
+6-9 diverse groups, specific to the city and age group.`);
+    let h=`<div class="mu-hdr"><div class="ico">👥</div><div><div class="title">Meetup Groups for Ages ${ag?.l||age}</div><div class="sub">Near ${data.city||loc} · Recurring communities to join</div></div></div>`;
+    h+='<div class="mu-grid">';
     (data.meetups||[]).forEach(m=>{
-      const col=MC[m.category]||MF;
-      html+=`<div class="meetup-card"><div class="meetup-top"><div class="meetup-emoji" style="background:${col.bg}">${col.emoji}</div><div><div class="meetup-name">${m.name}</div><span class="meetup-tag" style="background:${col.bg};color:${col.text}">${m.category}</span></div></div><div class="meetup-desc">${m.description}</div><div class="meetup-meta"><div class="meetup-meta-row">🔄 <strong>${m.frequency}</strong></div><div class="meetup-meta-row">👤 ${m.size}</div><div class="meetup-meta-row">📍 ${m.where}</div>${m.vibe?`<div class="meetup-vibe" style="background:#EDE9FE;color:#6D28D9">✨ ${m.vibe}</div>`:''}</div></div>`;
+      const c=MCAT[m.category]||{bg:"#F3F4F6",tx:"#374151",em:"👥"};
+      h+=`<div class="mu-card">
+        <div class="mu-top"><div class="mu-ico" style="background:${c.bg}">${c.em}</div>
+        <div><div class="mu-name">${m.name}</div><span class="mu-tag" style="background:${c.bg};color:${c.tx}">${m.category}</span></div></div>
+        <div class="mu-desc">${m.description}</div>
+        <div class="mu-meta">
+          <div>🔄 <strong>${m.frequency}</strong></div>
+          <div>👤 ${m.size}</div>
+          <div>📍 ${m.where}</div>
+          ${m.vibe?`<div class="mu-vibe">✨ ${m.vibe}</div>`:''}
+        </div>
+      </div>`;
     });
-    html+='</div>';
-    results.innerHTML=html;
-  }catch(e){setError('Could not load meetups. ('+e.message+')');results.innerHTML='';}
+    h+='</div>';
+    res.innerHTML=h;
+  }catch(e){showErr('Could not load meetups. ('+e.message+')');res.innerHTML='';}
   btn.disabled=false;
 }
 </script>
