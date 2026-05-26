@@ -1,0 +1,7 @@
+{
+  "name": "freeglow",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Find local events & meetups on your days off",
+  "license": "MIT"
+}
