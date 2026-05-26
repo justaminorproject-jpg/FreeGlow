@@ -341,17 +341,31 @@ setTab("s");
 function showErr(m){var b=document.getElementById("errBox");if(m){b.textContent="⚠️ "+m;b.style.display="block";}else b.style.display="none";}
 
 function cleanJSON(raw){
+  // Step 1: extract the JSON object
   var m=raw.match(/\{[\s\S]*\}/);
-  if(!m)throw new Error("No JSON in response");
-  var s=m[0].replace(/,\s*([}\]])/g,"$1");
-  try{return JSON.parse(s);}
+  if(!m) throw new Error("No JSON in response");
+  var s=m[0];
+
+  // Step 2: remove literal newlines/tabs/returns inside quoted strings
+  s=s.replace(/"((?:[^"\\]|\\.)*)"/g,function(match,content){
+    return '"'+content.replace(/\n/g,' ').replace(/\r/g,'').replace(/\t/g,' ')+'"';
+  });
+
+  // Step 3: remove trailing commas before } or ]
+  s=s.replace(/,\s*([}\]])/g,'$1');
+
+  // Step 4: try parsing
+  try{ return JSON.parse(s); }
   catch(e){
-    s=s.replace(/,\s*\{[^}]*$/,"");
+    // Step 5: salvage truncated JSON
+    s=s.replace(/,\s*\{[^}]*$/,'');
+    s=s.replace(/,\s*"[^"]*"[^,}\]]*$/,'');
     var op=(s.match(/\[/g)||[]).length-(s.match(/\]/g)||[]).length;
     var ob=(s.match(/\{/g)||[]).length-(s.match(/\}/g)||[]).length;
-    for(var i=0;i<op;i++)s+="]";
-    for(var i=0;i<ob;i++)s+="}";
-    return JSON.parse(s.replace(/,\s*([}\]])/g,"$1"));
+    for(var i=0;i<op;i++) s+=']';
+    for(var i=0;i<ob;i++) s+='}';
+    s=s.replace(/,\s*([}\]])/g,'$1');
+    return JSON.parse(s);
   }
 }
 
