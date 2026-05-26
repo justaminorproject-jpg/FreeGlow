@@ -239,13 +239,6 @@ Provide 6-9 diverse groups across different interests. Be specific to the city a
 
       <div style={{maxWidth:580,margin:"-2rem auto 0",padding:"0 1rem",position:"relative",zIndex:2}}>
 
-        {/* ── Powered by badge ── */}
-        {!keyOk && (
-          <div style={{background:"#FEF2F2",border:"1px solid #FECACA",borderRadius:12,padding:"12px 16px",fontSize:13,color:"#991B1B",marginBottom:14}}>
-            ⚠️ <strong>VITE_GROQ_API_KEY</strong> is not set. Add it to your <code>.env</code> file or Vercel environment variables.
-          </div>
-        )}
-
         {/* ── Location + Age ── */}
         <div style={{background:c.card,borderRadius:18,padding:"1.25rem",boxShadow:sh.card,marginBottom:14}}>
           <label style={{display:"block",fontSize:11,fontWeight:700,letterSpacing:"0.1em",color:c.muted,textTransform:"uppercase",marginBottom:8}}>📍 Your Location</label>
