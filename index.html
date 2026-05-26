@@ -1,386 +1,441 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FreeGlow ✨</title>
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0;}
-    body{background:#F7F5FF;font-family:'Segoe UI',system-ui,sans-serif;}
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>FreeGlow ✨</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#F7F5FF;font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;padding-bottom:60px}
+.hero{background:linear-gradient(135deg,#4C1D95 0%,#6D28D9 50%,#7C3AED 100%);padding:2.25rem 1.5rem 3.75rem;position:relative;overflow:hidden}
+.hero-blob1{position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.07)}
+.hero-blob2{position:absolute;bottom:-70px;left:-30px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,0.04)}
+.hero-blob3{position:absolute;top:30%;right:20%;width:80px;height:80px;border-radius:50%;background:rgba(251,191,36,0.15)}
+.hero-inner{position:relative;z-index:1;max-width:580px;margin:0 auto}
+.logo{display:inline-flex;align-items:center;gap:10px;margin-bottom:14px}
+.logo-icon{width:46px;height:46px;border-radius:14px;background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:24px}
+.logo-text{display:flex;align-items:baseline;gap:2px}
+.logo-free{font-size:26px;font-weight:900;color:#fff;letter-spacing:-1px;font-family:Georgia,serif}
+.logo-glow{font-size:26px;font-weight:900;background:linear-gradient(90deg,#FDE68A,#FCD34D);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-1px;font-family:Georgia,serif}
+.hero p{font-size:15px;color:rgba(255,255,255,0.78);line-height:1.5;max-width:340px}
+.main{max-width:580px;margin:-2rem auto 0;padding:0 1rem;position:relative;z-index:2}
+.card{background:#fff;border-radius:18px;padding:1.25rem;box-shadow:0 1px 3px rgba(109,40,217,0.08),0 4px 16px rgba(109,40,217,0.06);margin-bottom:14px}
+.label{display:block;font-size:11px;font-weight:700;letter-spacing:0.1em;color:#6B7280;text-transform:uppercase;margin-bottom:8px}
+input[type=text]{width:100%;padding:11px 15px;font-size:15px;border:2px solid #EDE9FE;border-radius:12px;outline:none;color:#1E1B4B;background:#FAFAFA;transition:border-color 0.2s;font-family:inherit}
+input[type=text]:focus{border-color:#8B5CF6}
+.divider{border:none;border-top:1px solid #E5E7EB;margin:14px 0}
+.age-grid{display:flex;gap:7px;flex-wrap:wrap}
+.age-btn{padding:8px 14px;border-radius:22px;font-size:13px;font-weight:700;border:2px solid #E5E7EB;cursor:pointer;background:#fff;color:#6B7280;transition:all 0.2s;line-height:1.2;font-family:inherit}
+.age-btn .sub{font-size:10px;font-weight:500;opacity:0.7;margin-top:1px}
+.age-btn.active{background:linear-gradient(135deg,#6D28D9,#7C3AED);color:#fff;border-color:#6D28D9;box-shadow:0 4px 14px rgba(109,40,217,0.35)}
+.age-btn.active .sub{opacity:0.8}
+.tabs{background:rgba(255,255,255,0.7);border-radius:14px;padding:5px;margin-bottom:14px;display:flex;gap:4px}
+.tab-btn{flex:1;padding:10px 0;font-size:13px;font-weight:700;border:none;border-radius:10px;cursor:pointer;background:transparent;color:#6B7280;transition:all 0.2s;font-family:inherit}
+.tab-btn.active{background:linear-gradient(135deg,#6D28D9,#7C3AED);color:#fff;box-shadow:0 4px 14px rgba(109,40,217,0.35)}
+.dow-grid{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:1rem}
+.dow-btn{width:44px;height:44px;border-radius:50%;font-size:13px;font-weight:700;border:2px solid #E5E7EB;cursor:pointer;background:#fff;color:#6B7280;transition:all 0.2s;font-family:inherit}
+.dow-btn.active{background:linear-gradient(135deg,#6D28D9,#7C3AED);color:#fff;border-color:#6D28D9;box-shadow:0 4px 14px rgba(109,40,217,0.35)}
+.lookahead{display:flex;gap:7px}
+.la-btn{flex:1;padding:8px 0;font-size:13px;font-weight:700;border-radius:10px;cursor:pointer;border:2px solid #E5E7EB;background:#fff;color:#6B7280;transition:all 0.2s;font-family:inherit}
+.la-btn.active{background:#EDE9FE;color:#6D28D9;border-color:#6D28D9}
+.sched-footer{margin-top:12px;padding-top:12px;border-top:1px solid #E5E7EB;display:flex;align-items:center;justify-content:space-between}
+.sched-footer span{font-size:13px;color:#6B7280}
+.sched-footer strong{color:#1E1B4B}
+.clear-btn{font-size:12px;color:#6D28D9;font-weight:700;background:none;border:none;cursor:pointer;font-family:inherit}
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.cal-title{font-size:16px;font-weight:800;color:#1E1B4B}
+.cal-nav{display:flex;gap:6px}
+.cal-nav button{width:32px;height:32px;border-radius:10px;border:1.5px solid #E5E7EB;background:#fff;cursor:pointer;font-size:16px;color:#6B7280;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:inherit}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-dow{text-align:center;font-size:11px;font-weight:700;color:#C4B5FD;padding:4px 0;letter-spacing:0.05em}
+.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:10px;font-size:13px;cursor:pointer;font-weight:400;background:transparent;color:#1E1B4B;border:1.5px solid transparent;position:relative;transition:all 0.15s;font-family:inherit}
+.cal-day.past{color:#D1D5DB;cursor:default}
+.cal-day.today{border-color:#8B5CF6}
+.cal-day.free{background:linear-gradient(135deg,#EDE9FE,#DDD6FE);color:#6D28D9;border-color:#C4B5FD;font-weight:700;box-shadow:0 2px 8px rgba(109,40,217,0.12)}
+.cal-day.override-added{background:#D1FAE5;color:#065F46;border-color:#6EE7B7;font-weight:700}
+.cal-day.override-removed{border:1.5px dashed #FCA5A5;color:#EF4444}
+.cal-day.today-dot::after{content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:#6D28D9}
+.cal-day.free.today-dot::after{background:#fff}
+.cal-hint{font-size:12px;color:#A78BFA;margin-top:12px;text-align:center;font-style:italic}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px;padding-left:4px}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#6B7280}
+.legend-dot{width:12px;height:12px;border-radius:3px;display:inline-block}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}
+.chip{display:inline-flex;align-items:center;gap:5px;background:#EDE9FE;color:#6D28D9;font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;border:1px solid #C4B5FD}
+.chip-x{cursor:pointer;font-size:15px;opacity:0.5;line-height:1}
+.error-box{background:#FEF2F2;border:1px solid #FECACA;border-radius:12px;padding:12px 16px;font-size:13px;color:#991B1B;margin-bottom:14px}
+.btn-primary{width:100%;padding:15px;font-size:15px;font-weight:800;background:linear-gradient(135deg,#6D28D9,#7C3AED);color:#fff;border:none;border-radius:14px;cursor:pointer;margin-bottom:10px;letter-spacing:0.02em;box-shadow:0 4px 14px rgba(109,40,217,0.35);transition:all 0.2s;font-family:inherit}
+.btn-primary:disabled{background:#C4B5FD;box-shadow:none;cursor:default}
+.btn-teal{width:100%;padding:15px;font-size:15px;font-weight:800;background:linear-gradient(135deg,#0F766E,#0D9488);color:#fff;border:none;border-radius:14px;cursor:pointer;margin-bottom:1.5rem;letter-spacing:0.02em;box-shadow:0 4px 14px rgba(13,148,136,0.35);transition:all 0.2s;font-family:inherit}
+.btn-teal:disabled{background:#99F6E4;box-shadow:none;cursor:default}
+.loading{text-align:center;padding:2rem;color:#6B7280;font-size:14px}
+.loading .icon{font-size:36px;margin-bottom:10px}
+.loading strong{color:#1E1B4B}
+.meetup-header{background:linear-gradient(135deg,#0F766E,#0D9488);border-radius:16px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.meetup-header .icon{font-size:28px}
+.meetup-header .title{font-size:16px;font-weight:800;color:#fff}
+.meetup-header .sub{font-size:12px;color:rgba(255,255,255,0.8);margin-top:2px}
+.meetup-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:2rem}
+.meetup-card{background:#fff;border-radius:16px;padding:14px;box-shadow:0 1px 3px rgba(109,40,217,0.08),0 4px 16px rgba(109,40,217,0.06);border:1px solid #E5E7EB;display:flex;flex-direction:column;gap:8px}
+.meetup-top{display:flex;align-items:flex-start;gap:10px}
+.meetup-emoji{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.meetup-name{font-size:13px;font-weight:800;color:#1E1B4B;line-height:1.3;margin-bottom:2px}
+.meetup-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700}
+.meetup-desc{font-size:12px;color:#374151;line-height:1.55}
+.meetup-meta{margin-top:auto;display:flex;flex-direction:column;gap:4px}
+.meetup-meta-row{font-size:11px;color:#6B7280;display:flex;align-items:center;gap:5px}
+.meetup-vibe{border-radius:8px;padding:4px 8px;font-size:11px;font-weight:600;margin-top:2px}
+.section-divider{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.section-divider .line{flex:1;height:1px;background:#EDE9FE}
+.section-divider .text{font-size:12px;font-weight:700;color:#6D28D9;letter-spacing:0.08em;text-transform:uppercase}
+.day-section{margin-bottom:1.75rem}
+.day-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.day-badge{background:linear-gradient(135deg,#6D28D9,#7C3AED);border-radius:10px;padding:4px 12px}
+.day-badge span{font-size:12px;font-weight:800;color:#fff;letter-spacing:0.04em}
+.day-line{flex:1;height:1px;background:#E5E7EB}
+.event-card{background:#fff;border-radius:16px;padding:14px 16px;margin-bottom:10px;box-shadow:0 1px 3px rgba(109,40,217,0.08),0 4px 16px rgba(109,40,217,0.06);border:1px solid #E5E7EB;display:flex;gap:13px;align-items:flex-start}
+.event-emoji{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+.event-name{font-size:15px;font-weight:800;color:#1E1B4B;margin-bottom:3px;line-height:1.3}
+.event-meta{font-size:12px;color:#6B7280;margin-bottom:7px;display:flex;flex-wrap:wrap;gap:8px}
+.event-desc{font-size:13px;color:#374151;line-height:1.6;margin-bottom:8px}
+.event-tip{background:#FEF3C7;border-radius:8px;padding:7px 10px;font-size:12px;color:#78350F;margin-bottom:8px;line-height:1.5}
+.event-type{display:inline-block;font-size:11px;padding:3px 10px;border-radius:12px;font-weight:700;letter-spacing:0.04em}
+.footer-badge{text-align:center;padding:1rem 1rem 0}
+.footer-badge span{background:#EDE9FE;color:#6D28D9;padding:6px 16px;border-radius:20px;font-weight:600;font-size:12px}
+</style>
 </head>
 <body>
-  <div id="root"></div>
-  <script type="text/babel">
-const { useState, useMemo } = React;
 
-const MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
-const DOW_SHORT=["Su","Mo","Tu","We","Th","Fr","Sa"];
-const DOW_FULL=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-const today=new Date(); today.setHours(0,0,0,0);
-const fmtKey=(y,m,d)=>`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-const parseKey=k=>{const[y,m,d]=k.split('-');return new Date(+y,+m-1,+d);};
-const fmtDisplay=k=>parseKey(k).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
-
-const CAT={
-  Social:{bg:"#EDE9FE",text:"#5B21B6",emoji:"🤝"},Outdoors:{bg:"#DCFCE7",text:"#166534",emoji:"🌿"},
-  Food:{bg:"#FEF3C7",text:"#92400E",emoji:"🍴"},Music:{bg:"#FCE7F3",text:"#9D174D",emoji:"🎵"},
-  Arts:{bg:"#E0F2FE",text:"#075985",emoji:"🎨"},Fitness:{bg:"#DCFCE7",text:"#166534",emoji:"💪"},
-  Volunteer:{bg:"#FEF9C3",text:"#854D0E",emoji:"🤲"},Learning:{bg:"#E0F2FE",text:"#0C4A6E",emoji:"📚"},
-  Community:{bg:"#FFF7ED",text:"#9A3412",emoji:"🏘️"},
-};
-const MCAT={
-  Social:{bg:"#EDE9FE",text:"#5B21B6",emoji:"🎉"},Outdoors:{bg:"#DCFCE7",text:"#166534",emoji:"🥾"},
-  Sports:{bg:"#DBEAFE",text:"#1E40AF",emoji:"⚽"},Arts:{bg:"#FCE7F3",text:"#9D174D",emoji:"🎨"},
-  Tech:{bg:"#E0F2FE",text:"#075985",emoji:"💻"},Wellness:{bg:"#FEF9C3",text:"#854D0E",emoji:"🧘"},
-  Books:{bg:"#F3E8FF",text:"#6B21A8",emoji:"📖"},"Food/Drink":{bg:"#FFF7ED",text:"#9A3412",emoji:"🍻"},
-  Gaming:{bg:"#EDE9FE",text:"#4C1D95",emoji:"🎮"},Networking:{bg:"#DBEAFE",text:"#1E3A8A",emoji:"🤝"},
-  Music:{bg:"#FCE7F3",text:"#831843",emoji:"🎸"},Volunteering:{bg:"#DCFCE7",text:"#14532D",emoji:"💚"},
-};
-const FB={bg:"#F3F4F6",text:"#374151",emoji:"✨"};
-const AGE=[
-  {id:"18-24",label:"18–24",desc:"College & Young Adult"},{id:"25-34",label:"25–34",desc:"Young Professional"},
-  {id:"35-44",label:"35–44",desc:"Mid-Career & Family"},{id:"45-54",label:"45–54",desc:"Established & Active"},
-  {id:"55+",label:"55+",desc:"Active Seniors"},
-];
-const c={bg:"#F7F5FF",card:"#FFFFFF",primary:"#6D28D9",pLight:"#EDE9FE",pMid:"#8B5CF6",
-  accent:"#F59E0B",aLight:"#FEF3C7",text:"#1E1B4B",muted:"#6B7280",border:"#E5E7EB",soft:"#EDE9FE"};
-const G={hdr:"linear-gradient(135deg,#4C1D95 0%,#6D28D9 50%,#7C3AED 100%)",
-  free:"linear-gradient(135deg,#EDE9FE 0%,#DDD6FE 100%)",
-  btn:"linear-gradient(135deg,#6D28D9 0%,#7C3AED 100%)",
-  teal:"linear-gradient(135deg,#0F766E 0%,#0D9488 100%)"};
-const sh={card:"0 1px 3px rgba(109,40,217,0.08),0 4px 16px rgba(109,40,217,0.06)",
-  btn:"0 4px 14px rgba(109,40,217,0.35)",teal:"0 4px 14px rgba(13,148,136,0.35)",sm:"0 1px 4px rgba(0,0,0,0.06)"};
-
-function App(){
-  const[tab,setTab]=useState("schedule");
-  const[location,setLocation]=useState("");
-  const[ageGroup,setAgeGroup]=useState("25-34");
-  const[workDays,setWorkDays]=useState(new Set([1,2,3,4,5]));
-  const[schedMonths,setSchedMonths]=useState(1);
-  const[mAdded,setMAdded]=useState(new Set());
-  const[mRemoved,setMRemoved]=useState(new Set());
-  const[viewYear,setViewYear]=useState(today.getFullYear());
-  const[viewMonth,setViewMonth]=useState(today.getMonth());
-  const[groqKey,setGroqKey]=useState("");
-  const[showKey,setShowKey]=useState(false);
-  const[loadEv,setLoadEv]=useState(false);
-  const[loadMu,setLoadMu]=useState(false);
-  const[events,setEvents]=useState(null);
-  const[meetups,setMeetups]=useState(null);
-  const[err,setErr]=useState("");
-  const[mErr,setMErr]=useState("");
-
-  const keyOk=groqKey.trim().length>10;
-
-  const groqFetch=async(prompt)=>{
-    if(!keyOk) throw new Error("no-key");
-    const r=await fetch("https://api.groq.com/openai/v1/chat/completions",{
-      method:"POST",headers:{"Content-Type":"application/json","Authorization":`Bearer ${groqKey.trim()}`},
-      body:JSON.stringify({model:"llama-3.3-70b-versatile",temperature:0.7,max_tokens:1500,
-        messages:[{role:"user",content:prompt}]})
-    });
-    const d=await r.json();
-    if(d.error) throw new Error(d.error.message||"API error");
-    const t=d.choices?.[0]?.message?.content||"";
-    const m=t.match(/\{[\s\S]*\}/);
-    if(!m) throw new Error("No JSON returned");
-    return JSON.parse(m[0]);
-  };
-
-  const toggleWork=d=>{setWorkDays(p=>{const n=new Set(p);n.has(d)?n.delete(d):n.add(d);return n;});setEvents(null);};
-
-  const schedFree=useMemo(()=>{
-    const s=new Set(),end=new Date(today);end.setMonth(end.getMonth()+schedMonths);
-    const cur=new Date(today);
-    while(cur<=end){if(!workDays.has(cur.getDay()))s.add(fmtKey(cur.getFullYear(),cur.getMonth(),cur.getDate()));cur.setDate(cur.getDate()+1);}
-    return s;
-  },[workDays,schedMonths]);
-
-  const freeDays=useMemo(()=>{
-    const s=new Set();
-    if(tab==="schedule"){for(const k of schedFree)if(!mRemoved.has(k))s.add(k);for(const k of mAdded)if(!mRemoved.has(k))s.add(k);}
-    else for(const k of mAdded)s.add(k);
-    return s;
-  },[tab,schedFree,mAdded,mRemoved]);
-
-  const toggleDay=key=>{
-    const isFree=freeDays.has(key);
-    if(tab==="schedule"){
-      if(isFree){setMRemoved(p=>{const n=new Set(p);n.add(key);return n;});setMAdded(p=>{const n=new Set(p);n.delete(key);return n;});}
-      else{setMAdded(p=>{const n=new Set(p);n.add(key);return n;});setMRemoved(p=>{const n=new Set(p);n.delete(key);return n;});}
-    }else setMAdded(p=>{const n=new Set(p);n.has(key)?n.delete(key):n.add(key);return n;});
-    setEvents(null);
-  };
-
-  const chMonth=d=>{let m=viewMonth+d,y=viewYear;if(m>11){m=0;y++;}if(m<0){m=11;y--;}setViewMonth(m);setViewYear(y);};
-  const firstDow=new Date(viewYear,viewMonth,1).getDay();
-  const daysIn=new Date(viewYear,viewMonth+1,0).getDate();
-  const sorted=[...freeDays].sort();
-  const upcoming=sorted.filter(k=>parseKey(k)>=today).slice(0,14);
-  const overrides=mAdded.size+mRemoved.size;
-  const ageLabel=AGE.find(a=>a.id===ageGroup)?.label||ageGroup;
-
-  const doSearch=async()=>{
-    if(!keyOk){setErr("Enter your Groq API key first.");return;}
-    if(!location.trim()){setErr("Enter your city or zip code.");return;}
-    if(!upcoming.length){setErr("No upcoming free days found.");return;}
-    setErr("");setLoadEv(true);setEvents(null);
-    const dl=upcoming.map(fmtDisplay).join(", ");
-    try{setEvents(await groqFetch(`You are a helpful local events assistant. Find upcoming community events in or near "${location.trim()}" on: ${dl}. Person is age ${ageLabel}, wants to meet people. Look for: festivals, markets, trivia nights, open mic, hiking groups, art classes, game nights, fitness classes, book clubs, volunteer events, food/drink events, concerts, farmers markets, workshops. Return ONLY valid JSON, no markdown: {"city":"City name","events":[{"date":"YYYY-MM-DD","name":"Event name","type":"One of: Social,Outdoors,Food,Music,Arts,Fitness,Volunteer,Learning,Community","time":"e.g. 7:00 PM","venue":"Venue or neighborhood","description":"2 sentences about it and why great for meeting people.","tip":"One first-timer tip"}]} Provide 2-4 events per date.`));}
-    catch(e){setErr(e.message==="no-key"?"Enter your Groq API key first.":"Couldn't load events. ("+e.message+")");}
-    setLoadEv(false);
-  };
-
-  const doMeetups=async()=>{
-    if(!keyOk){setMErr("Enter your Groq API key first.");return;}
-    if(!location.trim()){setMErr("Enter your city or zip code.");return;}
-    setMErr("");setLoadMu(true);setMeetups(null);
-    const ag=AGE.find(a=>a.id===ageGroup);
-    try{setMeetups(await groqFetch(`You are a local community expert. Find recurring meetup groups near "${location.trim()}" for people aged ${ag?.label} (${ag?.desc}). Look for: Meetup.com groups, hobby clubs, sports leagues, book clubs, hiking clubs, young professionals, trivia leagues, art classes, fitness groups, cooking clubs, board game nights, volunteer orgs, activity groups. Return ONLY valid JSON, no markdown: {"city":"City","meetups":[{"name":"Group name","category":"One of: Social,Outdoors,Sports,Arts,Tech,Wellness,Books,Food/Drink,Gaming,Networking,Music,Volunteering","frequency":"e.g. Every Thursday","size":"e.g. 50-200 members","description":"2 sentences about group and why great for ${ag?.label} age group.","where":"e.g. Meetup.com, local park","vibe":"e.g. Casual and welcoming"}]} Provide 6-9 diverse groups.`));}
-    catch(e){setMErr(e.message==="no-key"?"Enter your Groq API key first.":"Couldn't load meetups. ("+e.message+")");}
-    setLoadMu(false);
-  };
-
-  const evByDate={};
-  if(events?.events){for(const k of upcoming)evByDate[k]=[];for(const ev of events.events){if(evByDate[ev.date])evByDate[ev.date].push(ev);else if(upcoming.length)evByDate[upcoming[0]].push(ev);}}
-
-  return(
-    <div style={{background:c.bg,minHeight:"100vh",paddingBottom:60}}>
-
-      {/* Hero */}
-      <div style={{background:G.hdr,padding:"2.25rem 1.5rem 3.75rem",position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",top:-50,right:-50,width:200,height:200,borderRadius:"50%",background:"rgba(255,255,255,0.07)"}}/>
-        <div style={{position:"absolute",bottom:-70,left:-30,width:240,height:240,borderRadius:"50%",background:"rgba(255,255,255,0.04)"}}/>
-        <div style={{position:"absolute",top:"30%",right:"20%",width:80,height:80,borderRadius:"50%",background:"rgba(251,191,36,0.15)"}}/>
-        <div style={{position:"relative",zIndex:1,maxWidth:580,margin:"0 auto"}}>
-          <div style={{display:"inline-flex",alignItems:"center",gap:10,marginBottom:14}}>
-            <div style={{width:46,height:46,borderRadius:14,background:"rgba(255,255,255,0.15)",border:"1.5px solid rgba(255,255,255,0.25)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:24}}>🌅</div>
-            <div style={{display:"flex",alignItems:"baseline",gap:2}}>
-              <span style={{fontSize:26,fontWeight:900,color:"#fff",letterSpacing:"-1px",fontFamily:"Georgia,serif"}}>Free</span>
-              <span style={{fontSize:26,fontWeight:900,background:"linear-gradient(90deg,#FDE68A,#FCD34D)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",letterSpacing:"-1px",fontFamily:"Georgia,serif"}}>Glow</span>
-            </div>
-          </div>
-          <p style={{fontSize:15,color:"rgba(255,255,255,0.78)",margin:0,lineHeight:1.5,maxWidth:340}}>Your days off deserve to shine ✨ — find events & meetups that fit your life</p>
-        </div>
-      </div>
-
-      <div style={{maxWidth:580,margin:"-2rem auto 0",padding:"0 1rem",position:"relative",zIndex:2}}>
-
-        {/* API Key */}
-        <div style={{background:c.card,borderRadius:18,padding:"1.25rem",boxShadow:sh.card,marginBottom:14,border:keyOk?"1.5px solid #6EE7B7":`1.5px solid ${c.soft}`}}>
-          <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:8}}>
-            <label style={{fontSize:11,fontWeight:700,letterSpacing:"0.1em",color:c.muted,textTransform:"uppercase"}}>🔑 Groq API Key</label>
-            {keyOk&&<span style={{fontSize:11,fontWeight:700,color:"#059669",background:"#D1FAE5",padding:"2px 10px",borderRadius:20}}>✓ Ready</span>}
-          </div>
-          <div style={{display:"flex",gap:8}}>
-            <input type={showKey?"text":"password"} value={groqKey} onChange={e=>setGroqKey(e.target.value)} placeholder="gsk_..."
-              style={{flex:1,padding:"10px 14px",fontSize:14,border:`2px solid ${keyOk?"#6EE7B7":c.soft}`,borderRadius:12,outline:"none",color:c.text,background:"#FAFAFA",fontFamily:"monospace"}}/>
-            <button onClick={()=>setShowKey(s=>!s)} style={{padding:"10px 14px",borderRadius:12,border:`2px solid ${c.border}`,background:"#fff",cursor:"pointer",fontSize:13,color:c.muted,fontWeight:600}}>{showKey?"Hide":"Show"}</button>
-          </div>
-          <p style={{fontSize:11,color:c.muted,marginTop:7,marginBottom:0}}>Free key at <strong>console.groq.com</strong> · Stays in your browser only</p>
-        </div>
-
-        {/* Location + Age */}
-        <div style={{background:c.card,borderRadius:18,padding:"1.25rem",boxShadow:sh.card,marginBottom:14}}>
-          <label style={{display:"block",fontSize:11,fontWeight:700,letterSpacing:"0.1em",color:c.muted,textTransform:"uppercase",marginBottom:8}}>📍 Your Location</label>
-          <input value={location} onChange={e=>setLocation(e.target.value)} placeholder="City, state or zip — e.g. Atlanta, GA"
-            style={{width:"100%",padding:"11px 15px",fontSize:15,border:`2px solid ${c.soft}`,borderRadius:12,outline:"none",color:c.text,background:"#FAFAFA",marginBottom:16}}/>
-          <div style={{borderTop:`1px solid ${c.border}`,paddingTop:14}}>
-            <label style={{display:"block",fontSize:11,fontWeight:700,letterSpacing:"0.1em",color:c.muted,textTransform:"uppercase",marginBottom:10}}>🎂 Your Age Group</label>
-            <div style={{display:"flex",gap:7,flexWrap:"wrap"}}>
-              {AGE.map(ag=>{const sel=ageGroup===ag.id;return(
-                <button key={ag.id} onClick={()=>{setAgeGroup(ag.id);setMeetups(null);}}
-                  style={{padding:"8px 14px",borderRadius:22,fontSize:13,fontWeight:700,border:"2px solid",cursor:"pointer",
-                    background:sel?G.btn:"#fff",color:sel?"#fff":c.muted,borderColor:sel?c.primary:c.border,boxShadow:sel?sh.btn:sh.sm,transition:"all 0.2s",lineHeight:1.2}}>
-                  <div>{ag.label}</div><div style={{fontSize:10,fontWeight:500,opacity:0.7,marginTop:1}}>{ag.desc}</div>
-                </button>
-              );})}
-            </div>
-          </div>
-        </div>
-
-        {/* Tabs */}
-        <div style={{background:"rgba(255,255,255,0.7)",borderRadius:14,padding:5,marginBottom:14,display:"flex",gap:4}}>
-          {[["schedule","📋  Work Schedule"],["manual","✏️  Pick Days Manually"]].map(([id,lbl])=>(
-            <button key={id} onClick={()=>{setTab(id);setEvents(null);}}
-              style={{flex:1,padding:"10px 0",fontSize:13,fontWeight:700,border:"none",borderRadius:10,cursor:"pointer",
-                background:tab===id?G.btn:"transparent",color:tab===id?"#fff":c.muted,boxShadow:tab===id?sh.btn:"none",transition:"all 0.2s"}}>{lbl}</button>
-          ))}
-        </div>
-
-        {/* Schedule */}
-        {tab==="schedule"&&(
-          <div style={{background:c.card,borderRadius:18,padding:"1.25rem",boxShadow:sh.card,marginBottom:14}}>
-            <div style={{fontSize:11,fontWeight:700,letterSpacing:"0.1em",color:c.muted,textTransform:"uppercase",marginBottom:12}}>Which days do you work?</div>
-            <div style={{display:"flex",gap:7,marginBottom:"1rem",flexWrap:"wrap"}}>
-              {DOW_FULL.map((n,i)=>{const w=workDays.has(i);return(
-                <button key={i} onClick={()=>toggleWork(i)} style={{width:44,height:44,borderRadius:"50%",fontSize:13,fontWeight:700,border:"2px solid",cursor:"pointer",
-                  background:w?G.btn:c.card,color:w?"#fff":c.muted,borderColor:w?c.primary:c.border,boxShadow:w?sh.btn:sh.sm,transition:"all 0.2s"}}>{DOW_SHORT[i]}</button>
-              );})}
-            </div>
-            <div style={{borderTop:`1px solid ${c.border}`,paddingTop:12}}>
-              <div style={{fontSize:11,fontWeight:700,color:c.muted,marginBottom:8,textTransform:"uppercase"}}>Look Ahead</div>
-              <div style={{display:"flex",gap:7}}>
-                {[1,2,3].map(n=>(
-                  <button key={n} onClick={()=>{setSchedMonths(n);setEvents(null);}} style={{flex:1,padding:"8px 0",fontSize:13,fontWeight:700,borderRadius:10,cursor:"pointer",border:"2px solid",
-                    background:schedMonths===n?c.pLight:"#fff",color:schedMonths===n?c.primary:c.muted,borderColor:schedMonths===n?c.primary:c.border,transition:"all 0.2s"}}>{n} month{n>1?"s":""}</button>
-                ))}
-              </div>
-            </div>
-            <div style={{marginTop:12,paddingTop:12,borderTop:`1px solid ${c.border}`,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
-              <span style={{fontSize:13,color:c.muted}}><span style={{fontWeight:700,color:c.text}}>{upcoming.length}</span> free days coming up</span>
-              {overrides>0&&<button onClick={()=>{setMAdded(new Set());setMRemoved(new Set());setEvents(null);}} style={{fontSize:12,color:c.primary,fontWeight:700,background:"none",border:"none",cursor:"pointer"}}>Clear {overrides} override{overrides>1?"s":""}</button>}
-            </div>
-          </div>
-        )}
-
-        {/* Calendar */}
-        <div style={{background:c.card,borderRadius:18,padding:"1.25rem",boxShadow:sh.card,marginBottom:14}}>
-          <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:14}}>
-            <span style={{fontSize:16,fontWeight:800,color:c.text}}>{MONTHS[viewMonth]} {viewYear}</span>
-            <div style={{display:"flex",gap:6}}>
-              {[["‹",-1],["›",1]].map(([ch,d])=>(
-                <button key={ch} onClick={()=>chMonth(d)} style={{width:32,height:32,borderRadius:10,border:`1.5px solid ${c.border}`,background:"#fff",cursor:"pointer",fontSize:16,color:c.muted,display:"flex",alignItems:"center",justifyContent:"center",fontWeight:700}}>{ch}</button>
-              ))}
-            </div>
-          </div>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:4}}>
-            {DOW_SHORT.map(d=><div key={d} style={{textAlign:"center",fontSize:11,fontWeight:700,color:"#C4B5FD",padding:"4px 0"}}>{d}</div>)}
-            {Array(firstDow).fill(null).map((_,i)=><div key={"e"+i}/>)}
-            {Array(daysIn).fill(null).map((_,i)=>{
-              const d=i+1,dt=new Date(viewYear,viewMonth,d),key=fmtKey(viewYear,viewMonth,d);
-              const isPast=dt<today,isTod=dt.getTime()===today.getTime(),isFree=freeDays.has(key);
-              const isOA=mAdded.has(key),isOR=mRemoved.has(key);
-              let bg="transparent",col=isPast?"#D1D5DB":c.text,bdr="none";
-              if(isFree){bg=isOA?"#D1FAE5":G.free;col=isOA?"#065F46":c.primary;bdr=`1.5px solid ${isOA?"#6EE7B7":"#C4B5FD"}`;}
-              else if(isOR){bdr="1.5px dashed #FCA5A5";col="#EF4444";}
-              if(isTod&&!isFree)bdr=`2px solid ${c.pMid}`;
-              return(
-                <div key={d} onClick={!isPast?()=>toggleDay(key):undefined}
-                  style={{aspectRatio:"1",display:"flex",alignItems:"center",justifyContent:"center",borderRadius:10,fontSize:13,
-                    cursor:isPast?"default":"pointer",fontWeight:isFree||isTod?700:400,background:bg,color:col,border:bdr,position:"relative",
-                    transition:"all 0.15s",boxShadow:isFree?"0 2px 8px rgba(109,40,217,0.12)":"none"}}>
-                  {d}
-                  {isTod&&<span style={{position:"absolute",bottom:3,left:"50%",transform:"translateX(-50%)",width:4,height:4,borderRadius:"50%",background:isFree?"#fff":c.primary}}/>}
-                </div>
-              );
-            })}
-          </div>
-          {tab==="schedule"&&<p style={{fontSize:12,color:"#A78BFA",marginTop:12,textAlign:"center",fontStyle:"italic"}}>Tap any day to override your schedule</p>}
-        </div>
-
-        {/* Legend */}
-        <div style={{display:"flex",gap:16,flexWrap:"wrap",marginBottom:14,paddingLeft:4}}>
-          {[{color:"#C4B5FD",label:"Free day"},...(tab==="schedule"?[{color:"#6EE7B7",label:"Added as free"},{color:"#FCA5A5",label:"Marked working",dashed:true}]:[])].map(({color,label,dashed})=>(
-            <div key={label} style={{display:"flex",alignItems:"center",gap:6,fontSize:12,color:c.muted}}>
-              <span style={{width:12,height:12,borderRadius:3,background:dashed?"transparent":"#EDE9FE",border:`1.5px ${dashed?"dashed":"solid"} ${color}`,display:"inline-block"}}/>
-              {label}
-            </div>
-          ))}
-        </div>
-
-        {/* Chips */}
-        {upcoming.length>0&&(
-          <div style={{display:"flex",flexWrap:"wrap",gap:7,marginBottom:16}}>
-            {upcoming.slice(0,10).map(k=>(
-              <span key={k} style={{display:"inline-flex",alignItems:"center",gap:5,background:c.pLight,color:c.primary,fontSize:12,fontWeight:600,padding:"5px 12px",borderRadius:20,border:"1px solid #C4B5FD"}}>
-                {fmtDisplay(k)}<span onClick={()=>toggleDay(k)} style={{cursor:"pointer",fontSize:15,opacity:0.5,lineHeight:1}}>×</span>
-              </span>
-            ))}
-            {upcoming.length>10&&<span style={{fontSize:12,color:c.muted,alignSelf:"center",fontStyle:"italic"}}>+{upcoming.length-10} more</span>}
-          </div>
-        )}
-
-        {err&&<div style={{background:"#FEF2F2",border:"1px solid #FECACA",borderRadius:12,padding:"12px 16px",fontSize:13,color:"#991B1B",marginBottom:14}}>⚠️ {err}</div>}
-
-        {/* Buttons */}
-        <button onClick={doSearch} disabled={loadEv||!keyOk}
-          style={{width:"100%",padding:"15px",fontSize:15,fontWeight:800,background:loadEv||!keyOk?"#C4B5FD":G.btn,color:"#fff",border:"none",borderRadius:14,cursor:loadEv||!keyOk?"default":"pointer",marginBottom:10,boxShadow:loadEv||!keyOk?"none":sh.btn,transition:"all 0.2s"}}>
-          {loadEv?"🔍  Searching for events nearby…":`✨  Find events on my ${upcoming.length} free day${upcoming.length===1?"":"s"}`}
-        </button>
-        <button onClick={doMeetups} disabled={loadMu||!keyOk}
-          style={{width:"100%",padding:"15px",fontSize:15,fontWeight:800,background:loadMu||!keyOk?"#99F6E4":G.teal,color:"#fff",border:"none",borderRadius:14,cursor:loadMu||!keyOk?"default":"pointer",marginBottom:"1.5rem",boxShadow:loadMu||!keyOk?"none":sh.teal,transition:"all 0.2s"}}>
-          {loadMu?"🔍  Finding meetup groups…":`👥  Find ${ageLabel} Meetup Groups Near Me`}
-        </button>
-
-        {loadEv&&<div style={{textAlign:"center",padding:"2rem",color:c.muted,fontSize:14}}><div style={{fontSize:36,marginBottom:10}}>🗺️</div><div style={{fontWeight:600,color:c.text,marginBottom:4}}>Finding things to do in {location}…</div><div style={{fontSize:13}}>Powered by Groq · Llama 3.3 70B</div></div>}
-        {loadMu&&<div style={{textAlign:"center",padding:"2rem",color:c.muted,fontSize:14}}><div style={{fontSize:36,marginBottom:10}}>👥</div><div style={{fontWeight:600,color:c.text,marginBottom:4}}>Finding {ageLabel} meetup groups in {location}…</div><div style={{fontSize:13}}>Powered by Groq · Llama 3.3 70B</div></div>}
-
-        {/* Meetup results */}
-        {meetups&&!loadMu&&(
-          <div style={{marginBottom:"2rem"}}>
-            <div style={{background:G.teal,borderRadius:16,padding:"14px 18px",marginBottom:16,display:"flex",alignItems:"center",gap:12}}>
-              <div style={{fontSize:28}}>👥</div>
-              <div><div style={{fontSize:16,fontWeight:800,color:"#fff"}}>Meetup Groups for Ages {ageLabel}</div><div style={{fontSize:12,color:"rgba(255,255,255,0.8)",marginTop:2}}>Near {meetups.city||location} · Recurring communities</div></div>
-            </div>
-            {mErr&&<div style={{background:"#FEF2F2",border:"1px solid #FECACA",borderRadius:12,padding:"12px 16px",fontSize:13,color:"#991B1B",marginBottom:12}}>⚠️ {mErr}</div>}
-            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
-              {(meetups.meetups||[]).map((m,i)=>{const col=MCAT[m.category]||FB;return(
-                <div key={i} style={{background:c.card,borderRadius:16,padding:"14px",boxShadow:sh.card,border:`1px solid ${c.border}`,display:"flex",flexDirection:"column",gap:8}}>
-                  <div style={{display:"flex",alignItems:"flex-start",gap:10}}>
-                    <div style={{width:38,height:38,borderRadius:10,background:col.bg,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>{col.emoji}</div>
-                    <div style={{flex:1,minWidth:0}}>
-                      <div style={{fontSize:13,fontWeight:800,color:c.text,lineHeight:1.3,marginBottom:2}}>{m.name}</div>
-                      <span style={{display:"inline-block",fontSize:10,padding:"2px 8px",borderRadius:10,background:col.bg,color:col.text,fontWeight:700}}>{m.category}</span>
-                    </div>
-                  </div>
-                  <div style={{fontSize:12,color:"#374151",lineHeight:1.55}}>{m.description}</div>
-                  <div style={{marginTop:"auto",display:"flex",flexDirection:"column",gap:4}}>
-                    <div style={{fontSize:11,color:c.muted}}>🔄 <span style={{fontWeight:600}}>{m.frequency}</span></div>
-                    <div style={{fontSize:11,color:c.muted}}>👤 {m.size}</div>
-                    <div style={{fontSize:11,color:c.muted}}>📍 {m.where}</div>
-                    {m.vibe&&<div style={{background:c.pLight,borderRadius:8,padding:"4px 8px",fontSize:11,color:c.primary,fontWeight:600,marginTop:2}}>✨ {m.vibe}</div>}
-                  </div>
-                </div>
-              );})}
-            </div>
-          </div>
-        )}
-
-        {/* Event results */}
-        {events&&!loadEv&&(
-          <div>
-            <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:18}}>
-              <div style={{flex:1,height:1,background:c.soft}}/><span style={{fontSize:12,fontWeight:700,color:c.primary,letterSpacing:"0.08em",textTransform:"uppercase"}}>Events near {events.city||location}</span><div style={{flex:1,height:1,background:c.soft}}/>
-            </div>
-            {upcoming.map(k=>{
-              const evs=evByDate[k]||[];if(!evs.length)return null;
-              return(
-                <div key={k} style={{marginBottom:"1.75rem"}}>
-                  <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:10}}>
-                    <div style={{background:G.btn,borderRadius:10,padding:"4px 12px"}}><span style={{fontSize:12,fontWeight:800,color:"#fff"}}>{fmtDisplay(k)}</span></div>
-                    <div style={{flex:1,height:1,background:c.border}}/>
-                  </div>
-                  {evs.map((ev,i)=>{const col=CAT[ev.type]||FB;return(
-                    <div key={i} style={{background:c.card,borderRadius:16,padding:"14px 16px",marginBottom:10,boxShadow:sh.card,border:`1px solid ${c.border}`,display:"flex",gap:13}}>
-                      <div style={{width:40,height:40,borderRadius:12,background:col.bg,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,fontSize:18}}>{col.emoji}</div>
-                      <div style={{flex:1,minWidth:0}}>
-                        <div style={{fontSize:15,fontWeight:800,color:c.text,marginBottom:3,lineHeight:1.3}}>{ev.name}</div>
-                        <div style={{fontSize:12,color:c.muted,marginBottom:7}}>🕐 {ev.time} &nbsp;·&nbsp; 📍 {ev.venue}</div>
-                        <div style={{fontSize:13,color:"#374151",lineHeight:1.6,marginBottom:8}}>{ev.description}</div>
-                        {ev.tip&&<div style={{background:c.aLight,borderRadius:8,padding:"7px 10px",fontSize:12,color:"#78350F",marginBottom:8}}>💡 <strong>Tip:</strong> {ev.tip}</div>}
-                        <span style={{display:"inline-block",fontSize:11,padding:"3px 10px",borderRadius:12,background:col.bg,color:col.text,fontWeight:700}}>{ev.type}</span>
-                      </div>
-                    </div>
-                  );})}
-                </div>
-              );
-            })}
-            <div style={{textAlign:"center",padding:"1rem 1rem 0"}}>
-              <span style={{background:c.pLight,color:c.primary,padding:"6px 16px",borderRadius:20,fontWeight:600,fontSize:12}}>🌅 FreeGlow · {upcoming.length} free day{upcoming.length!==1?"s":""} · {events.city||location}</span>
-            </div>
-          </div>
-        )}
+<div class="hero">
+  <div class="hero-blob1"></div>
+  <div class="hero-blob2"></div>
+  <div class="hero-blob3"></div>
+  <div class="hero-inner">
+    <div class="logo">
+      <div class="logo-icon">🌅</div>
+      <div class="logo-text">
+        <span class="logo-free">Free</span><span class="logo-glow">Glow</span>
       </div>
     </div>
-  );
+    <p>Your days off deserve to shine ✨ — find events & meetups that fit your life</p>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- Location + Age -->
+  <div class="card">
+    <label class="label">📍 Your Location</label>
+    <input type="text" id="locationInput" placeholder="City, state or zip — e.g. Atlanta, GA" style="margin-bottom:16px"/>
+    <hr class="divider" style="margin-top:0"/>
+    <label class="label">🎂 Your Age Group</label>
+    <div class="age-grid" id="ageGrid"></div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab-btn active" id="tabSchedule" onclick="switchTab('schedule')">📋  Work Schedule</button>
+    <button class="tab-btn" id="tabManual" onclick="switchTab('manual')">✏️  Pick Days Manually</button>
+  </div>
+
+  <!-- Schedule settings -->
+  <div class="card" id="scheduleCard">
+    <div class="label">Which days do you work?</div>
+    <div class="dow-grid" id="dowGrid"></div>
+    <hr class="divider"/>
+    <div class="label">Look Ahead</div>
+    <div class="lookahead" id="lookahead"></div>
+    <div class="sched-footer">
+      <span><strong id="freeDayCount">0</strong> free days coming up</span>
+      <button class="clear-btn" id="clearBtn" onclick="clearOverrides()" style="display:none">Clear overrides</button>
+    </div>
+  </div>
+
+  <!-- Calendar -->
+  <div class="card">
+    <div class="cal-header">
+      <span class="cal-title" id="calTitle"></span>
+      <div class="cal-nav">
+        <button onclick="changeMonth(-1)">‹</button>
+        <button onclick="changeMonth(1)">›</button>
+      </div>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+    <p class="cal-hint" id="calHint">Tap any day to override your schedule</p>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend" id="legend"></div>
+
+  <!-- Chips -->
+  <div class="chips" id="chips"></div>
+
+  <!-- Error -->
+  <div class="error-box" id="errorBox" style="display:none"></div>
+
+  <!-- Buttons -->
+  <button class="btn-primary" id="btnEvents" onclick="doSearch()">✨ Find events on my free days</button>
+  <button class="btn-teal" id="btnMeetups" onclick="doMeetups()">👥 Find Meetup Groups Near Me</button>
+
+  <!-- Results -->
+  <div id="results"></div>
+</div>
+
+<script>
+const MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
+const DOW_S=["Su","Mo","Tu","We","Th","Fr","Sa"];
+const DOW_F=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const AGE_GROUPS=[{id:"18-24",label:"18–24",desc:"College & Young Adult"},{id:"25-34",label:"25–34",desc:"Young Professional"},{id:"35-44",label:"35–44",desc:"Mid-Career & Family"},{id:"45-54",label:"45–54",desc:"Established & Active"},{id:"55+",label:"55+",desc:"Active Seniors"}];
+const CAT={Social:{bg:"#EDE9FE",text:"#5B21B6",emoji:"🤝"},Outdoors:{bg:"#DCFCE7",text:"#166534",emoji:"🌿"},Food:{bg:"#FEF3C7",text:"#92400E",emoji:"🍴"},Music:{bg:"#FCE7F3",text:"#9D174D",emoji:"🎵"},Arts:{bg:"#E0F2FE",text:"#075985",emoji:"🎨"},Fitness:{bg:"#DCFCE7",text:"#166534",emoji:"💪"},Volunteer:{bg:"#FEF9C3",text:"#854D0E",emoji:"🤲"},Learning:{bg:"#E0F2FE",text:"#0C4A6E",emoji:"📚"},Community:{bg:"#FFF7ED",text:"#9A3412",emoji:"🏘️"}};
+const FB={bg:"#F3F4F6",text:"#374151",emoji:"✨"};
+const MC={"Social":{bg:"#EDE9FE",text:"#5B21B6",emoji:"🎉"},"Outdoors":{bg:"#DCFCE7",text:"#166534",emoji:"🥾"},"Sports":{bg:"#DBEAFE",text:"#1E40AF",emoji:"⚽"},"Arts":{bg:"#FCE7F3",text:"#9D174D",emoji:"🎨"},"Tech":{bg:"#E0F2FE",text:"#075985",emoji:"💻"},"Wellness":{bg:"#FEF9C3",text:"#854D0E",emoji:"🧘"},"Books":{bg:"#F3E8FF",text:"#6B21A8",emoji:"📖"},"Food/Drink":{bg:"#FFF7ED",text:"#9A3412",emoji:"🍻"},"Gaming":{bg:"#EDE9FE",text:"#4C1D95",emoji:"🎮"},"Networking":{bg:"#DBEAFE",text:"#1E3A8A",emoji:"🤝"},"Music":{bg:"#FCE7F3",text:"#831843",emoji:"🎸"},"Volunteering":{bg:"#DCFCE7",text:"#14532D",emoji:"💚"}};
+const MF={bg:"#F3F4F6",text:"#374151",emoji:"👥"};
+
+const tod=new Date();tod.setHours(0,0,0,0);
+let viewY=tod.getFullYear(),viewM=tod.getMonth();
+let tab="schedule",ageGroup="25-34",schedMonths=1;
+let workDays=new Set([1,2,3,4,5]);
+let manualAdded=new Set(),manualRemoved=new Set();
+
+function fmtKey(y,m,d){return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;}
+function parseKey(k){const[y,m,d]=k.split('-');return new Date(+y,+m-1,+d);}
+function fmtDisplay(k){return parseKey(k).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});}
+
+function getScheduledFree(){
+  const days=new Set();
+  const end=new Date(tod);end.setMonth(end.getMonth()+schedMonths);
+  const cur=new Date(tod);
+  while(cur<=end){
+    if(!workDays.has(cur.getDay()))days.add(fmtKey(cur.getFullYear(),cur.getMonth(),cur.getDate()));
+    cur.setDate(cur.getDate()+1);
+  }
+  return days;
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
-  </script>
+function getFreeDays(){
+  const days=new Set();
+  if(tab==="schedule"){
+    const sFree=getScheduledFree();
+    for(const k of sFree)if(!manualRemoved.has(k))days.add(k);
+    for(const k of manualAdded)if(!manualRemoved.has(k))days.add(k);
+  } else {
+    for(const k of manualAdded)days.add(k);
+  }
+  return days;
+}
+
+function getUpcoming(){
+  return [...getFreeDays()].sort().filter(k=>parseKey(k)>=tod).slice(0,14);
+}
+
+// Build age buttons
+const ag=document.getElementById('ageGrid');
+AGE_GROUPS.forEach(a=>{
+  const b=document.createElement('button');
+  b.className='age-btn'+(a.id===ageGroup?' active':'');
+  b.innerHTML=`<div>${a.label}</div><div class="sub">${a.desc}</div>`;
+  b.onclick=()=>{ageGroup=a.id;document.querySelectorAll('.age-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');};
+  ag.appendChild(b);
+});
+
+// Build day-of-week buttons
+const dg=document.getElementById('dowGrid');
+DOW_F.forEach((name,i)=>{
+  const b=document.createElement('button');
+  b.className='dow-btn'+(workDays.has(i)?' active':'');
+  b.textContent=DOW_S[i];
+  b.onclick=()=>{
+    if(workDays.has(i))workDays.delete(i);else workDays.add(i);
+    b.classList.toggle('active');
+    renderAll();
+  };
+  dg.appendChild(b);
+});
+
+// Build lookahead buttons
+const la=document.getElementById('lookahead');
+[1,2,3].forEach(n=>{
+  const b=document.createElement('button');
+  b.className='la-btn'+(n===schedMonths?' active':'');
+  b.textContent=n+' month'+(n>1?'s':'');
+  b.onclick=()=>{schedMonths=n;document.querySelectorAll('.la-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderAll();};
+  la.appendChild(b);
+});
+
+function switchTab(t){
+  tab=t;
+  document.getElementById('tabSchedule').classList.toggle('active',t==='schedule');
+  document.getElementById('tabManual').classList.toggle('active',t==='manual');
+  document.getElementById('scheduleCard').style.display=t==='schedule'?'block':'none';
+  document.getElementById('calHint').style.display=t==='schedule'?'block':'none';
+  renderAll();
+}
+
+function toggleDay(key){
+  const free=getFreeDays().has(key);
+  if(tab==='schedule'){
+    if(free){manualRemoved.add(key);manualAdded.delete(key);}
+    else{manualAdded.add(key);manualRemoved.delete(key);}
+  } else {
+    if(manualAdded.has(key))manualAdded.delete(key);else manualAdded.add(key);
+  }
+  renderAll();
+}
+
+function clearOverrides(){manualAdded=new Set();manualRemoved=new Set();renderAll();}
+
+function changeMonth(d){
+  viewM+=d;
+  if(viewM>11){viewM=0;viewY++;}
+  if(viewM<0){viewM=11;viewY--;}
+  renderCal();
+}
+
+function renderCal(){
+  document.getElementById('calTitle').textContent=MONTHS[viewM]+' '+viewY;
+  const freeDays=getFreeDays();
+  const grid=document.getElementById('calGrid');
+  grid.innerHTML=DOW_S.map(d=>`<div class="cal-dow">${d}</div>`).join('');
+  const first=new Date(viewY,viewM,1).getDay();
+  const dim=new Date(viewY,viewM+1,0).getDate();
+  for(let i=0;i<first;i++)grid.innerHTML+='<div></div>';
+  for(let d=1;d<=dim;d++){
+    const dt=new Date(viewY,viewM,d),key=fmtKey(viewY,viewM,d);
+    const isPast=dt<tod,isTod=dt.getTime()===tod.getTime(),isFree=freeDays.has(key);
+    const isOA=manualAdded.has(key),isOR=manualRemoved.has(key);
+    let cls='cal-day';
+    if(isPast)cls+=' past';
+    else if(isFree&&isOA)cls+=' free override-added';
+    else if(isFree)cls+=' free';
+    else if(isOR)cls+=' override-removed';
+    if(isTod)cls+=' today';
+    if(isTod)cls+=' today-dot';
+    const click=isPast?'':`onclick="toggleDay('${key}')"`;
+    grid.innerHTML+=`<div class="${cls}" ${click}>${d}</div>`;
+  }
+}
+
+function renderChips(){
+  const upcoming=getUpcoming();
+  const box=document.getElementById('chips');
+  box.innerHTML=upcoming.slice(0,10).map(k=>`<span class="chip">${fmtDisplay(k)}<span class="chip-x" onclick="toggleDay('${k}')">×</span></span>`).join('');
+  if(upcoming.length>10)box.innerHTML+=`<span style="font-size:12px;color:#6B7280;align-self:center;font-style:italic">+${upcoming.length-10} more</span>`;
+}
+
+function renderLegend(){
+  const box=document.getElementById('legend');
+  let html=`<div class="legend-item"><span class="legend-dot" style="background:#EDE9FE;border:1.5px solid #C4B5FD"></span>Free day</div>`;
+  if(tab==='schedule'){
+    html+=`<div class="legend-item"><span class="legend-dot" style="background:#D1FAE5;border:1.5px solid #6EE7B7"></span>Added as free</div>`;
+    html+=`<div class="legend-item"><span class="legend-dot" style="background:transparent;border:1.5px dashed #FCA5A5"></span>Marked working</div>`;
+  }
+  box.innerHTML=html;
+}
+
+function renderScheduleFooter(){
+  const upcoming=getUpcoming();
+  document.getElementById('freeDayCount').textContent=upcoming.length;
+  const oc=manualAdded.size+manualRemoved.size;
+  const cb=document.getElementById('clearBtn');
+  cb.style.display=oc>0?'block':'none';
+  cb.textContent=`Clear ${oc} override${oc>1?'s':''}`;
+}
+
+function renderButtons(){
+  const upcoming=getUpcoming();
+  const ag=AGE_GROUPS.find(a=>a.id===ageGroup);
+  document.getElementById('btnEvents').textContent=`✨  Find events on my ${upcoming.length} free day${upcoming.length===1?'':'s'}`;
+  document.getElementById('btnMeetups').textContent=`👥  Find ${ag?.label||ageGroup} Meetup Groups Near Me`;
+}
+
+function renderAll(){renderCal();renderChips();renderLegend();renderScheduleFooter();renderButtons();}
+
+// Init
+switchTab('schedule');
+renderAll();
+
+// API call
+async function groqFetch(prompt){
+  const resp=await fetch('/api/groq',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'llama-3.3-70b-versatile',temperature:0.7,max_tokens:1500,messages:[{role:'user',content:prompt}]})});
+  const data=await resp.json();
+  if(data.error)throw new Error(data.error.message||JSON.stringify(data.error));
+  const text=data.choices?.[0]?.message?.content||'';
+  const match=text.match(/\{[\s\S]*\}/);
+  if(!match)throw new Error('No JSON returned');
+  return JSON.parse(match[0]);
+}
+
+function setError(msg,isMeetup=false){
+  const box=document.getElementById('errorBox');
+  if(msg){box.style.display='block';box.textContent='⚠️ '+msg;}
+  else box.style.display='none';
+}
+
+async function doSearch(){
+  const loc=document.getElementById('locationInput').value.trim();
+  if(!loc){setError('Please enter your city or zip code.');return;}
+  const upcoming=getUpcoming();
+  if(!upcoming.length){setError('No upcoming free days found.');return;}
+  setError('');
+  const btn=document.getElementById('btnEvents');
+  btn.disabled=true;
+  const results=document.getElementById('results');
+  results.innerHTML=`<div class="loading"><div class="icon">🗺️</div><strong>Finding things to do in ${loc}…</strong><div style="margin-top:4px;font-size:13px">Powered by Groq · Llama 3.3 70B</div></div>`;
+  const dateList=upcoming.map(fmtDisplay).join(', ');
+  const ag=AGE_GROUPS.find(a=>a.id===ageGroup);
+  const prompt=`You are a helpful local events assistant. Find upcoming community events, social activities, and gatherings in or near "${loc}" happening on these dates: ${dateList}.
+The person is age ${ag?.label||ageGroup} and wants to meet people and find community. Tailor suggestions to this age group.
+Return ONLY a valid JSON object, no markdown, no backticks:
+{"city":"City name","events":[{"date":"YYYY-MM-DD","name":"Event name","type":"One of: Social,Outdoors,Food,Music,Arts,Fitness,Volunteer,Learning,Community","time":"e.g. 7:00 PM","venue":"Venue or neighborhood","description":"2 sentences about what it is and why its great for meeting people.","tip":"One quick first-timer tip"}]}
+Provide 2-4 events per date. Make them realistic and specific to the area.`;
+  try{
+    const data=await groqFetch(prompt);
+    const byDate={};
+    for(const k of upcoming)byDate[k]=[];
+    for(const ev of data.events||[]){if(byDate[ev.date])byDate[ev.date].push(ev);else if(upcoming.length)byDate[upcoming[0]].push(ev);}
+    let html=`<div class="section-divider"><div class="line"></div><div class="text">Events near ${data.city||loc}</div><div class="line"></div></div>`;
+    upcoming.forEach(k=>{
+      const evs=byDate[k]||[];if(!evs.length)return;
+      html+=`<div class="day-section"><div class="day-header"><div class="day-badge"><span>${fmtDisplay(k)}</span></div><div class="day-line"></div></div>`;
+      evs.forEach(ev=>{
+        const col=CAT[ev.type]||FB;
+        html+=`<div class="event-card"><div class="event-emoji" style="background:${col.bg}">${col.emoji}</div><div style="flex:1;min-width:0"><div class="event-name">${ev.name}</div><div class="event-meta"><span>🕐 ${ev.time}</span><span>📍 ${ev.venue}</span></div><div class="event-desc">${ev.description}</div>${ev.tip?`<div class="event-tip">💡 <strong>Tip:</strong> ${ev.tip}</div>`:''}<span class="event-type" style="background:${col.bg};color:${col.text}">${ev.type}</span></div></div>`;
+      });
+      html+='</div>';
+    });
+    html+=`<div class="footer-badge"><span>🌅 FreeGlow · ${upcoming.length} free day${upcoming.length!==1?'s':''} · ${data.city||loc}</span></div>`;
+    results.innerHTML=html;
+  }catch(e){setError('Could not load events. ('+e.message+')');results.innerHTML='';}
+  btn.disabled=false;
+}
+
+async function doMeetups(){
+  const loc=document.getElementById('locationInput').value.trim();
+  if(!loc){setError('Please enter your city or zip code.');return;}
+  setError('');
+  const btn=document.getElementById('btnMeetups');
+  btn.disabled=true;
+  const results=document.getElementById('results');
+  const ag=AGE_GROUPS.find(a=>a.id===ageGroup);
+  results.innerHTML=`<div class="loading"><div class="icon">👥</div><strong>Finding ${ag?.label||ageGroup} meetup groups in ${loc}…</strong><div style="margin-top:4px;font-size:13px">Powered by Groq · Llama 3.3 70B</div></div>`;
+  const prompt=`You are a local community expert. Find recurring meetup groups and communities in or near "${loc}" specifically welcoming to people aged ${ag?.label||ageGroup} (${ag?.desc||''}).
+Return ONLY a valid JSON object, no markdown, no backticks:
+{"city":"City name","meetups":[{"name":"Group name","category":"One of: Social,Outdoors,Sports,Arts,Tech,Wellness,Books,Food/Drink,Gaming,Networking,Music,Volunteering","frequency":"How often e.g. Every Thursday","size":"Approx size e.g. 50-200 members","description":"2 sentences about the group and why its great for ${ag?.label} age group.","where":"Platform or venue e.g. Meetup.com, local park","vibe":"One phrase e.g. Casual and welcoming"}]}
+Provide 6-9 diverse groups. Be specific to the city and age group.`;
+  try{
+    const data=await groqFetch(prompt);
+    let html=`<div class="meetup-header"><div class="icon">👥</div><div><div class="title">Meetup Groups for Ages ${ag?.label||ageGroup}</div><div class="sub">Near ${data.city||loc} · Recurring communities to join</div></div></div>`;
+    html+='<div class="meetup-grid">';
+    (data.meetups||[]).forEach(m=>{
+      const col=MC[m.category]||MF;
+      html+=`<div class="meetup-card"><div class="meetup-top"><div class="meetup-emoji" style="background:${col.bg}">${col.emoji}</div><div><div class="meetup-name">${m.name}</div><span class="meetup-tag" style="background:${col.bg};color:${col.text}">${m.category}</span></div></div><div class="meetup-desc">${m.description}</div><div class="meetup-meta"><div class="meetup-meta-row">🔄 <strong>${m.frequency}</strong></div><div class="meetup-meta-row">👤 ${m.size}</div><div class="meetup-meta-row">📍 ${m.where}</div>${m.vibe?`<div class="meetup-vibe" style="background:#EDE9FE;color:#6D28D9">✨ ${m.vibe}</div>`:''}</div></div>`;
+    });
+    html+='</div>';
+    results.innerHTML=html;
+  }catch(e){setError('Could not load meetups. ('+e.message+')');results.innerHTML='';}
+  btn.disabled=false;
+}
+</script>
 </body>
 </html>
