@@ -1,7 +1,5 @@
 {
-  "functions": {
-    "api/groq.js": {
-      "runtime": "edge"
-    }
-  }
+  "rewrites": [
+    { "source": "/api/groq", "destination": "/api/groq.js" }
+  ]
 }
