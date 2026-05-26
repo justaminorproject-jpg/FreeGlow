@@ -1,5 +1,54 @@
-# FreeGlow
-🌅 FreeGlow — enter your work schedule, discover local events &amp; age-matched meetup groups on your days off. Powered by Groq + Llama 3.3 70B.
+# 🌅 FreeGlow
 
-FreeGlow is a React app that flips the way you find things to do. Instead of browsing events and hoping they land on a day you're free, you enter your work schedule first — then FreeGlow finds what's happening on your days off. It also surfaces recurring meetup groups filtered by age range, so whether you're 25–34 looking for young professionals or 45+ looking for an active community, you're seeing options built for you. Powered by the Groq API (Llama 3.3 70B) for fast, location-aware suggestions.
+> Your days off deserve to shine — find local events & age-matched meetup groups on your free days.
 
+Built with React + Vite. Powered by [Groq](https://groq.com) (Llama 3.3 70B).
+
+## Setup
+
+### 1. Clone & install
+```bash
+git clone https://github.com/YOUR_USERNAME/freeglow.git
+cd freeglow
+npm install
+```
+
+### 2. Add your Groq API key
+```bash
+cp .env.example .env
+```
+Then edit `.env` and paste your key from [console.groq.com](https://console.groq.com):
+```
+VITE_GROQ_API_KEY=gsk_your_key_here
+```
+
+### 3. Run locally
+```bash
+npm run dev
+```
+
+---
+
+## Deploy to Vercel
+
+1. Push your repo to GitHub
+2. Import the repo at [vercel.com/new](https://vercel.com/new)
+3. Go to **Settings → Environment Variables**
+4. Add: `VITE_GROQ_API_KEY` → your key
+5. Redeploy — done ✅
+
+> ⚠️ Never commit your `.env` file. It's already in `.gitignore` by default with Vite.
+
+---
+
+## Features
+- 📋 Enter your recurring work schedule (days of week)
+- 📅 Override individual days on the calendar
+- ✨ Find local events on your free days
+- 👥 Discover age-matched meetup groups & communities
+- 🌅 Powered by Groq (Llama 3.3 70B) — fast & free tier
+
+## Stack
+- React + Vite
+- Groq API (Llama 3.3 70B)
+- Zero dependencies beyond React

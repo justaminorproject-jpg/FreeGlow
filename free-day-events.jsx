@@ -76,9 +76,10 @@ export default function App() {
   const [manualRemoved, setManualRemoved] = useState(new Set());
   const [viewYear,  setViewYear]  = useState(today.getFullYear());
   const [viewMonth, setViewMonth] = useState(today.getMonth());
-  const [groqKey,   setGroqKey]   = useState("");
-  const [showKey,   setShowKey]   = useState(false);
-  const [keyStored, setKeyStored] = useState(false);
+  const groqKey = import.meta.env.VITE_GROQ_API_KEY || "";
+
+
+
   const [loadingEvents,  setLoadingEvents]  = useState(false);
   const [loadingMeetups, setLoadingMeetups] = useState(false);
   const [events,      setEvents]      = useState(null);
@@ -167,7 +168,7 @@ export default function App() {
   const overrideCount=manualAdded.size+manualRemoved.size;
   const clearOverrides=()=>{setManualAdded(new Set());setManualRemoved(new Set());setEvents(null);};
   const ageLabel=AGE_GROUPS.find(a=>a.id===ageGroup)?.label||ageGroup;
-  const keyOk = groqKey.trim().length > 10;
+  const keyOk = groqKey.length > 10;
 
   // ── Search events ──────────────────────────────────────────────────────────
   const doSearch = async () => {
@@ -238,33 +239,12 @@ Provide 6-9 diverse groups across different interests. Be specific to the city a
 
       <div style={{maxWidth:580,margin:"-2rem auto 0",padding:"0 1rem",position:"relative",zIndex:2}}>
 
-        {/* ── Groq API Key ── */}
-        <div style={{background:c.card,borderRadius:18,padding:"1.25rem",boxShadow:sh.card,marginBottom:14,border:keyOk?`1.5px solid #6EE7B7`:`1.5px solid ${c.softBorder}`}}>
-          <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:8}}>
-            <label style={{fontSize:11,fontWeight:700,letterSpacing:"0.1em",color:c.muted,textTransform:"uppercase"}}>
-              🔑 Groq API Key
-            </label>
-            {keyOk && <span style={{fontSize:11,fontWeight:700,color:"#059669",background:"#D1FAE5",padding:"2px 10px",borderRadius:20}}>✓ Key saved</span>}
+        {/* ── Powered by badge ── */}
+        {!keyOk && (
+          <div style={{background:"#FEF2F2",border:"1px solid #FECACA",borderRadius:12,padding:"12px 16px",fontSize:13,color:"#991B1B",marginBottom:14}}>
+            ⚠️ <strong>VITE_GROQ_API_KEY</strong> is not set. Add it to your <code>.env</code> file or Vercel environment variables.
           </div>
-          <div style={{display:"flex",gap:8,alignItems:"center"}}>
-            <input
-              type={showKey?"text":"password"}
-              value={groqKey}
-              onChange={e=>setGroqKey(e.target.value)}
-              placeholder="gsk_..."
-              style={{flex:1,padding:"11px 14px",fontSize:14,border:`2px solid ${keyOk?"#6EE7B7":c.softBorder}`,borderRadius:12,outline:"none",color:c.text,background:"#FAFAFA",fontFamily:"monospace",boxSizing:"border-box",transition:"border-color 0.2s"}}
-              onFocus={e=>e.target.style.borderColor=c.primaryMid}
-              onBlur={e=>e.target.style.borderColor=keyOk?"#6EE7B7":c.softBorder}
-            />
-            <button onClick={()=>setShowKey(s=>!s)}
-              style={{padding:"11px 14px",borderRadius:12,border:`2px solid ${c.border}`,background:"#fff",cursor:"pointer",fontSize:13,color:c.muted,fontWeight:600,whiteSpace:"nowrap"}}>
-              {showKey?"Hide":"Show"}
-            </button>
-          </div>
-          <p style={{fontSize:11,color:c.muted,marginTop:7,marginBottom:0,lineHeight:1.5}}>
-            Get a free key at <span style={{color:c.primary,fontWeight:600}}>console.groq.com</span> · Powered by Llama 3.3 70B · Your key stays in this browser only
-          </p>
-        </div>
+        )}
 
         {/* ── Location + Age ── */}
         <div style={{background:c.card,borderRadius:18,padding:"1.25rem",boxShadow:sh.card,marginBottom:14}}>
