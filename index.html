@@ -364,7 +364,8 @@ function cleanJSON(raw) {
   // Remove control characters inside strings (newlines, tabs in values)
   s = s.replace(/"([^"]*)"/g, (match) =>
     match.replace(/
-/g, ' ').replace(//g, '').replace(/	/g, ' ')
+/g, ' ').replace(/
+/g, '').replace(/	/g, ' ')
   );
   // Try parsing — if it fails, truncate to last complete object/array
   try {
@@ -406,7 +407,7 @@ async function doEvents(){
   const btn=document.getElementById('btnEv');btn.disabled=true;
   const res=document.getElementById('results');
   const ag=AGES.find(a=>a.id===age);
-  res.innerHTML=`<div class="loading"><div class="ico">🗺️</div><strong>Finding things to do in ${loc}…</strong><span>Powered by Groq · Llama 3.3 70B</span></div>`;
+  res.innerHTML=`<div class="loading"><div class="ico">🗺️</div><strong>Finding things to do in ${loc}…</strong><span id="aiProv">Searching with AI…</span></div>`;
   try{
     const data=await callAI(`You are a helpful local events assistant. Find upcoming community events in or near "${loc}" on these dates: ${up.map(disp).join(', ')}.
 The person is age ${ag?.l||age} and wants to meet people. Return ONLY valid JSON, no markdown:
@@ -430,7 +431,8 @@ The person is age ${ag?.l||age} and wants to meet people. Return ONLY valid JSON
       });
       h+='</div>';
     });
-    h+=`<div class="foot-badge"><span>🌅 FreeGlow · ${up.length} free day${up.length!==1?'s':''} · ${data.city||loc}</span></div>`;
+    const prov = data._provider==="gemini"?"✨ Gemini":"⚡ Groq";
+    h+=`<div class="foot-badge"><span>🌅 FreeGlow · ${up.length} free day${up.length!==1?'s':''} · ${data.city||loc} · ${prov}</span></div>`;
     res.innerHTML=h;
   }catch(e){showErr('Could not load events. ('+e.message+')');res.innerHTML='';}
   btn.disabled=false;
@@ -444,7 +446,7 @@ async function doMeetups(){
   const btn=document.getElementById('btnMu');btn.disabled=true;
   const res=document.getElementById('results');
   const ag=AGES.find(a=>a.id===age);
-  res.innerHTML=`<div class="loading"><div class="ico">👥</div><strong>Finding ${ag?.l||age} meetup groups in ${loc}…</strong><span>Powered by Groq · Llama 3.3 70B</span></div>`;
+  res.innerHTML=`<div class="loading"><div class="ico">👥</div><strong>Finding ${ag?.l||age} meetup groups in ${loc}…</strong><span id="aiProv">Searching with AI…</span></div>`;
   try{
     const data=await callAI(`You are a local community expert. Find recurring meetup groups near "${loc}" for people aged ${ag?.l||age} (${ag?.d||''}).
 Return ONLY valid JSON, no markdown:
