@@ -1,181 +1,171 @@
 export default async function handler(req, res) {
-  try {
-  if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
-  const groqKey        = process.env.GROQ_API_KEY;
-  const geminiKey      = process.env.GEMINI_API_KEY;
-  const tmKey          = process.env.TICKETMASTER_API_KEY;
-  const ebKey          = process.env.EVENTBRITE_API_KEY;
+  // Always return JSON — never let an HTML error escape
+  res.setHeader("Content-Type", "application/json");
 
-  const { type, messages, max_tokens = 2000, temperature = 0.7,
-          location, lat, lng, dates } = req.body;
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
+
+  const groqKey   = process.env.GROQ_API_KEY;
+  const geminiKey = process.env.GEMINI_API_KEY;
+  const tmKey     = process.env.TICKETMASTER_API_KEY;
+  const ebKey     = process.env.EVENTBRITE_API_KEY;
+
+  const body = req.body || {};
+  const { type, messages, max_tokens = 2000, temperature = 0.7, location, dates } = body;
 
   // ── REAL EVENTS: Ticketmaster + Eventbrite ──────────────────────────────────
   if (type === "events" && location) {
-    const results = { ticketmaster: [], eventbrite: [] };
+    const results = [];
+    const startDate = (dates && dates[0])                   || new Date().toISOString().split("T")[0];
+    const endDate   = (dates && dates[dates.length - 1])    || startDate;
 
-    // Build date range from free days array
-    const startDate = dates && dates[0] ? dates[0] : new Date().toISOString().split("T")[0];
-    const endDate   = dates && dates.length > 1 ? dates[dates.length - 1] : startDate;
-
-    // ── Ticketmaster ──────────────────────────────────────────────────────────
+    // Ticketmaster
     if (tmKey) {
       try {
-        const tmUrl = new URL("https://app.ticketmaster.com/discovery/v2/events.json");
-        tmUrl.searchParams.set("apikey", tmKey);
-        tmUrl.searchParams.set("city",   location);
-        tmUrl.searchParams.set("startDateTime", startDate + "T00:00:00Z");
-        tmUrl.searchParams.set("endDateTime",   endDate   + "T23:59:59Z");
-        tmUrl.searchParams.set("size", "20");
-        tmUrl.searchParams.set("sort", "date,asc");
-        tmUrl.searchParams.set("classificationName", "music,arts,family,sports,miscellaneous");
-
-        const tmRes  = await fetch(tmUrl.toString());
-        if (!tmRes.ok) throw new Error("TM " + tmRes.status);
-        const tmData = await tmRes.json();
-        const events = tmData?._embedded?.events || [];
-
-        results.ticketmaster = events.map(ev => ({
-          id:     ev.id,
-          name:   ev.name,
-          date:   ev.dates?.start?.localDate || startDate,
-          time:   ev.dates?.start?.localTime
-                    ? ev.dates.start.localTime.slice(0,5).replace(/^0/,"").replace(":",":")
-                    : "Check details",
-          venue:  ev._embedded?.venues?.[0]?.name || location,
-          url:    ev.url || "",
-          image:  ev.images?.[0]?.url || "",
-          type:   mapTMClassification(ev.classifications?.[0]),
-          source: "Ticketmaster",
-          price:  ev.priceRanges
-                    ? "$" + ev.priceRanges[0].min + (ev.priceRanges[0].max !== ev.priceRanges[0].min ? "–$" + ev.priceRanges[0].max : "")
-                    : "Check site"
-        }));
-      } catch(e) {
-        console.error("Ticketmaster error:", e.message);
-      }
+        const url = "https://app.ticketmaster.com/discovery/v2/events.json"
+          + "?apikey=" + tmKey
+          + "&city="   + encodeURIComponent(location)
+          + "&startDateTime=" + startDate + "T00:00:00Z"
+          + "&endDateTime="   + endDate   + "T23:59:59Z"
+          + "&size=20&sort=date,asc";
+        const r = await fetch(url);
+        if (r.ok) {
+          const d = await r.json();
+          const evs = (d._embedded && d._embedded.events) || [];
+          evs.forEach(function(ev) {
+            results.push({
+              id:     ev.id,
+              name:   ev.name,
+              date:   (ev.dates && ev.dates.start && ev.dates.start.localDate) || startDate,
+              time:   (ev.dates && ev.dates.start && ev.dates.start.localTime)
+                        ? fmtTime(ev.dates.start.localTime) : "Check details",
+              venue:  (ev._embedded && ev._embedded.venues && ev._embedded.venues[0] && ev._embedded.venues[0].name) || location,
+              url:    ev.url || "",
+              type:   tmCategory(ev.classifications && ev.classifications[0]),
+              source: "Ticketmaster",
+              price:  (ev.priceRanges && ev.priceRanges[0])
+                        ? "$" + ev.priceRanges[0].min : "Check site",
+              description: ""
+            });
+          });
+        }
+      } catch(e) { console.error("TM error:", e.message); }
     }
 
-    // ── Eventbrite ────────────────────────────────────────────────────────────
+    // Eventbrite
     if (ebKey) {
       try {
-        const ebUrl = new URL("https://www.eventbriteapi.com/v3/events/search/");
-        ebUrl.searchParams.set("token",                ebKey);
-        ebUrl.searchParams.set("location.address",     location);
-        ebUrl.searchParams.set("location.within",      "25mi");
-        ebUrl.searchParams.set("start_date.range_start", startDate + "T00:00:00Z");
-        ebUrl.searchParams.set("start_date.range_end",   endDate   + "T23:59:59Z");
-        ebUrl.searchParams.set("expand", "venue,ticket_availability");
-        ebUrl.searchParams.set("page_size", "20");
-
-        const ebRes  = await fetch(ebUrl.toString(), {
-          headers: { "Authorization": "Bearer " + ebKey }
-        });
-        if (!ebRes.ok) throw new Error("EB " + ebRes.status);
-        const ebData = await ebRes.json();
-        const events = ebData?.events || [];
-
-        results.eventbrite = events.map(ev => ({
-          id:     ev.id,
-          name:   ev.name?.text || "Event",
-          date:   ev.start?.local?.split("T")[0] || startDate,
-          time:   ev.start?.local
-                    ? formatTime12hr(ev.start.local.split("T")[1])
-                    : "Check details",
-          venue:  ev.venue?.name || ev.venue?.address?.city || location,
-          url:    ev.url || "",
-          image:  ev.logo?.url || "",
-          description: ev.description?.text?.slice(0, 200) || ev.summary || "",
-          type:   mapEBCategory(ev.category_id),
-          source: "Eventbrite",
-          price:  ev.is_free ? "Free" : "Check site"
-        }));
-      } catch(e) {
-        console.error("Eventbrite error:", e.message);
-      }
+        const url = "https://www.eventbriteapi.com/v3/events/search/"
+          + "?location.address=" + encodeURIComponent(location)
+          + "&location.within=25mi"
+          + "&start_date.range_start=" + startDate + "T00:00:00Z"
+          + "&start_date.range_end="   + endDate   + "T23:59:59Z"
+          + "&expand=venue,ticket_availability&page_size=20";
+        const r = await fetch(url, { headers: { "Authorization": "Bearer " + ebKey } });
+        if (r.ok) {
+          const d = await r.json();
+          const evs = d.events || [];
+          evs.forEach(function(ev) {
+            var start = (ev.start && ev.start.local) || "";
+            results.push({
+              id:     ev.id,
+              name:   (ev.name && ev.name.text) || "Event",
+              date:   start ? start.split("T")[0] : startDate,
+              time:   start ? fmtTime(start.split("T")[1]) : "Check details",
+              venue:  (ev.venue && ev.venue.name) || location,
+              url:    ev.url || "",
+              type:   ebCategory(ev.category_id),
+              source: "Eventbrite",
+              price:  ev.is_free ? "Free" : "Check site",
+              description: (ev.summary || "")
+            });
+          });
+        }
+      } catch(e) { console.error("EB error:", e.message); }
     }
 
-    // Combine and deduplicate by name+date
-    const allEvents  = [...results.ticketmaster, ...results.eventbrite];
-    const seen       = new Set();
-    const deduped    = allEvents.filter(ev => {
-      const key = (ev.name + ev.date).toLowerCase().replace(/\s/g,"");
-      if (seen.has(key)) return false;
-      seen.add(key); return true;
+    // Deduplicate
+    var seen = {};
+    var deduped = results.filter(function(ev) {
+      var key = (ev.name + ev.date).toLowerCase().replace(/\s/g,"");
+      if (seen[key]) return false;
+      seen[key] = true; return true;
     });
 
-    return res.status(200).json({ events: deduped, sources: ["ticketmaster","eventbrite"] });
+    return res.status(200).json({ events: deduped });
   }
 
-  // ── AI: Groq with Gemini fallback ──────────────────────────────────────────
-  if (!groqKey && !geminiKey) {
-    return res.status(500).json({ error: "No AI keys configured" });
+  // ── AI: Groq → Gemini fallback ─────────────────────────────────────────────
+  if (!messages || !messages.length) {
+    return res.status(400).json({ error: "No messages provided" });
   }
 
+  // Try Groq
   if (groqKey) {
     try {
-      const groqRes = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      const r = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${groqKey}` },
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + groqKey },
         body: JSON.stringify({ model: "llama-3.3-70b-versatile", temperature, max_tokens, messages })
       });
-      const data = await groqRes.json();
-      const errMsg = data?.error?.message || "";
-      const isLimit = groqRes.status === 429 || errMsg.toLowerCase().includes("rate") || errMsg.toLowerCase().includes("quota");
-      if (groqRes.ok && !data.error) return res.status(200).json({ ...data, _provider: "groq" });
-      if (!isLimit) return res.status(groqRes.status).json({ error: errMsg });
-      console.log("Groq limit — falling back to Gemini");
-    } catch(e) { console.log("Groq failed:", e.message); }
+      const d = await r.json();
+      const errMsg = (d.error && d.error.message) || "";
+      const isLimit = r.status === 429
+        || errMsg.toLowerCase().includes("rate")
+        || errMsg.toLowerCase().includes("quota");
+      if (r.ok && !d.error) return res.status(200).json(Object.assign({}, d, { _provider: "groq" }));
+      if (!isLimit) return res.status(r.status).json({ error: errMsg || "Groq error" });
+      console.log("Groq limit hit — trying Gemini");
+    } catch(e) { console.error("Groq fetch error:", e.message); }
   }
 
-  if (!geminiKey) return res.status(429).json({ error: "Groq limit reached, no Gemini key set" });
+  // Try Gemini
+  if (geminiKey) {
+    try {
+      var prompt = messages.map(function(m){ return m.content; }).join("\n\n");
+      const r = await fetch(
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + geminiKey,
+        { method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: { temperature: temperature, maxOutputTokens: max_tokens } }) }
+      );
+      const d = await r.json();
+      if (!r.ok || d.error) throw new Error((d.error && d.error.message) || "Gemini error");
+      var text = (d.candidates && d.candidates[0] && d.candidates[0].content
+                  && d.candidates[0].content.parts && d.candidates[0].content.parts[0]
+                  && d.candidates[0].content.parts[0].text) || "";
+      return res.status(200).json({ _provider: "gemini", choices: [{ message: { content: text } }] });
+    } catch(e) {
+      return res.status(500).json({ error: "Gemini error: " + e.message });
+    }
+  }
 
-  try {
-    const prompt = messages.map(m => m.content).join("\n\n");
-    const gemRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`,
-      { method:"POST", headers:{"Content-Type":"application/json"},
-        body: JSON.stringify({ contents:[{parts:[{text:prompt}]}], generationConfig:{temperature, maxOutputTokens:max_tokens} }) }
-    );
-    const gemData = await gemRes.json();
-    if (!gemRes.ok || gemData.error) throw new Error(gemData?.error?.message || "Gemini error");
-    const text = gemData?.candidates?.[0]?.content?.parts?.[0]?.text || "";
-    return res.status(200).json({ _provider:"gemini", choices:[{message:{content:text}}] });
-  } catch(e) {
-    return res.status(500).json({ error: "Both AI providers failed: " + e.message });
-  }
-  } catch(err) {
-    console.error("Handler error:", err.message);
-    return res.status(500).json({ error: "Server error: " + err.message });
-  }
+  return res.status(500).json({ error: "No AI keys configured on server" });
 }
 
-// ── Helpers ────────────────────────────────────────────────────────────────────
-function formatTime12hr(timeStr) {
-  if (!timeStr) return "Check details";
-  const [h, m] = timeStr.split(":").map(Number);
-  const ampm = h >= 12 ? "PM" : "AM";
-  const h12  = h % 12 || 12;
-  return `${h12}:${String(m).padStart(2,"0")} ${ampm}`;
+function fmtTime(t) {
+  if (!t) return "Check details";
+  var parts = t.split(":");
+  var h = parseInt(parts[0]), m = parseInt(parts[1]) || 0;
+  var ampm = h >= 12 ? "PM" : "AM";
+  return (h % 12 || 12) + ":" + (m < 10 ? "0" : "") + m + " " + ampm;
 }
 
-function mapTMClassification(cls) {
+function tmCategory(cls) {
   if (!cls) return "Community";
-  const seg = (cls.segment?.name || "").toLowerCase();
-  const gen = (cls.genre?.name   || "").toLowerCase();
-  if (seg.includes("music"))                    return "Music";
-  if (seg.includes("sport"))                    return "Fitness";
+  var seg = ((cls.segment && cls.segment.name) || "").toLowerCase();
+  if (seg.includes("music"))  return "Music";
+  if (seg.includes("sport"))  return "Fitness";
   if (seg.includes("art") || seg.includes("theatre")) return "Arts";
-  if (seg.includes("family"))                   return "Community";
-  if (gen.includes("comedy") || gen.includes("social")) return "Social";
-  return "Community";
+  if (seg.includes("family")) return "Community";
+  return "Social";
 }
 
-function mapEBCategory(catId) {
-  const MAP = {
-    "103":"Music","108":"Fitness","105":"Arts","104":"Food",
-    "107":"Learning","110":"Social","113":"Community",
-    "115":"Outdoors","117":"Social","109":"Volunteer"
-  };
-  return MAP[String(catId)] || "Community";
+function ebCategory(id) {
+  var MAP = {"103":"Music","108":"Fitness","105":"Arts","104":"Food",
+             "107":"Learning","110":"Social","113":"Community",
+             "115":"Outdoors","117":"Social","109":"Volunteer"};
+  return MAP[String(id)] || "Community";
 }
