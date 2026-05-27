@@ -628,22 +628,13 @@ function doMeetups(){
   var btn=document.getElementById("btnMu");btn.disabled=true;
   var ag=AGES[1];for(var i=0;i<AGES.length;i++){if(AGES[i].id===ageId){ag=AGES[i];break;}}
   var res=document.getElementById("results");
-  res.innerHTML='<div class="loading"><div class="ico">👥</div><strong>Searching Meetup.com for '+ag.l+' groups in '+loc+'...</strong></div>';
-
-  fetch("/api/groups",{method:"POST",headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({location:loc, ageGroup:ag.l})})
-  .then(function(r){return r.json();})
-  .then(function(data){
-    var meetups = data.meetups || [];
-    var src = data.source==="live" ? "🔴 Live from Meetup.com" : "🤖 AI Suggestions";
-    var h='<div class="muhdr"><div style="font-size:26px">👥</div><div><div style="font-size:15px;font-weight:800;color:#fff">Meetup Groups · Ages '+ag.l+'</div><div style="font-size:12px;color:rgba(255,255,255,.8);margin-top:2px">Near '+(data.city||loc)+'</div></div></div>';
-    h+='<div style="text-align:center;margin-bottom:12px"><span style="background:#F0FDF4;color:#166534;border:1px solid #86EFAC;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700">'+src+'</span></div>';
+  res.innerHTML='<div class="loading"><div class="ico">&#128101;</div><strong>Finding '+ag.l+' meetup groups in '+loc+'...</strong></div>';
+  var prompt='Find recurring meetup groups near "'+loc+'" for age '+ag.l+' ('+ag.d+'). Return ONLY valid JSON no markdown: {"city":"City","meetups":[{"name":"Name","category":"Social|Outdoors|Sports|Arts|Tech|Wellness|Books|Food/Drink|Gaming|Networking|Music|Volunteering","frequency":"Every Thursday","size":"50-200 members","description":"Two sentences.","where":"Meetup.com or venue","vibe":"Casual and welcoming"}]}. 6-9 diverse groups.';
+  callAI(prompt).then(function(data){
+    var h='<div class="muhdr"><div style="font-size:26px">&#128101;</div><div><div style="font-size:15px;font-weight:800;color:#fff">Meetup Groups &middot; Ages '+ag.l+'</div><div style="font-size:12px;color:rgba(255,255,255,.8);margin-top:2px">Near '+(data.city||loc)+'</div></div></div>';
     h+='<div class="mugrid">';
-    meetups.forEach(function(m){
-      var c=MCAT[m.category]||{bg:"#F3F4F6",tx:"#374151",em:"👥"};
-
-
-
+    (data.meetups||[]).forEach(function(m){
+      var c=MCAT[m.category]||{bg:"#F3F4F6",tx:"#374151",em:"&#128101;"};
       h+='<div class="mucard"><div class="mutop"><div class="muico" style="background:'+c.bg+'">'+c.em+'</div><div><div class="muname">'+m.name+'</div><span class="mutag" style="background:'+c.bg+';color:'+c.tx+'">'+m.category+'</span></div></div><div class="mudesc">'+m.description+'</div><div class="mumeta"><div>&#128260; <strong>'+m.frequency+'</strong></div><div>&#128100; '+m.size+'</div><div>&#128205; '+m.where+'</div>'+(m.vibe?'<div class="muvibe">&#10024; '+m.vibe+'</div>':'')+'</div></div>';
     });
     h+='</div>';res.innerHTML=h;
