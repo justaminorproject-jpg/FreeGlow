@@ -501,18 +501,14 @@ function cleanJSON(raw){
 function callAI(prompt){
   return fetch("/api/groq",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"llama-3.3-70b-versatile",temperature:0.7,max_tokens:2000,messages:[{role:"user",content:prompt}]})})
   .then(function(r){
-    var ct = r.headers.get("content-type")||"";
-    if(!ct.includes("application/json")){
-      return r.text().then(function(t){
-        throw new Error("Server returned HTML (status "+r.status+"): "+t.slice(0,120));
-      });
-    }
-    return r.json();
-  })
-  .then(function(d){
-    if(d.error) throw new Error(d.error.message||d.error||"API error");
-    var txt=(d.choices&&d.choices[0]&&d.choices[0].message&&d.choices[0].message.content)||"";
-    var p=cleanJSON(txt);p._provider=d._provider||"groq";return p;
+    return r.text().then(function(rawText){
+      var d;
+      try { d = JSON.parse(rawText); }
+      catch(e){ throw new Error("Server said: "+rawText.slice(0,200)); }
+      if(d.error) throw new Error(d.error.message||d.error||"API error");
+      var txt=(d.choices&&d.choices[0]&&d.choices[0].message&&d.choices[0].message.content)||"";
+      var p=cleanJSON(txt);p._provider=d._provider||"groq";return p;
+    });
   });
 }
 
