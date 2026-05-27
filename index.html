@@ -99,6 +99,54 @@ body{background:#F7F5FF;font-family:system-ui,-apple-system,sans-serif;padding-b
 .muvibe{background:#EDE9FE;color:#6D28D9;border-radius:7px;padding:3px 8px;font-size:11px;font-weight:600;margin-top:2px}
 .fbadge{text-align:center;padding:.75rem 0}
 .fbadge span{background:#EDE9FE;color:#6D28D9;padding:5px 14px;border-radius:18px;font-weight:600;font-size:12px}
+/* NAV ICONS */
+.nav-icons{position:absolute;top:1.25rem;right:1.25rem;display:flex;gap:8px;z-index:10}
+.nav-icon{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.18);border:1.5px solid rgba(255,255,255,0.25);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:inherit}
+.nav-icon:hover{background:rgba(255,255,255,0.28)}
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:100;display:none;align-items:flex-end;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:24px 24px 0 0;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;padding:1.5rem 1.5rem 2rem}
+.modal-handle{width:40px;height:4px;background:#E5E7EB;border-radius:2px;margin:0 auto 1.25rem}
+.modal-title{font-size:20px;font-weight:800;color:#111;margin-bottom:4px}
+.modal-sub{font-size:13px;color:#9CA3AF;margin-bottom:1.5rem}
+.modal-close{float:right;background:none;border:none;font-size:20px;cursor:pointer;color:#9CA3AF;margin-top:-4px}
+.step{display:flex;gap:14px;margin-bottom:1.25rem;align-items:flex-start}
+.step-num{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#6D28D9,#7C3AED);color:#fff;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-text{flex:1}
+.step-title{font-size:14px;font-weight:700;color:#111;margin-bottom:2px}
+.step-desc{font-size:13px;color:#6B7280;line-height:1.5}
+.about-logo{display:flex;align-items:center;gap:12px;margin-bottom:1.25rem;padding:1rem;background:#F7F5FF;border-radius:14px}
+.about-logo .ico{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#6D28D9,#7C3AED);display:flex;align-items:center;justify-content:center;font-size:24px}
+.about-section{margin-bottom:1.25rem}
+.about-section h3{font-size:13px;font-weight:700;color:#6D28D9;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.about-section p{font-size:13px;color:#374151;line-height:1.6}
+.about-pill{display:inline-flex;align-items:center;gap:6px;background:#F3F4F6;border-radius:20px;padding:6px 12px;font-size:12px;font-weight:600;color:#374151;margin:3px}
+.divline{border:none;border-top:1px solid #F3F4F6;margin:1rem 0}
+
+/* BOTTOM NAV */
+.bnav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #E5E7EB;display:flex;z-index:100;box-shadow:0 -2px 12px rgba(109,40,217,0.08)}
+.bnav-btn{flex:1;padding:10px 0 12px;border:none;background:transparent;cursor:pointer;font-family:inherit;display:flex;flex-direction:column;align-items:center;gap:3px;color:#9CA3AF;font-size:10px;font-weight:600;letter-spacing:.04em;transition:color .15s}
+.bnav-btn.on{color:#6D28D9}
+.bnav-ico{font-size:20px;line-height:1}
+
+/* HOW TO PAGE */
+#howPage{display:none;max-width:560px;margin:0 auto;padding:0 1rem 2rem}
+.how-hero{background:linear-gradient(135deg,#4C1D95,#6D28D9,#7C3AED);padding:1.5rem;margin:-1.75rem -1rem 1.25rem;border-radius:0 0 20px 20px;text-align:center;position:relative;z-index:1}
+.how-hero h2{font-size:20px;font-weight:800;color:#fff;margin-bottom:4px;font-family:Georgia,serif}
+.how-hero p{font-size:13px;color:rgba(255,255,255,.8)}
+.step-card{background:#fff;border-radius:16px;padding:1rem 1.1rem;box-shadow:0 2px 16px rgba(109,40,217,0.09);margin-bottom:10px;display:flex;gap:14px;align-items:flex-start}
+.step-num{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#6D28D9,#7C3AED);color:#fff;font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.step-title{font-size:14px;font-weight:800;color:#111;margin-bottom:4px}
+.step-desc{font-size:13px;color:#374151;line-height:1.55}
+.step-tip{font-size:12px;color:#6D28D9;background:#EDE9FE;border-radius:8px;padding:5px 10px;margin-top:7px;line-height:1.5}
+.faq-card{background:#fff;border-radius:16px;padding:1rem 1.1rem;box-shadow:0 2px 16px rgba(109,40,217,0.09);margin-bottom:10px;cursor:pointer}
+.faq-q{font-size:14px;font-weight:700;color:#111;display:flex;justify-content:space-between;align-items:center}
+.faq-q span{font-size:18px;color:#6D28D9;transition:transform .2s}
+.faq-a{font-size:13px;color:#374151;line-height:1.55;margin-top:8px;display:none}
+.faq-card.open .faq-a{display:block}
+.faq-card.open .faq-q span{transform:rotate(45deg)}
+.how-section{font-size:11px;font-weight:700;letter-spacing:.09em;color:#9CA3AF;text-transform:uppercase;margin:16px 0 8px 2px}
 </style>
 </head>
 <body>
@@ -109,7 +157,12 @@ body{background:#F7F5FF;font-family:system-ui,-apple-system,sans-serif;padding-b
       <div class="logo-box">🌅</div>
       <span class="logo-free">Free</span><span class="logo-glow">Glow</span>
     </div>
-    <div class="hero-sub">Your days off deserve to shine ✨ — find events &amp; meetups that fit your life</div>
+    <div class="nav-icons">
+    <button class="nav-icon" onclick="openModal('howModal')" title="How to use">&#10067;</button>
+    <button class="nav-icon" onclick="openModal('aboutModal')" title="About FreeGlow">&#8505;&#65039;</button>
+    <button class="nav-icon" onclick="openModal('tosModal')" title="Terms of Service">&#128196;</button>
+  </div>
+  <div class="hero-sub">Your days off deserve to shine ✨ — find events &amp; meetups that fit your life</div>
   </div>
 </div>
 
@@ -158,6 +211,495 @@ body{background:#F7F5FF;font-family:system-ui,-apple-system,sans-serif;padding-b
   <button class="btn-p" id="btnEv" onclick="doEvents()">✨ Find events on my free days</button>
   <button class="btn-t" id="btnMu" onclick="doMeetups()">👥 Find Meetup Groups Near Me</button>
   <div id="results"></div>
+</div>
+
+<!-- HOW TO USE PAGE -->
+<div id="howPage">
+  <div class="how-hero">
+    <h2>How to use FreeGlow 🌅</h2>
+    <p>Find events & meetups that actually fit your life</p>
+  </div>
+
+  <div class="how-section">Getting started</div>
+
+  <div class="step-card">
+    <div class="step-num">1</div>
+    <div>
+      <div class="step-title">Enter your location</div>
+      <div class="step-desc">Type your city, neighborhood, or zip code in the location box. FreeGlow uses this to find events and meetup groups near you.</div>
+      <div class="step-tip">💡 Be specific — "Atlanta, GA" works better than just "Atlanta"</div>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-num">2</div>
+    <div>
+      <div class="step-title">Pick your age group</div>
+      <div class="step-desc">Select the age range that fits you. FreeGlow uses this to tailor event suggestions and find meetup groups with people your age.</div>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-num">3</div>
+    <div>
+      <div class="step-title">Set your work schedule</div>
+      <div class="step-desc">Tap the days you work — they turn purple. FreeGlow automatically figures out all your upcoming free days and highlights them on the calendar.</div>
+      <div class="step-tip">💡 Use "Look Ahead" to search 1, 2, or 3 months out</div>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-num">4</div>
+    <div>
+      <div class="step-title">Override any day</div>
+      <div class="step-desc">Working an extra shift? Got a random day off? Just tap that day on the calendar to flip it. Green = added as free, dashed red = marked as working.</div>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-num">5</div>
+    <div>
+      <div class="step-title">Find events on your free days</div>
+      <div class="step-desc">Tap the purple button to search for local events happening specifically on your days off — festivals, trivia nights, classes, markets, concerts and more.</div>
+      <div class="step-tip">💡 Each event includes a first-timer tip to make showing up solo less scary</div>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-num">6</div>
+    <div>
+      <div class="step-title">Find meetup groups near you</div>
+      <div class="step-desc">Tap the teal button to discover recurring community groups in your area — book clubs, hiking groups, trivia leagues, game nights, young professionals and more.</div>
+      <div class="step-tip">💡 Meetup groups meet regularly so you keep building connections over time</div>
+    </div>
+  </div>
+
+  <div class="how-section">Frequently asked questions</div>
+
+  <div class="faq-card" onclick="toggleFaq(this)">
+    <div class="faq-q">What's the difference between Events and Meetup Groups? <span>+</span></div>
+    <div class="faq-a"><strong>Events</strong> are one-time things happening on your specific free days — a festival, trivia night, concert, or market. <strong>Meetup Groups</strong> are recurring communities that meet regularly — book clubs, hiking groups, game nights — great for building real friendships over time.</div>
+  </div>
+
+  <div class="faq-card" onclick="toggleFaq(this)">
+    <div class="faq-q">Can I use Pick Days Manually instead? <span>+</span></div>
+    <div class="faq-a">Yes! Tap the "Pick Days Manually" tab and tap any days on the calendar to mark them as free. Great if your schedule changes week to week or you just want to check out a specific date.</div>
+  </div>
+
+  <div class="faq-card" onclick="toggleFaq(this)">
+    <div class="faq-q">How accurate are the results? <span>+</span></div>
+    <div class="faq-a">FreeGlow uses AI (Llama 3.3 via Groq, with Gemini as backup) to suggest realistic local events and groups. Results are AI-generated so always verify event details before heading out — check the venue's website or social media to confirm.</div>
+  </div>
+
+  <div class="faq-card" onclick="toggleFaq(this)">
+    <div class="faq-q">Is my data saved? <span>+</span></div>
+    <div class="faq-a">No data is saved between sessions. Your schedule and location stay in your browser only and are never stored on any server. Each time you open FreeGlow you start fresh.</div>
+  </div>
+
+  <div class="faq-card" onclick="toggleFaq(this)">
+    <div class="faq-q">Why does it sometimes fail to load? <span>+</span></div>
+    <div class="faq-a">FreeGlow uses a free AI service that occasionally hits rate limits. If it fails, wait a few seconds and try again — it automatically switches to a backup AI (Gemini) when the main one is busy.</div>
+  </div>
+
+  <div style="text-align:center;padding:1.5rem 0 .5rem">
+    <div style="font-size:28px;margin-bottom:6px">🌅</div>
+    <div style="font-size:13px;color:#9CA3AF">FreeGlow — your days off deserve to shine ✨</div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bnav">
+  <button class="bnav-btn on" id="navHome" onclick="showPage('home')">
+    <span class="bnav-ico">🏠</span>HOME
+  </button>
+  <button class="bnav-btn" id="navHow" onclick="showPage('how')">
+    <span class="bnav-ico">❓</span>HOW TO USE
+  </button>
+</div>
+
+<!-- HOW TO USE MODAL -->
+<div class="modal-overlay" id="howModal" onclick="closeModal('howModal')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeModal('howModal')">&#10005;</button>
+    <div class="modal-title">How to Use FreeGlow</div>
+    <div class="modal-sub">Find your people on your days off ✨</div>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text">
+        <div class="step-title">Enter Your Location</div>
+        <div class="step-desc">Type your city, state, or zip code at the top. FreeGlow uses this to find events and groups near you.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text">
+        <div class="step-title">Pick Your Age Group</div>
+        <div class="step-desc">Select the age range that fits you. This filters meetup groups and events to match your stage of life.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text">
+        <div class="step-title">Set Your Work Schedule</div>
+        <div class="step-desc">Tap the days you work — Monday through Friday is the default. FreeGlow automatically figures out all your upcoming free days.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-text">
+        <div class="step-title">Override Any Day</div>
+        <div class="step-desc">Got an extra shift? Random day off? Tap any day on the calendar to flip it. Green = free day, dashed red = working that day.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-text">
+        <div class="step-title">Find Events on Your Free Days</div>
+        <div class="step-desc">Hit the purple button to search for local events — festivals, trivia nights, art classes, open mics, farmers markets and more — happening specifically on your days off.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-text">
+        <div class="step-title">Find Meetup Groups</div>
+        <div class="step-desc">Hit the teal button to discover recurring community groups in your area. These are ongoing communities you can join to meet people regularly, not just one-time events.</div>
+      </div>
+    </div>
+
+    <div style="background:#F7F5FF;border-radius:12px;padding:12px 14px;margin-top:4px">
+      <div style="font-size:12px;font-weight:700;color:#6D28D9;margin-bottom:4px">&#128161; Pro Tip</div>
+      <div style="font-size:13px;color:#374151;line-height:1.5">Each event comes with a first-timer tip so showing up solo feels less intimidating. Look out for the yellow tip box on every result!</div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT MODAL -->
+<div class="modal-overlay" id="aboutModal" onclick="closeModal('aboutModal')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeModal('aboutModal')">&#10005;</button>
+
+    <div class="about-logo">
+      <div class="ico">&#127749;</div>
+      <div>
+        <div style="font-size:20px;font-weight:900;color:#111;font-family:Georgia,serif">Free<span style="background:linear-gradient(90deg,#6D28D9,#7C3AED);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Glow</span></div>
+        <div style="font-size:12px;color:#9CA3AF;margin-top:2px">Version 1.0.0</div>
+      </div>
+    </div>
+
+    <div class="about-section">
+      <h3>What is FreeGlow?</h3>
+      <p>FreeGlow flips the way you find things to do. Instead of browsing events and hoping they land on a day you're free, you enter your work schedule first — then FreeGlow finds what's happening on <em>your</em> days off.</p>
+    </div>
+
+    <div class="divline"></div>
+
+    <div class="about-section">
+      <h3>Why We Built This</h3>
+      <p>Finding your people in a new city — or just breaking out of a routine — is harder than it should be. You find something cool and then check your schedule: nope, working. FreeGlow was built so that never happens again. Your free time deserves to shine.</p>
+    </div>
+
+    <div class="divline"></div>
+
+    <div class="about-section">
+      <h3>What It Does</h3>
+      <p style="margin-bottom:8px">Enter your schedule once and get back:</p>
+      <div><span class="about-pill">&#127881; Local events on free days</span><span class="about-pill">&#128101; Age-matched meetup groups</span><span class="about-pill">&#128205; Location-based results</span><span class="about-pill">&#128161; First-timer tips</span><span class="about-pill">&#128260; Recurring communities</span></div>
+    </div>
+
+    <div class="divline"></div>
+
+    <div class="about-section">
+      <h3>Powered By</h3>
+      <p>FreeGlow uses <strong>Groq</strong> (with <strong>Llama 3.3 70B</strong>) and <strong>Google Gemini</strong> as a fallback to find real, local suggestions tailored to your age group and location. Fast, free, and private — your data never gets stored.</p>
+    </div>
+
+    <div class="divline"></div>
+
+    <div class="about-section">
+      <h3>Connect</h3>
+      <p>Built with &#10084;&#65039; for anyone trying to find their people.<br>Visit us at <strong>free-glow.vercel.app</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- TERMS OF SERVICE MODAL -->
+<div class="modal-overlay" id="tosModal" onclick="closeModal('tosModal')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeModal('tosModal')">&#10005;</button>
+    <div class="modal-title">Terms of Service</div>
+    <div class="modal-sub">Last updated: May 2026</div>
+
+    <div class="about-section">
+      <h3>1. Acceptance of Terms</h3>
+      <p>By accessing or using FreeGlow ("the App"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the App.</p>
+    </div>
+    <div class="divline"></div>
+
+    <div class="about-section">
+      <h3>2. Description of Service</h3>
+      <p>FreeGlow is a free web and mobile application that helps users discover local events and community meetup groups based on their work schedule and age group. The App uses artificial intelligence (Groq/Llama and Google Gemini) to generate event and meetup suggestions based on user-provided location and schedule information.</p>
+    </div>
+    <div class="divline"></div>
+
+    <div class="about-section">
+      <h3>3. Use of the App</h3>
+      <p>You agree to use FreeGlow only for lawful purposes and in a way that does not infringe the rights of others. You must not misuse the App by attempting to disrupt, damage, or gain unauthorized access to any part of it. You agree not to use the App to transmit any harmful, offensive, or illegal content.</p>
+    </div>
+    <div class="divline"></div>
+
+    <div class="about-section">
+      <h3>4. AI-Generated Content</h3>
+      <p>Event and meetup suggestions provided by FreeGlow are generated by artificial intelligence and are for informational purposes only. We do not guarantee the accuracy, completeness, or availability of any suggested events or groups. Always verify event details independently before attending. FreeGlow is not responsible for any events, groups, or experiences you participate in as a result of using the App.</p>
+    </div>
+    <div class="divline"></div>
+
+    <div class="about-section">
+      <h3>5. Privacy & Data</h3>
+      <p>FreeGlow does not collect, store, or sell your personal data. Location information and schedule data you enter are used only to generate results during your session and are not retained on our servers. API calls are made through a secure server-side proxy. Your information is never shared with third parties for marketing purposes.</p>
+    </div>
+    <div class="divline"></div>
+
+    <div class="about-section">
+      <h3>6. Third-Party Services</h3>
+      <p>FreeGlow uses third-party AI services including Groq and Google Gemini to generate content. Your use of the App is also subject to the terms and privacy policies of these providers. We are not responsible for the practices of these third-party services.</p>
+    </div>
+    <div class="divline"></div>
+
+    <div class="about-section">
+      <h3>7. Disclaimer of Warranties</h3>
+      <p>FreeGlow is provided "as is" without warranties of any kind, either express or implied. We do not warrant that the App will be uninterrupted, error-free, or free of viruses or other harmful components. We make no warranties about the accuracy or reliability of any AI-generated content.</p>
+    </div>
+    <div class="divline"></div>
+
+    <div class="about-section">
+      <h3>8. Limitation of Liability</h3>
+      <p>To the fullest extent permitted by law, FreeGlow and its creators shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of the App, including but not limited to loss of data, personal injury, or damages resulting from attendance at any event or group suggested by the App.</p>
+    </div>
+    <div class="divline"></div>
+
+    <div class="about-section">
+      <h3>9. Changes to Terms</h3>
+      <p>We reserve the right to modify these Terms of Service at any time. Changes will be effective immediately upon posting within the App. Your continued use of FreeGlow after any changes constitutes your acceptance of the new terms.</p>
+    </div>
+    <div class="divline"></div>
+
+    <div class="about-section">
+      <h3>10. Contact</h3>
+      <p>If you have any questions about these Terms of Service, please reach out through <strong>free-glow.vercel.app</strong>.</p>
+    </div>
+
+    <div style="background:#F7F5FF;border-radius:12px;padding:12px 14px;margin-top:8px;text-align:center">
+      <div style="font-size:12px;color:#6B7280;line-height:1.6">By using FreeGlow, you acknowledge that you have read and understood these Terms of Service and agree to be bound by them.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showPage(p){
+  document.getElementById("navHome").className="bnav-btn"+(p==="home"?" on":"");
+  document.getElementById("navHow").className="bnav-btn"+(p==="how"?" on":"");
+  document.querySelector(".wrap").style.display=p==="home"?"block":"none";
+  document.getElementById("howPage").style.display=p==="how"?"block":"none";
+  window.scrollTo(0,0);
+}
+function toggleFaq(el){
+  el.classList.toggle("open");
+}
+</script>
+
+<!-- HOW TO USE MODAL -->
+<div class="modal-overlay" id="howModal" onclick="closeModal('howModal')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeModal('howModal')">&#10005;</button>
+    <div class="modal-title">How to Use FreeGlow</div>
+    <div class="modal-sub">Find your people on your days off ✨</div>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text">
+        <div class="step-title">Enter Your Location</div>
+        <div class="step-desc">Type your city, state, or zip code at the top. FreeGlow uses this to find events and groups near you.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text">
+        <div class="step-title">Pick Your Age Group</div>
+        <div class="step-desc">Select the age range that fits you. This filters meetup groups and events to match your stage of life.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text">
+        <div class="step-title">Set Your Work Schedule</div>
+        <div class="step-desc">Tap the days you work — Monday through Friday is the default. FreeGlow automatically figures out all your upcoming free days.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-text">
+        <div class="step-title">Override Any Day</div>
+        <div class="step-desc">Got an extra shift? Random day off? Tap any day on the calendar to flip it. Green = free day, dashed red = working that day.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-text">
+        <div class="step-title">Find Events on Your Free Days</div>
+        <div class="step-desc">Hit the purple button to search for local events — festivals, trivia nights, art classes, open mics, farmers markets and more — happening specifically on your days off.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-text">
+        <div class="step-title">Find Meetup Groups</div>
+        <div class="step-desc">Hit the teal button to discover recurring community groups in your area. These are ongoing communities you can join to meet people regularly, not just one-time events.</div>
+      </div>
+    </div>
+
+    <div style="background:#F7F5FF;border-radius:12px;padding:12px 14px;margin-top:4px">
+      <div style="font-size:12px;font-weight:700;color:#6D28D9;margin-bottom:4px">&#128161; Pro Tip</div>
+      <div style="font-size:13px;color:#374151;line-height:1.5">Each event comes with a first-timer tip so showing up solo feels less intimidating. Look out for the yellow tip box on every result!</div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT MODAL -->
+<div class="modal-overlay" id="aboutModal" onclick="closeModal('aboutModal')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeModal('aboutModal')">&#10005;</button>
+
+    <div class="about-logo">
+      <div class="ico">&#127749;</div>
+      <div>
+        <div style="font-size:20px;font-weight:900;color:#111;font-family:Georgia,serif">Free<span style="background:linear-gradient(90deg,#6D28D9,#7C3AED);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Glow</span></div>
+        <div style="font-size:12px;color:#9CA3AF;margin-top:2px">Version 1.0.0</div>
+      </div>
+    </div>
+
+    <div class="about-section">
+      <h3>What is FreeGlow?</h3>
+      <p>FreeGlow flips the way you find things to do. Instead of browsing events and hoping they land on a day you're free, you enter your work schedule first — then FreeGlow finds what's happening on <em>your</em> days off.</p>
+    </div>
+
+    <div class="divline"></div>
+
+    <div class="about-section">
+      <h3>Why We Built This</h3>
+      <p>Finding your people in a new city — or just breaking out of a routine — is harder than it should be. You find something cool and then check your schedule: nope, working. FreeGlow was built so that never happens again. Your free time deserves to shine.</p>
+    </div>
+
+    <div class="divline"></div>
+
+    <div class="about-section">
+      <h3>What It Does</h3>
+      <p style="margin-bottom:8px">Enter your schedule once and get back:</p>
+      <div><span class="about-pill">&#127881; Local events on free days</span><span class="about-pill">&#128101; Age-matched meetup groups</span><span class="about-pill">&#128205; Location-based results</span><span class="about-pill">&#128161; First-timer tips</span><span class="about-pill">&#128260; Recurring communities</span></div>
+    </div>
+
+    <div class="divline"></div>
+
+    <div class="about-section">
+      <h3>Powered By</h3>
+      <p>FreeGlow uses <strong>Groq</strong> (with <strong>Llama 3.3 70B</strong>) and <strong>Google Gemini</strong> as a fallback to find real, local suggestions tailored to your age group and location. Fast, free, and private — your data never gets stored.</p>
+    </div>
+
+    <div class="divline"></div>
+
+    <div class="about-section">
+      <h3>Connect</h3>
+      <p>Built with &#10084;&#65039; for anyone trying to find their people.<br>Visit us at <strong>free-glow.vercel.app</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- TERMS OF SERVICE MODAL -->
+<div class="modal-overlay" id="tosModal" onclick="closeModal('tosModal')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeModal('tosModal')">&#10005;</button>
+    <div class="modal-title">Terms of Service</div>
+    <div class="modal-sub">Last updated: May 2026</div>
+
+    <div class="about-section">
+      <h3>1. Acceptance of Terms</h3>
+      <p>By accessing or using FreeGlow ("the App"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the App.</p>
+    </div>
+    <div class="divline"></div>
+
+    <div class="about-section">
+      <h3>2. Description of Service</h3>
+      <p>FreeGlow is a free web and mobile application that helps users discover local events and community meetup groups based on their work schedule and age group. The App uses artificial intelligence (Groq/Llama and Google Gemini) to generate event and meetup suggestions based on user-provided location and schedule information.</p>
+    </div>
+    <div class="divline"></div>
+
+    <div class="about-section">
+      <h3>3. Use of the App</h3>
+      <p>You agree to use FreeGlow only for lawful purposes and in a way that does not infringe the rights of others. You must not misuse the App by attempting to disrupt, damage, or gain unauthorized access to any part of it. You agree not to use the App to transmit any harmful, offensive, or illegal content.</p>
+    </div>
+    <div class="divline"></div>
+
+    <div class="about-section">
+      <h3>4. AI-Generated Content</h3>
+      <p>Event and meetup suggestions provided by FreeGlow are generated by artificial intelligence and are for informational purposes only. We do not guarantee the accuracy, completeness, or availability of any suggested events or groups. Always verify event details independently before attending. FreeGlow is not responsible for any events, groups, or experiences you participate in as a result of using the App.</p>
+    </div>
+    <div class="divline"></div>
+
+    <div class="about-section">
+      <h3>5. Privacy & Data</h3>
+      <p>FreeGlow does not collect, store, or sell your personal data. Location information and schedule data you enter are used only to generate results during your session and are not retained on our servers. API calls are made through a secure server-side proxy. Your information is never shared with third parties for marketing purposes.</p>
+    </div>
+    <div class="divline"></div>
+
+    <div class="about-section">
+      <h3>6. Third-Party Services</h3>
+      <p>FreeGlow uses third-party AI services including Groq and Google Gemini to generate content. Your use of the App is also subject to the terms and privacy policies of these providers. We are not responsible for the practices of these third-party services.</p>
+    </div>
+    <div class="divline"></div>
+
+    <div class="about-section">
+      <h3>7. Disclaimer of Warranties</h3>
+      <p>FreeGlow is provided "as is" without warranties of any kind, either express or implied. We do not warrant that the App will be uninterrupted, error-free, or free of viruses or other harmful components. We make no warranties about the accuracy or reliability of any AI-generated content.</p>
+    </div>
+    <div class="divline"></div>
+
+    <div class="about-section">
+      <h3>8. Limitation of Liability</h3>
+      <p>To the fullest extent permitted by law, FreeGlow and its creators shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of the App, including but not limited to loss of data, personal injury, or damages resulting from attendance at any event or group suggested by the App.</p>
+    </div>
+    <div class="divline"></div>
+
+    <div class="about-section">
+      <h3>9. Changes to Terms</h3>
+      <p>We reserve the right to modify these Terms of Service at any time. Changes will be effective immediately upon posting within the App. Your continued use of FreeGlow after any changes constitutes your acceptance of the new terms.</p>
+    </div>
+    <div class="divline"></div>
+
+    <div class="about-section">
+      <h3>10. Contact</h3>
+      <p>If you have any questions about these Terms of Service, please reach out through <strong>free-glow.vercel.app</strong>.</p>
+    </div>
+
+    <div style="background:#F7F5FF;border-radius:12px;padding:12px 14px;margin-top:8px;text-align:center">
+      <div style="font-size:12px;color:#6B7280;line-height:1.6">By using FreeGlow, you acknowledge that you have read and understood these Terms of Service and agree to be bound by them.</div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -343,30 +885,34 @@ setTab("s");
 function showErr(m){var b=document.getElementById("errBox");if(m){b.textContent="⚠️ "+m;b.style.display="block";}else b.style.display="none";}
 
 function cleanJSON(raw){
-  // Step 1: extract the JSON object
-  var m=raw.match(/\{[\s\S]*\}/);
-  if(!m) throw new Error("No JSON in response");
-  var s=m[0];
-
-  // Step 2: remove literal newlines/tabs/returns inside quoted strings
-  s=s.replace(/"((?:[^"\\]|\\.)*)"/g,function(match,content){
-    return '"'+content.replace(/\n/g,' ').replace(/\r/g,'').replace(/\t/g,' ')+'"';
-  });
-
-  // Step 3: remove trailing commas before } or ]
-  s=s.replace(/,\s*([}\]])/g,'$1');
-
-  // Step 4: try parsing
+  // Find first { then track bracket depth to find the true closing }
+  var start=raw.indexOf("{");
+  if(start===-1) throw new Error("No JSON in response");
+  var depth=0,inStr=false,esc=false,end=-1;
+  for(var i=start;i<raw.length;i++){
+    var ch=raw[i];
+    if(esc){esc=false;continue;}
+    if(ch==="\\"){esc=true;continue;}
+    if(ch==='"'){inStr=!inStr;continue;}
+    if(inStr) continue;
+    if(ch==="{") depth++;
+    else if(ch==="}"){depth--;if(depth===0){end=i;break;}}
+  }
+  if(end===-1) end=raw.length-1;
+  var s=raw.substring(start,end+1);
+  // Clean common AI mistakes
+  s=s.replace(/,\s*([}\]])/g,"$1");
+  s=s.replace(/[\u0000-\u001F\u007F]/g," ");
   try{ return JSON.parse(s); }
   catch(e){
-    // Step 5: salvage truncated JSON
-    s=s.replace(/,\s*\{[^}]*$/,'');
-    s=s.replace(/,\s*"[^"]*"[^,}\]]*$/,'');
+    // Salvage truncated JSON
+    s=s.replace(/,\s*\{[^}]*$/,"");
+    s=s.replace(/,\s*"[^"]*"\s*:[^,}\]]*$/,"");
     var op=(s.match(/\[/g)||[]).length-(s.match(/\]/g)||[]).length;
     var ob=(s.match(/\{/g)||[]).length-(s.match(/\}/g)||[]).length;
-    for(var i=0;i<op;i++) s+=']';
-    for(var i=0;i<ob;i++) s+='}';
-    s=s.replace(/,\s*([}\]])/g,'$1');
+    for(var i=0;i<op;i++) s+="]";
+    for(var i=0;i<ob;i++) s+="}";
+    s=s.replace(/,\s*([}\]])/g,"$1");
     return JSON.parse(s);
   }
 }
@@ -433,6 +979,10 @@ function doMeetups(){
   }).catch(function(e){showErr("Could not load meetups. ("+e.message+")");res.innerHTML="";})
   .finally(function(){btn.disabled=false;});
 }
+
+function openModal(id){ document.getElementById(id).classList.add("open"); document.body.style.overflow="hidden"; }
+function closeModal(id){ document.getElementById(id).classList.remove("open"); document.body.style.overflow=""; }
+document.addEventListener("keydown",function(e){ if(e.key==="Escape"){ closeModal("howModal"); closeModal("aboutModal"); } });
 
 if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}
 </script>
