@@ -516,43 +516,102 @@ function buildAffiliateSection(types){
 }
 
 // ── Events search ─────────────────────────────────────────────────────────────
+function renderEventResults(events, city, source, loc) {
+  var up = upcoming();
+  calEventStore = [];
+  var byD = {};
+  up.forEach(function(k){ byD[k]=[]; });
+
+  events.forEach(function(ev) {
+    if (byD[ev.date]) { byD[ev.date].push(ev); return; }
+    if (!up.length) return;
+    var closest = up.reduce(function(p,c){
+      return Math.abs(new Date(c)-new Date(ev.date)) < Math.abs(new Date(p)-new Date(ev.date)) ? c : p;
+    });
+    byD[closest].push(ev);
+  });
+
+  var types=[], hasAny=false;
+  var srcLabel = source==="real" ? "Live Events" : (source==="gemini" ? "Gemini" : "Groq");
+  var h='<div class="sdiv"><div class="sline"></div><div class="stxt">Events near '+(city||loc)+'</div><div class="sline"></div></div>';
+
+  up.forEach(function(k){
+    var evs=byD[k]||[]; if(!evs.length) return;
+    hasAny=true;
+    h+='<div class="dsec"><div class="dhdr"><div class="dbadge">'+kdisp(k)+'</div><div class="dline"></div></div>';
+    evs.forEach(function(ev){
+      var c=ECAT[ev.type]||{bg:"#F3F4F6",tx:"#374151",em:"&#10024;"};
+      var idx=calEventStore.length;
+      calEventStore.push({name:ev.name,date:ev.date,time:ev.time,venue:ev.venue,desc:ev.description||""});
+      if(types.indexOf(ev.type)===-1) types.push(ev.type);
+      var srcBadge = ev.source ? '<span style="font-size:10px;color:#9CA3AF;margin-left:5px">via '+ev.source+'</span>' : '';
+      var ticketBtn = ev.url ? '<a href="'+ev.url+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px;background:#EDE9FE;color:#6D28D9;border:none;border-radius:18px;padding:4px 10px;font-size:11px;font-weight:700;text-decoration:none;margin-right:4px">&#127915; Get Tickets</a>' : '';
+      var priceTag = ev.price ? '<span style="font-size:11px;font-weight:700;color:#059669;background:#ECFDF5;padding:3px 8px;border-radius:10px;margin-right:4px">'+ev.price+'</span>' : '';
+      h+='<div class="ecard"><div class="eico" style="background:'+c.bg+'">'+c.em+'</div><div style="flex:1;min-width:0">';
+      h+='<div class="ename">'+ev.name+srcBadge+'</div>';
+      h+='<div class="emeta">&#128336; '+ev.time+' &middot; &#128205; '+ev.venue+'</div>';
+      if(ev.description) h+='<div class="edesc">'+String(ev.description).slice(0,180)+'</div>';
+      if(ev.tip) h+='<div class="etip">&#128161; Tip: '+ev.tip+'</div>';
+      h+='<div style="display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin-top:6px">';
+      h+='<span class="etag" style="background:'+c.bg+';color:'+c.tx+'">'+ev.type+'</span>';
+      h+=priceTag+ticketBtn;
+      h+='<button class="cal-add-btn" onclick="openCalPopupIdx('+idx+')">&#128197; Add to Calendar</button>';
+      h+='</div></div></div>';
+    });
+    h+='</div>';
+  });
+
+  if(!hasAny) return '<div style="text-align:center;padding:2rem;color:#9CA3AF;font-size:14px">No events found for your free days. Try a nearby city or different dates.</div>';
+  h+=buildAffiliateSection(types);
+  h+='<div class="fbadge"><span>&#127749; FreeGlow &middot; '+up.length+' day'+(up.length!==1?'s':'')+' &middot; '+(city||loc)+' &middot; '+srcLabel+'</span></div>';
+  h+='<div style="text-align:center;padding:6px 0 0"><a href="https://michelleminor.org" target="_blank" style="font-size:11px;color:#9CA3AF;text-decoration:none">Created by Michelle Minor</a></div>';
+  return h;
+}
+
 function doEvents(){
   var loc=document.getElementById("locIn").value.trim();
   if(!loc){showErr("Please enter your city or zip code.");return;}
-  var up=upcoming();if(!up.length){showErr("No upcoming free days found.");return;}
-  showErr("");calEventStore=[];
-  var btn=document.getElementById("btnEv");btn.disabled=true;
-  var ag=AGES[1];for(var i=0;i<AGES.length;i++){if(AGES[i].id===ageId){ag=AGES[i];break;}}
+  var up=upcoming(); if(!up.length){showErr("No upcoming free days found.");return;}
+  showErr(""); calEventStore=[];
+  var btn=document.getElementById("btnEv"); btn.disabled=true;
+  var ag=AGES[1]; for(var i=0;i<AGES.length;i++){if(AGES[i].id===ageId){ag=AGES[i];break;}}
   var res=document.getElementById("results");
-  res.innerHTML='<div class="loading"><div class="ico">🗺️</div><strong>Finding things to do in '+loc+'...</strong></div>';
-  var dates=up.map(function(k){return kdisp(k);}).join(", ");
-  var prompt='Find upcoming community events in or near "'+loc+'" on: '+dates+'. Person is age '+ag.l+' wanting to meet people. Return ONLY valid JSON no markdown: {"city":"City","events":[{"date":"YYYY-MM-DD","name":"Name","type":"Social|Outdoors|Food|Music|Arts|Fitness|Volunteer|Learning|Community","time":"7:00 PM","venue":"Venue","description":"Two sentences.","tip":"One tip."}]}. 2-4 events per date.';
-  callAI(prompt).then(function(data){
-    var byD={};up.forEach(function(k){byD[k]=[];});
-    (data.events||[]).forEach(function(ev){if(byD[ev.date])byD[ev.date].push(ev);else if(up.length)byD[up[0]].push(ev);});
-    var prov=data._provider==="gemini"?"✨ Gemini":"⚡ Groq";
-    var h='<div class="sdiv"><div class="sline"></div><div class="stxt">Events near '+(data.city||loc)+'</div><div class="sline"></div></div>';
-    var types=[];
-    up.forEach(function(k){
-      var evs=byD[k]||[];if(!evs.length)return;
-      h+='<div class="dsec"><div class="dhdr"><div class="dbadge">'+kdisp(k)+'</div><div class="dline"></div></div>';
-      evs.forEach(function(ev){
-        var c=ECAT[ev.type]||{bg:"#F3F4F6",tx:"#374151",em:"✨"};
-        var idx=calEventStore.length;
-        calEventStore.push({name:ev.name,date:ev.date,time:ev.time,venue:ev.venue,desc:ev.description});
-        if(types.indexOf(ev.type)===-1)types.push(ev.type);
-        h+='<div class="ecard"><div class="eico" style="background:'+c.bg+'">'+c.em+'</div><div style="flex:1;min-width:0"><div class="ename">'+ev.name+'</div><div class="emeta">'+ev.time+' - '+ev.venue+'</div><div class="edesc">'+ev.description+'</div>'+(ev.tip ? '<div class="etip">Tip: '+ev.tip+'</div>' : '')+'<span class="etag" style="background:'+c.bg+';color:'+c.tx+'">'+ev.type+'</span><button class="cal-add-btn" onclick="openCalPopupIdx('+idx+')">Add to Calendar</button></div></div>';
-      });
-      h+='</div>';
-    });
-    h+=buildAffiliateSection(types);
-    h+='<div class="fbadge"><span>🌅 FreeGlow · '+up.length+' day'+(up.length!==1?'s':'')+' · '+(data.city||loc)+' · '+prov+'</span></div>';
-    h+='<div style="text-align:center;padding:6px 0 0"><a href="https://michelleminor.org" target="_blank" style="font-size:11px;color:#9CA3AF;text-decoration:none">Created by Michelle Minor</a></div>';
-    res.innerHTML=h;
-  }).catch(function(e){showErr("Could not load events. ("+e.message+")");res.innerHTML="";})
-  .finally(function(){btn.disabled=false;});
-}
+  res.innerHTML='<div class="loading"><div class="ico">&#127915;</div><strong>Searching real events in '+loc+'...</strong><div style="font-size:12px;color:#9CA3AF;margin-top:4px">Checking Ticketmaster &amp; Eventbrite</div></div>';
 
+  function fallbackToAI(){
+    res.innerHTML='<div class="loading"><div class="ico">&#129302;</div><strong>Finding suggestions via AI...</strong></div>';
+    var dates=up.map(function(k){return kdisp(k);}).join(", ");
+    var prompt='Find upcoming community events in or near "'+loc+'" on: '+dates+'. Person is age '+ag.l+' wanting to meet people. Return ONLY valid JSON no markdown: {"city":"City","events":[{"date":"YYYY-MM-DD","name":"Name","type":"Social|Outdoors|Food|Music|Arts|Fitness|Volunteer|Learning|Community","time":"7:00 PM","venue":"Venue","description":"Two sentences.","tip":"One tip."}]}. 2-4 events per date.';
+    callAI(prompt).then(function(d){
+      res.innerHTML=renderEventResults(d.events||[], d.city||loc, d._provider||"groq", loc);
+    }).catch(function(e){
+      showErr("Could not load events. ("+e.message+")"); res.innerHTML="";
+    }).finally(function(){ btn.disabled=false; });
+  }
+
+  fetch("/api/groq",{method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({type:"events",location:loc,dates:up})})
+  .then(function(r){return r.json();})
+  .then(function(data){
+    var real=data.events||[];
+    if(real.length>=3){
+      res.innerHTML=renderEventResults(real, loc, "real", loc);
+      btn.disabled=false;
+    } else {
+      // supplement with AI
+      var dates=up.map(function(k){return kdisp(k);}).join(", ");
+      var prompt='Find upcoming community events in or near "'+loc+'" on: '+dates+'. Person is age '+ag.l+' wanting to meet people. Return ONLY valid JSON no markdown: {"city":"City","events":[{"date":"YYYY-MM-DD","name":"Name","type":"Social|Outdoors|Food|Music|Arts|Fitness|Volunteer|Learning|Community","time":"7:00 PM","venue":"Venue","description":"Two sentences.","tip":"One tip."}]}. 2-4 events per date.';
+      res.innerHTML='<div class="loading"><div class="ico">&#129302;</div><strong>Adding AI suggestions...</strong></div>';
+      callAI(prompt).then(function(d){
+        var combined=real.concat(d.events||[]);
+        res.innerHTML=renderEventResults(combined, d.city||loc, real.length>0?"real":d._provider||"groq", loc);
+      }).catch(function(){
+        res.innerHTML=renderEventResults(real.length>0?real:[], loc, "real", loc);
+      }).finally(function(){ btn.disabled=false; });
+    }
+  })
+  .catch(function(){ fallbackToAI(); });
+}
 // ── Meetups search ────────────────────────────────────────────────────────────
 function doMeetups(){
   var loc=document.getElementById("locIn").value.trim();
@@ -561,11 +620,24 @@ function doMeetups(){
   var btn=document.getElementById("btnMu");btn.disabled=true;
   var ag=AGES[1];for(var i=0;i<AGES.length;i++){if(AGES[i].id===ageId){ag=AGES[i];break;}}
   var res=document.getElementById("results");
-  res.innerHTML='<div class="loading"><div class="ico">👥</div><strong>Finding '+ag.l+' meetup groups in '+loc+'...</strong></div>';
-  var prompt='Find recurring meetup groups near "'+loc+'" for age '+ag.l+' ('+ag.d+'). Return ONLY valid JSON no markdown: {"city":"City","meetups":[{"name":"Name","category":"Social|Outdoors|Sports|Arts|Tech|Wellness|Books|Food/Drink|Gaming|Networking|Music|Volunteering","frequency":"Every Thursday","size":"50-200 members","description":"Two sentences.","where":"Meetup.com or venue","vibe":"Casual and welcoming"}]}. 6-9 diverse groups.';
-  callAI(prompt).then(function(data){
-    var h='<div class="muhdr"><div style="font-size:26px">👥</div><div><div style="font-size:15px;font-weight:800;color:#fff">Meetup Groups · Ages '+ag.l+'</div><div style="font-size:12px;color:rgba(255,255,255,.8);margin-top:2px">Near '+(data.city||loc)+'</div></div></div><div class="mugrid">';
-    (data.meetups||[]).forEach(function(m){var c=MCAT[m.category]||{bg:"#F3F4F6",tx:"#374151",em:"👥"};h+='<div class="mucard"><div class="mutop"><div class="muico" style="background:'+c.bg+'">'+c.em+'</div><div><div class="muname">'+m.name+'</div><span class="mutag" style="background:'+c.bg+';color:'+c.tx+'">'+m.category+'</span></div></div><div class="mudesc">'+m.description+'</div><div class="mumeta"><div>🔄 <strong>'+m.frequency+'</strong></div><div>👤 '+m.size+'</div><div>📍 '+m.where+'</div>'+(m.vibe?'<div class="muvibe">✨ '+m.vibe+'</div>':'')+'</div></div>';});
+  res.innerHTML='<div class="loading"><div class="ico">👥</div><strong>Searching Meetup.com for '+ag.l+' groups in '+loc+'...</strong></div>';
+
+  fetch("/api/groups",{method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({location:loc, ageGroup:ag.l})})
+  .then(function(r){return r.json();})
+  .then(function(data){
+    var meetups = data.meetups || [];
+    var src = data.source==="live" ? "🔴 Live from Meetup.com" : "🤖 AI Suggestions";
+    var h='<div class="muhdr"><div style="font-size:26px">👥</div><div><div style="font-size:15px;font-weight:800;color:#fff">Meetup Groups · Ages '+ag.l+'</div><div style="font-size:12px;color:rgba(255,255,255,.8);margin-top:2px">Near '+(data.city||loc)+'</div></div></div>';
+    h+='<div style="text-align:center;margin-bottom:12px"><span style="background:#F0FDF4;color:#166534;border:1px solid #86EFAC;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700">'+src+'</span></div>';
+    h+='<div class="mugrid">';
+    meetups.forEach(function(m){
+      var c=MCAT[m.category]||{bg:"#F3F4F6",tx:"#374151",em:"👥"};
+
+
+
+      h+='<div class="mucard"><div class="mutop"><div class="muico" style="background:'+c.bg+'">'+c.em+'</div><div><div class="muname">'+m.name+'</div><span class="mutag" style="background:'+c.bg+';color:'+c.tx+'">'+m.category+'</span></div></div><div class="mudesc">'+m.description+'</div><div class="mumeta"><div>&#128260; <strong>'+m.frequency+'</strong></div><div>&#128100; '+m.size+'</div><div>&#128205; '+m.where+'</div>'+(m.vibe?'<div class="muvibe">&#10024; '+m.vibe+'</div>':'')+'</div></div>';
+    });
     h+='</div>';res.innerHTML=h;
   }).catch(function(e){showErr("Could not load meetups. ("+e.message+")");res.innerHTML="";})
   .finally(function(){btn.disabled=false;});
