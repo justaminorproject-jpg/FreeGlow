@@ -1,4 +1,5 @@
 export default async function handler(req, res) {
+  try {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
   const groqKey        = process.env.GROQ_API_KEY;
@@ -30,6 +31,7 @@ export default async function handler(req, res) {
         tmUrl.searchParams.set("classificationName", "music,arts,family,sports,miscellaneous");
 
         const tmRes  = await fetch(tmUrl.toString());
+        if (!tmRes.ok) throw new Error("TM " + tmRes.status);
         const tmData = await tmRes.json();
         const events = tmData?._embedded?.events || [];
 
@@ -69,6 +71,7 @@ export default async function handler(req, res) {
         const ebRes  = await fetch(ebUrl.toString(), {
           headers: { "Authorization": "Bearer " + ebKey }
         });
+        if (!ebRes.ok) throw new Error("EB " + ebRes.status);
         const ebData = await ebRes.json();
         const events = ebData?.events || [];
 
@@ -140,6 +143,10 @@ export default async function handler(req, res) {
     return res.status(200).json({ _provider:"gemini", choices:[{message:{content:text}}] });
   } catch(e) {
     return res.status(500).json({ error: "Both AI providers failed: " + e.message });
+  }
+  } catch(err) {
+    console.error("Handler error:", err.message);
+    return res.status(500).json({ error: "Server error: " + err.message });
   }
 }
 
